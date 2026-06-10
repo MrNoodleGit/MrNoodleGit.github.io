@@ -1,0 +1,9 @@
+# local tooling
+.claude/
+.DS_Store
+
+# inspiration images (not used by the site)
+Longboard.jpeg
+zima-blue-disintegration.png
+zima-blue-pool.png
+zima-blue-spotlight.png
