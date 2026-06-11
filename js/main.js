@@ -57,12 +57,17 @@ document.querySelectorAll(".scene").forEach((scene) => {
   video.addEventListener("error", fail);
   const lastSource = video.querySelector("source:last-of-type");
   if (lastSource) lastSource.addEventListener("error", fail);
-  // the load may already have failed before these listeners attached
-  if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) fail();
+  // networkState is unreliable mid-parse; check once everything has settled
+  window.addEventListener("load", () => {
+    if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) fail();
+  });
 
   if (reducedMotion) return;
 
-  video.addEventListener("canplay", () => scene.classList.add("scene--ready"));
+  video.addEventListener("canplay", () => {
+    scene.classList.remove("scene--novideo");
+    scene.classList.add("scene--ready");
+  });
 
   if ("IntersectionObserver" in window) {
     const sceneObserver = new IntersectionObserver(
