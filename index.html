@@ -6,7 +6,7 @@
     <title>Ra Mour — Alchemist</title>
     <meta
       name="description"
-      content="Ra Mour — designer and writer. Selected work and essays."
+      content="Ra Mour — researcher, cognitive explorer, and experience architect."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,15 +14,15 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css?v=2" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
       <a class="nav__home" href="#top">RM</a>
       <ul class="nav__links">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#writing">Writing</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#life">Life</a></li>
+        <li><a href="#writing">Writing</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -51,58 +51,134 @@
     </header>
 
     <main>
-      <!-- ============ 01 — SELECTED WORK ============ -->
-      <section class="section" id="work">
-        <p class="section__label reveal">01 — Selected Work</p>
+      <!-- ============ 01 — ABOUT ============ -->
+      <section class="section" id="about">
+        <p class="section__label reveal">01 — About</p>
 
-        <!-- EDIT: Replace the three placeholder projects below with your own.
-           Each row needs: a title, a one-line description, a year, and a link. -->
-        <ul class="work">
-          <li class="work__row reveal">
-            <a class="work__link" href="#"
-              ><!-- EDIT: project URL -->
-              <h2 class="work__title">Tidewater</h2>
-              <p class="work__desc">
-                Brand identity for a marine research collective
-              </p>
-              <div class="work__meta">
-                <span class="work__year">2025</span>
-                <span class="work__cta">View project &rarr;</span>
-              </div>
-            </a>
-          </li>
-          <li class="work__row reveal">
-            <a class="work__link" href="#"
-              ><!-- EDIT: project URL -->
-              <h2 class="work__title">Still Signal</h2>
-              <p class="work__desc">
-                Editorial design for a quarterly print journal on attention
-              </p>
-              <div class="work__meta">
-                <span class="work__year">2024</span>
-                <span class="work__cta">View project &rarr;</span>
-              </div>
-            </a>
-          </li>
-          <li class="work__row reveal">
-            <a class="work__link" href="#"
-              ><!-- EDIT: project URL -->
-              <h2 class="work__title">Night Swim</h2>
-              <p class="work__desc">
-                Poster series and motion sketches for a film festival
-              </p>
-              <div class="work__meta">
-                <span class="work__year">2024</span>
-                <span class="work__cta">View project &rarr;</span>
-              </div>
-            </a>
-          </li>
-        </ul>
+        <div class="about reveal">
+          <div class="about__portrait">
+            <img src="ra_mour.jpeg" alt="Ra Mour" />
+          </div>
+          <div class="about__text">
+            <p>
+              I'm a researcher, cognitive explorer, and experience architect.
+              I was born in the US and grew up in Medellín, Colombia. I
+              graduated from MIT, where I studied Computation and Cognition
+              as well as Theater Arts.
+            </p>
+            <p>
+              My mission is to investigate both the material and subjective
+              foundations of our world, and to apply that knowledge in the
+              service of compassionate intelligence, more joyful
+              human-computer interactions, and more effective psychiatry. I'm
+              open for work, artistic projects, and fun adventures.
+            </p>
+            <p>
+              I spend much of my time looking for links between realms of
+              abstraction — from fundamental mathematical and physical
+              realities, to the cognitive machinery we use to consider them,
+              to the philosophical principles that guide our thinking. I
+              aspire to tell beautiful and compelling stories about these
+              realms.
+            </p>
+            <p>
+              I speak English, Spanish, French, and Portuguese. I get along
+              very well with old people and babies. I'm obsessed with mangos,
+              spicy food, and guacamole.
+            </p>
+            <p class="about__note">
+              Scroll below to see what I love doing with my time — and watch
+              the episode <em>Zima Blue</em> of
+              <em>Love, Death &amp; Robots</em> for a beautiful depiction of
+              several ideas that fascinate me.
+            </p>
+          </div>
+        </div>
       </section>
 
-      <!-- ============ 02 — WRITING ============ -->
+      <!-- ============ 02 — WHAT I LOVE ============ -->
+      <section class="life" id="life">
+        <div class="life__label">
+          <p class="section__label reveal">02 — What I love</p>
+        </div>
+
+        <!-- Drop video files into media/ — see media/README.txt for expected names -->
+        <article class="scene">
+          <video
+            class="scene__video"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="media/dancing.jpg"
+          >
+            <source src="media/dancing.mp4" type="video/mp4" />
+          </video>
+          <div class="scene__scrim" aria-hidden="true"></div>
+          <div class="scene__caption reveal">
+            <p class="scene__index">01 / 03</p>
+            <h2 class="scene__title">Dancing</h2>
+            <p class="scene__text">
+              Skilled movement became essential during the pandemic. It began
+              as self-exploration — my body representing what my favorite
+              music made me feel. I gravitate to improvisation: freestyle
+              hip-hop, breaking, house, contemporary.
+            </p>
+          </div>
+        </article>
+
+        <article class="scene">
+          <video
+            class="scene__video"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="media/martial-arts.jpg"
+          >
+            <source src="media/martial-arts.mp4" type="video/mp4" />
+          </video>
+          <div class="scene__scrim" aria-hidden="true"></div>
+          <div class="scene__caption reveal">
+            <p class="scene__index">02 / 03</p>
+            <h2 class="scene__title">Martial arts</h2>
+            <p class="scene__text">
+              Kung Fu in Colombia at fourteen, Taekwondo after, then
+              Brazilian Jiu-Jitsu during the pandemic. Martial arts taught me
+              respect for one's opponents, humility, fortitude — and how to
+              remain calm under severe physical pressure.
+            </p>
+          </div>
+        </article>
+
+        <article class="scene">
+          <video
+            class="scene__video"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="media/meditation.jpg"
+          >
+            <source src="media/meditation.mp4" type="video/mp4" />
+          </video>
+          <div class="scene__scrim" aria-hidden="true"></div>
+          <div class="scene__caption reveal">
+            <p class="scene__index">03 / 03</p>
+            <h2 class="scene__title">Meditation</h2>
+            <p class="scene__text">
+              A practice that has shown me we can relate to subjective
+              experience in a way that promotes peace and mitigates
+              suffering. I've sat several silent retreats, including two
+              ten-day retreats in Massachusetts.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ 03 — WRITING ============ -->
       <section class="section section--abyss" id="writing">
-        <p class="section__label reveal">02 — Writing</p>
+        <p class="section__label reveal">03 — Writing</p>
 
         <!-- EDIT: Replace the three placeholder essays below with your own.
            Each entry needs: a title, a date, and a link (e.g. to the Substack post). -->
@@ -145,30 +221,8 @@
         </p>
       </section>
 
-      <!-- ============ 03 — ABOUT ============ -->
-      <section class="section" id="about">
-        <p class="section__label reveal">03 — About</p>
-
-        <div class="about reveal">
-          <div class="about__portrait" aria-hidden="true">
-            <!-- EDIT: replace this div's contents with <img src="..." alt="Ra Mour"> -->
-            <img src="ra_mour.jpeg" alt="Ra Mour" />
-            <!-- <span class="about__portrait-note">your photo</span> -->
-          </div>
-          <div class="about__text">
-            <!-- EDIT: replace this placeholder bio with your own (2–3 sentences). -->
-            <p>
-              Ra Mour is a designer and writer working at the meeting point of
-              image and language. Their practice turns research into form —
-              identities, print, and essays that take their time.
-            </p>
-            <p>Currently taking on select collaborations.</p>
-          </div>
-        </div>
-      </section>
-
       <!-- ============ 04 — CONTACT ============ -->
-      <section class="section section--abyss section--contact" id="contact">
+      <section class="section section--contact" id="contact">
         <p class="section__label reveal">04 — Contact</p>
 
         <div class="contact reveal">
@@ -186,17 +240,50 @@
               >
             </li>
             <li>
-              <a class="textlink" href="#" target="_blank" rel="noopener"
+              <a
+                class="textlink"
+                href="https://www.youtube.com/@Ra_Mour"
+                target="_blank"
+                rel="noopener"
+                >YouTube</a
+              >
+            </li>
+            <li>
+              <a
+                class="textlink"
+                href="https://www.instagram.com/ramour42/"
+                target="_blank"
+                rel="noopener"
                 >Instagram</a
               >
             </li>
-            <!-- EDIT: Instagram URL -->
             <li>
-              <a class="textlink" href="#" target="_blank" rel="noopener"
+              <a
+                class="textlink"
+                href="https://www.linkedin.com/in/ramour/"
+                target="_blank"
+                rel="noopener"
                 >LinkedIn</a
               >
             </li>
-            <!-- EDIT: LinkedIn URL -->
+            <li>
+              <a
+                class="textlink"
+                href="https://x.com/ramour42"
+                target="_blank"
+                rel="noopener"
+                >X</a
+              >
+            </li>
+            <li>
+              <a
+                class="textlink"
+                href="https://patreon.com/ramour"
+                target="_blank"
+                rel="noopener"
+                >Patreon</a
+              >
+            </li>
           </ul>
         </div>
       </section>
@@ -206,6 +293,6 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=2"></script>
   </body>
 </html>

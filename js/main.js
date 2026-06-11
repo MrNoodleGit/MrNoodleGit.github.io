@@ -47,6 +47,42 @@ if ("IntersectionObserver" in window && sections.length) {
   sections.forEach((section) => navObserver.observe(section));
 }
 
+/* ---------- full-bleed scene videos ---------- */
+
+document.querySelectorAll(".scene").forEach((scene) => {
+  const video = scene.querySelector(".scene__video");
+  if (!video) return;
+
+  const fail = () => scene.classList.add("scene--novideo");
+  video.addEventListener("error", fail);
+  const lastSource = video.querySelector("source:last-of-type");
+  if (lastSource) lastSource.addEventListener("error", fail);
+  // the load may already have failed before these listeners attached
+  if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) fail();
+
+  if (reducedMotion) return;
+
+  video.addEventListener("canplay", () => scene.classList.add("scene--ready"));
+
+  if ("IntersectionObserver" in window) {
+    const sceneObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.35 }
+    );
+    sceneObserver.observe(scene);
+  } else {
+    video.autoplay = true;
+  }
+});
+
 /* ---------- rising bubbles in the hero ---------- */
 
 const bubbleHost = document.querySelector(".hero__bubbles");
