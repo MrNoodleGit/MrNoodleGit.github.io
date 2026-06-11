@@ -2,6 +2,11 @@
 .claude/
 .DS_Store
 
+# original uncompressed videos (the site uses the compressed renames)
+media/bjj_rolling.mp4
+media/red_twist_short.mp4
+media/meditation_original.mp4
+
 # inspiration images (not used by the site)
 Longboard.jpeg
 zima-blue-disintegration.png
