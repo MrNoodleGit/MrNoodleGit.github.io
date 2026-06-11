@@ -143,20 +143,52 @@ a { color: inherit; text-decoration: none; }
 
 .hero__center { position: relative; text-align: center; }
 
+.hero__pool {
+  position: relative;
+  display: inline-block;
+  max-width: 92vw;
+  background: var(--zima);
+  padding: clamp(1.5rem, 5vh, 3.5rem) clamp(2rem, 7vw, 5.5rem);
+  box-shadow:
+    0 0 70px rgba(91, 194, 231, 0.45),
+    0 0 200px rgba(91, 194, 231, 0.22);
+  animation: pool-breathe 7s ease-in-out infinite;
+}
+
+/* faint sheen across the water's surface */
+.hero__pool::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 70% 0;
+  background: linear-gradient(to bottom, rgba(232, 240, 240, 0.14), transparent);
+  pointer-events: none;
+}
+
+@keyframes pool-breathe {
+  0%, 100% {
+    box-shadow:
+      0 0 60px rgba(91, 194, 231, 0.35),
+      0 0 160px rgba(91, 194, 231, 0.16);
+    filter: brightness(0.97);
+  }
+  50% {
+    box-shadow:
+      0 0 95px rgba(91, 194, 231, 0.6),
+      0 0 260px rgba(91, 194, 231, 0.3);
+    filter: brightness(1.06);
+  }
+}
+
 .hero__name {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(3rem, 11vw, 8.5rem);
+  font-size: clamp(1.8rem, 5vw, 3.75rem);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text);
-  text-shadow:
-    0 0 24px rgba(91, 194, 231, 0.45),
-    0 0 90px rgba(91, 194, 231, 0.25);
+  color: var(--ink);
 }
 
 .hero__tagline {
-  margin-top: 0.75rem;
+  margin-top: 2rem;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(1rem, 2.5vw, 1.5rem);
@@ -414,7 +446,7 @@ a { color: inherit; text-decoration: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .ray, .bubble, .hero__scrollcue::after { animation: none; }
+  .ray, .bubble, .hero__scrollcue::after, .hero__pool { animation: none; }
   .bubble { display: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
