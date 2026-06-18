@@ -344,6 +344,44 @@ a { color: inherit; text-decoration: none; }
   );
 }
 
+/* play hint — visible while a scene's video is paused, fades out on play */
+.scene__play {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  width: clamp(3.25rem, 7vw, 4.5rem);
+  height: clamp(3.25rem, 7vw, 4.5rem);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(91, 194, 231, 0.65);
+  border-radius: 50%;
+  background: rgba(2, 2, 2, 0.2);
+  color: var(--zima);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.scene__play svg {
+  width: 40%;
+  height: 40%;
+  fill: currentColor;
+  margin-left: 8%; /* optically centre the triangle */
+}
+
+.scene.is-paused .scene__play {
+  opacity: 1;
+  animation: hint-pulse 2.6s ease-in-out infinite;
+}
+
+.scene--novideo .scene__play { display: none; }
+
+@keyframes hint-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(91, 194, 231, 0); }
+  50% { box-shadow: 0 0 26px rgba(91, 194, 231, 0.5); }
+}
+
 .scene__caption {
   position: relative;
   width: 100%;
@@ -513,6 +551,7 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .ray, .bubble, .hero__scrollcue::after { animation: none; }
+  .scene.is-paused .scene__play { animation: none; }
   .bubble { display: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }

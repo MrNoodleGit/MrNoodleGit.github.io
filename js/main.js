@@ -68,6 +68,16 @@ document.querySelectorAll(".scene").forEach((scene) => {
     else video.pause();
   });
 
+  // play hint — shown while paused, fades out once the video plays
+  const hint = document.createElement("div");
+  hint.className = "scene__play";
+  hint.setAttribute("aria-hidden", "true");
+  hint.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>';
+  scene.appendChild(hint);
+  scene.classList.add("is-paused");
+  video.addEventListener("play", () => scene.classList.remove("is-paused"));
+  video.addEventListener("pause", () => scene.classList.add("is-paused"));
+
   if (reducedMotion) return;
 
   // set as properties (not just attributes) so programmatic play()
