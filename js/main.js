@@ -62,12 +62,18 @@ document.querySelectorAll(".scene").forEach((scene) => {
     if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) fail();
   });
 
+  // tap to play/pause — fallback when autoplay is blocked (e.g. Android Data Saver)
+  scene.addEventListener("click", () => {
+    if (video.paused) video.play().catch(() => {});
+    else video.pause();
+  });
+
   if (reducedMotion) return;
 
-  video.addEventListener("canplay", () => {
-    scene.classList.remove("scene--novideo");
-    scene.classList.add("scene--ready");
-  });
+  // set as properties (not just attributes) so programmatic play()
+  // satisfies mobile autoplay policies
+  video.muted = true;
+  video.playsInline = true;
 
   if ("IntersectionObserver" in window) {
     const sceneObserver = new IntersectionObserver(
