@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ra Mour — Waking Up en español</title>
+    <meta
+      name="description"
+      content="Traducciones al español del curso introductorio y las lecciones de la app Waking Up, por Ra Mour."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css?v=7" />
+    <link rel="stylesheet" href="css/waking-up.css?v=1" />
+  </head>
+  <body>
+    <header class="wu-header">
+      <a href="index.html">Ra Mour</a>
+    </header>
+
+    <section class="wu-intro">
+      <p class="wu-intro__label">Translation · Voice</p>
+      <h1>Waking Up · en español</h1>
+      <p>
+        Spanish translations and narration of the Waking Up app's
+        Introductory Course and theory lessons — Sam Harris's foundational
+        meditations and talks, carried into Spanish so that more people can
+        practice in their own language. Tap any track to listen.
+      </p>
+    </section>
+
+    <section class="collection">
+      <div class="collection__head">
+        <img
+          class="collection__cover"
+          src="media/waking-up/meditations-cover.png"
+          alt="Waking Up"
+        />
+        <div>
+          <h2 class="collection__title">Meditaciones</h2>
+          <p class="collection__sub">Curso introductorio · 14 sesiones</p>
+        </div>
+      </div>
+      <ol class="tracklist" id="meditations-list"></ol>
+    </section>
+
+    <section class="collection">
+      <div class="collection__head">
+        <img
+          class="collection__cover"
+          src="media/waking-up/lessons-cover.jpg"
+          alt="Lecciones"
+        />
+        <div>
+          <h2 class="collection__title">Lecciones</h2>
+          <p class="collection__sub">Teoría y práctica · 14 charlas</p>
+        </div>
+      </div>
+      <ol class="tracklist" id="lessons-list"></ol>
+    </section>
+
+    <noscript>
+      <p style="padding: 0 var(--pad); color: var(--muted)">
+        Enable JavaScript to play the audio sessions.
+      </p>
+    </noscript>
+
+    <footer class="wu-footer">
+      <p>&copy; 2026 Ra Mour · Traducciones de Waking Up</p>
+    </footer>
+
+    <div class="player" id="player" hidden>
+      <img class="player__cover" id="player-cover" src="" alt="" />
+      <div class="player__meta">
+        <span class="player__title" id="player-title"></span>
+        <span class="player__sub" id="player-sub"></span>
+      </div>
+      <div class="player__controls">
+        <button class="player__btn" id="prev" type="button" aria-label="Previous">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 6h2v12H7zM20 6v12l-9-6z" />
+          </svg>
+        </button>
+        <button class="player__btn player__play" id="playpause" type="button" aria-label="Play">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+        </button>
+        <button class="player__btn" id="next" type="button" aria-label="Next">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 6h2v12h-2zM4 6l9 6-9 6z" />
+          </svg>
+        </button>
+      </div>
+      <div class="player__seekwrap">
+        <span class="player__time" id="cur">0:00</span>
+        <input
+          class="player__seek"
+          id="seek"
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          step="1"
+          aria-label="Seek"
+        />
+        <span class="player__time" id="dur">0:00</span>
+      </div>
+      <audio id="audio" preload="none"></audio>
+    </div>
+
+    <script src="js/player.js?v=1"></script>
+  </body>
+</html>
