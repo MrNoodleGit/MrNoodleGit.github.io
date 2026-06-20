@@ -1,0 +1,319 @@
+/* ============================================================
+   Waking Up — Spanish translations page + audio player
+   Relies on :root variables and base styles from style.css
+   ============================================================ */
+
+.wu-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  padding: 1.25rem var(--pad);
+  background: linear-gradient(to bottom, rgba(2, 2, 2, 0.85), transparent);
+}
+
+.wu-header a {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--zima);
+  font-size: 0.95rem;
+}
+
+.wu-header a::before {
+  content: "← ";
+}
+
+.wu-intro {
+  padding: clamp(7rem, 18vh, 11rem) var(--pad) clamp(2rem, 6vh, 3.5rem);
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.wu-intro__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--zima);
+  margin-bottom: 1.25rem;
+}
+
+.wu-intro h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  letter-spacing: 0.03em;
+  margin-bottom: 1.25rem;
+}
+
+.wu-intro p {
+  max-width: 42rem;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+}
+
+/* ---------- collections ---------- */
+
+.collection {
+  padding: clamp(2.5rem, 7vh, 4.5rem) var(--pad);
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.collection__head {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.collection__cover {
+  width: clamp(4rem, 12vw, 6rem);
+  height: clamp(4rem, 12vw, 6rem);
+  object-fit: cover;
+  border: 1px solid var(--teal);
+  background: var(--abyss);
+  flex-shrink: 0;
+}
+
+.collection__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+}
+
+.collection__sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+}
+
+/* ---------- track list ---------- */
+
+.tracklist {
+  list-style: none;
+}
+
+.track {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2rem 1fr auto 1.6rem;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 0.5rem;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(20, 99, 111, 0.45);
+  color: var(--text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.25s, padding-left 0.25s;
+}
+
+.tracklist li:last-child .track {
+  border-bottom: 1px solid rgba(20, 99, 111, 0.45);
+}
+
+.track:hover {
+  background: rgba(20, 99, 111, 0.12);
+  padding-left: 0.9rem;
+}
+
+.track__n {
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.track__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.track__es {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+}
+
+.track__en {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.track__dur {
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.track__icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.25s, color 0.25s;
+}
+
+.track__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.track:hover .track__icon { opacity: 1; }
+
+.track.is-current { background: rgba(91, 194, 231, 0.08); }
+.track.is-current .track__es { color: var(--zima); }
+.track.is-current .track__n { color: var(--zima); }
+.track.is-current .track__icon { opacity: 1; color: var(--zima); }
+
+/* ---------- sticky player bar ---------- */
+
+.player {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  padding: 0.75rem var(--pad);
+  background: rgba(6, 23, 25, 0.96);
+  border-top: 1px solid rgba(20, 99, 111, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.player[hidden] { display: none; }
+
+.player__cover {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border: 1px solid var(--teal);
+  flex-shrink: 0;
+}
+
+.player__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  width: clamp(7rem, 22vw, 16rem);
+}
+
+.player__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.player__btn {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: color 0.25s, background 0.25s;
+}
+
+.player__btn svg { width: 1.5rem; height: 1.5rem; fill: currentColor; }
+.player__btn:hover { color: var(--zima); }
+
+.player__play {
+  border: 1px solid rgba(91, 194, 231, 0.6);
+  color: var(--zima);
+}
+.player__play:hover { background: rgba(91, 194, 231, 0.12); }
+
+.player__seekwrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.player__time {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.player__seek {
+  flex: 1;
+  min-width: 0;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(127, 168, 173, 0.35);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.player__seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--zima);
+  box-shadow: 0 0 8px rgba(91, 194, 231, 0.6);
+}
+
+.player__seek::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: none;
+  border-radius: 50%;
+  background: var(--zima);
+}
+
+/* leave room so the fixed player never covers the last track */
+.wu-footer {
+  padding: 2.5rem var(--pad) 7rem;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 40rem) {
+  .track { grid-template-columns: 1.5rem 1fr auto; gap: 0.85rem; }
+  .track__icon { display: none; }
+
+  .player { flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+  .player__meta { width: auto; flex: 1; order: 1; }
+  .player__controls { order: 2; }
+  .player__seekwrap { order: 3; width: 100%; flex-basis: 100%; }
+}

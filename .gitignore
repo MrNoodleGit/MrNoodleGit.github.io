@@ -7,6 +7,9 @@ media/bjj_rolling.mp4
 media/red_twist_short.mp4
 media/meditation_original.mp4
 
+# Waking Up source WAVs (~4GB; the site uses the compressed mp3s in media/waking-up/)
+media/waking-up-portfolio-media/
+
 # inspiration images (not used by the site)
 Longboard.jpeg
 zima-blue-disintegration.png

@@ -447,6 +447,70 @@ a { color: inherit; text-decoration: none; }
 
 .essays__more { margin-top: 3rem; }
 
+/* ---------- waking-up feature card (homepage) ---------- */
+
+.wu-feature {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  margin-top: 3.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(20, 99, 111, 0.55);
+  background: rgba(2, 2, 2, 0.25);
+  transition: border-color 0.4s, background 0.4s;
+}
+
+.wu-feature:hover {
+  border-color: var(--zima);
+  background: rgba(20, 99, 111, 0.12);
+}
+
+.wu-feature__cover {
+  width: clamp(5rem, 16vw, 8rem);
+  height: clamp(5rem, 16vw, 8rem);
+  object-fit: cover;
+  border: 1px solid var(--teal);
+  flex-shrink: 0;
+}
+
+.wu-feature__kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--zima);
+  margin-bottom: 0.6rem;
+}
+
+.wu-feature__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin-bottom: 0.5rem;
+}
+
+.wu-feature__desc {
+  color: var(--muted);
+  max-width: 34rem;
+  margin-bottom: 0.85rem;
+}
+
+.wu-feature__cta {
+  color: var(--zima);
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(91, 194, 231, 0.35);
+  padding-bottom: 0.15em;
+  transition: border-color 0.3s, text-shadow 0.3s;
+}
+
+.wu-feature:hover .wu-feature__cta {
+  border-color: var(--zima);
+  text-shadow: 0 0 20px rgba(91, 194, 231, 0.5);
+}
+
+@media (max-width: 40rem) {
+  .wu-feature { flex-direction: column; align-items: flex-start; text-align: left; }
+}
+
 .textlink {
   color: var(--zima);
   padding-bottom: 0.2em;
