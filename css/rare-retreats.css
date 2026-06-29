@@ -228,6 +228,10 @@
   color: var(--zima);
 }
 
+.rr-subscribe {
+  max-width: 100%;
+}
+
 /* ---------- keyframes ---------- */
 
 @keyframes rr-spin {
