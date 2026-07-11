@@ -96,3 +96,7 @@
 ---
 
 > Magic is faith in fun.
+
+---
+
+> Technology can make us forget what we know about life
