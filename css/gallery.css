@@ -1,0 +1,220 @@
+/* ============================================================
+   Gallery — "dim gallery" room: warm near-black, amber accents.
+   Relies on :root variables + base styles from style.css
+   ============================================================ */
+
+.gallery {
+  --g-bg: #151210;
+  --g-panel: #1d1815;
+  --g-amber: #d9a441;
+  --g-text: #ede4d4;
+  --g-muted: #9c8e7a;
+
+  background: var(--g-bg);
+  color: var(--g-text);
+}
+
+.gallery ::selection { background: var(--g-amber); color: var(--g-bg); }
+
+/* ---------- back link ---------- */
+
+.gal-back {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  padding: 1.25rem var(--pad);
+  background: linear-gradient(to bottom, rgba(21, 18, 16, 0.9), transparent);
+}
+
+.gal-back a {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--g-amber);
+  font-size: 0.95rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.gal-back a::before { content: "← "; }
+
+.gal-back a:hover {
+  color: #f4e3bc;
+  text-shadow: 0 0 18px rgba(217, 164, 65, 0.55);
+}
+
+/* ---------- intro ---------- */
+
+.gal-intro {
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: clamp(6.5rem, 16vh, 10rem) var(--pad) clamp(2rem, 5vh, 3.5rem);
+}
+
+.gal-intro h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--g-amber);
+}
+
+/* ---------- masonry wall ---------- */
+
+.wall {
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 var(--pad) clamp(4rem, 10vh, 7rem);
+  columns: 3;
+  column-gap: 1.25rem;
+}
+
+@media (max-width: 64rem) { .wall { columns: 2; } }
+@media (max-width: 40rem) { .wall { columns: 1; } }
+
+.wall__item {
+  display: block;
+  width: 100%;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  position: relative;
+  break-inside: avoid;
+  border: 1px solid rgba(217, 164, 65, 0.16);
+  background: var(--g-panel);
+  cursor: zoom-in;
+  font: inherit;
+  text-align: left;
+  transition: border-color 0.4s, box-shadow 0.4s;
+}
+
+.wall__item:hover,
+.wall__item:focus-visible {
+  border-color: rgba(217, 164, 65, 0.55);
+  box-shadow: 0 0 32px rgba(217, 164, 65, 0.12);
+  outline: none;
+}
+
+.wall__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- interspersed quotes (from quotes.md) ---------- */
+
+.wall-quote {
+  break-inside: avoid;
+  margin: 0 0 1.25rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 2.5vw, 1.9rem);
+  border: 1px solid rgba(217, 164, 65, 0.16);
+  background: var(--g-panel);
+}
+
+.wall-quote__text {
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--g-text);
+  white-space: pre-line;
+}
+
+.wall-quote__text::before {
+  content: "“";
+  display: block;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--g-amber);
+  margin-bottom: 0.4rem;
+}
+
+.wall-quote__attr {
+  margin-top: 0.9rem;
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--g-amber);
+}
+
+.wall__error {
+  column-span: all;
+  color: var(--g-muted);
+  padding: 2rem 0;
+}
+
+.wall__error a { color: var(--g-amber); }
+
+.gal-note {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--pad) 3rem;
+  color: var(--g-muted);
+}
+
+/* ---------- lightbox ---------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(10, 8, 6, 0.95);
+  cursor: zoom-out;
+}
+
+.lightbox[hidden] { display: none; }
+
+.lightbox__figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: default;
+}
+
+.lightbox__img {
+  max-width: min(94vw, 80rem);
+  max-height: 82vh;
+  object-fit: contain;
+  border: 1px solid rgba(217, 164, 65, 0.25);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 0.9rem;
+  right: 1.3rem;
+  background: none;
+  border: none;
+  color: var(--g-amber);
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.lightbox__close:hover {
+  color: #f4e3bc;
+  text-shadow: 0 0 18px rgba(217, 164, 65, 0.55);
+}
+
+/* ---------- footer ---------- */
+
+.gal-footer {
+  padding: 2.5rem var(--pad);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--g-muted);
+  text-align: center;
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .wall__item { transition: none; }
+}
