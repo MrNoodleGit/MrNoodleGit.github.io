@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ra Mour — Music</title>
+    <meta
+      name="description"
+      content="Songs and playlists Ra Mour keeps returning to."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css?v=17" />
+    <link rel="stylesheet" href="css/music.css?v=1" />
+  </head>
+  <body class="music">
+    <header class="music-back">
+      <a href="index.html">Ra Mour</a>
+    </header>
+
+    <section class="music-intro">
+      <h1>Music</h1>
+      <p>Songs and playlists I keep returning to.</p>
+    </section>
+
+    <!-- Filled by js/music.js from music.md (template inside) —
+       add a track or playlist entry there and it appears here. -->
+    <div class="music-grid" id="music-grid" aria-live="polite"></div>
+
+    <noscript>
+      <p class="gal-note" style="max-width: var(--measure); margin: 0 auto; padding: 0 var(--pad) 3rem; color: var(--muted);">
+        Enable JavaScript to view the recommendations.
+      </p>
+    </noscript>
+
+    <footer class="music-footer">
+      <p>&copy; 2026 Ra Mour</p>
+    </footer>
+
+    <script src="js/music.js?v=1"></script>
+  </body>
+</html>
