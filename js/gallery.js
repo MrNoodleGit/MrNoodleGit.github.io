@@ -46,10 +46,21 @@ const lightboxImg = document.getElementById("lightbox-img");
 const lightboxClose = document.getElementById("lightbox-close");
 let lastFocus = null;
 
-function openLightbox(src, alt) {
-  lastFocus = document.activeElement;
+// every image in wall order, so the lightbox can step through them
+// with the arrow keys regardless of the quote tiles interspersed
+const lightboxImages = [];
+let lightboxIndex = -1;
+
+function showLightboxImage(index) {
+  lightboxIndex = (index + lightboxImages.length) % lightboxImages.length;
+  const { src, alt } = lightboxImages[lightboxIndex];
   lightboxImg.src = src;
   lightboxImg.alt = alt;
+}
+
+function openLightbox(index) {
+  lastFocus = document.activeElement;
+  showLightboxImage(index);
   lightbox.hidden = false;
   document.body.style.overflow = "hidden";
   lightboxClose.focus();
@@ -67,7 +78,10 @@ lightbox.addEventListener("click", (e) => {
   if (!e.target.closest(".lightbox__figure")) closeLightbox();
 });
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !lightbox.hidden) closeLightbox();
+  if (lightbox.hidden) return;
+  if (e.key === "Escape") closeLightbox();
+  else if (e.key === "ArrowLeft") showLightboxImage(lightboxIndex - 1);
+  else if (e.key === "ArrowRight") showLightboxImage(lightboxIndex + 1);
 });
 
 /* ---------- render ---------- */
@@ -75,6 +89,7 @@ document.addEventListener("keydown", (e) => {
 function imageTile(name) {
   const alt = galleryAltFrom(name);
   const src = gallerySrc(name);
+  const index = lightboxImages.push({ src, alt }) - 1;
 
   const item = document.createElement("button");
   item.type = "button";
@@ -88,7 +103,7 @@ function imageTile(name) {
   img.decoding = "async";
 
   item.appendChild(img);
-  item.addEventListener("click", () => openLightbox(src, alt));
+  item.addEventListener("click", () => openLightbox(index));
   return item;
 }
 
