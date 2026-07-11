@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=14" />
+    <link rel="stylesheet" href="css/style.css?v=16" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -306,6 +306,19 @@
             </p>
           </div>
         </article>
+      </section>
+
+      <!-- ============ GALLERY PREVIEW ============ -->
+      <section class="section gallery-preview" id="gallery-preview">
+        <p class="section__label reveal">Gallery</p>
+
+        <!-- Filled by js/gallery-preview.js with a random pick from
+           media/art-gallery/ on every visit. -->
+        <div class="gallery-preview__collage reveal" id="gallery-preview-collage"></div>
+
+        <p class="gallery-preview__cta reveal">
+          <a class="textlink" href="gallery.html">View the full gallery &rarr;</a>
+        </p>
       </section>
 
       <!-- ============ 04 — WORK (hidden) ============ -->
@@ -620,5 +633,7 @@
     </footer>
 
     <script src="js/main.js?v=6"></script>
+    <script src="js/gallery-discovery.js?v=1"></script>
+    <script src="js/gallery-preview.js?v=1"></script>
   </body>
 </html>
