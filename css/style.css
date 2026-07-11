@@ -387,7 +387,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.8rem;
 }
 
-/* ---------- life: full-bleed video scenes ---------- */
+/* ---------- life: single frame, horizontal toggle ---------- */
 
 .life__label {
   padding: clamp(5rem, 12vh, 9rem) var(--pad) clamp(2.5rem, 6vh, 4rem);
@@ -399,20 +399,34 @@ a { color: inherit; text-decoration: none; }
   margin-right: auto;
 }
 
-.scene {
+.lifeframe {
   position: relative;
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
   /* fallback backdrop until a video loads — same light-from-above as the hero */
   background:
     radial-gradient(120% 70% at 50% -10%, rgba(20, 99, 111, 0.4), transparent 60%),
     var(--ink);
 }
 
-.scene__video {
+.lifeframe__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+}
+
+.lifeframe__slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.lifeframe__video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -423,9 +437,7 @@ a { color: inherit; text-decoration: none; }
   opacity: 0.85;
 }
 
-.scene--novideo .scene__video { display: none; }
-
-.scene__scrim {
+.lifeframe__scrim {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -436,8 +448,8 @@ a { color: inherit; text-decoration: none; }
   );
 }
 
-/* play hint — visible while a scene's video is paused, fades out on play */
-.scene__play {
+/* play hint — visible while the active slide's video is paused */
+.lifeframe__play {
   position: absolute;
   left: 50%;
   top: 44%;
@@ -453,43 +465,42 @@ a { color: inherit; text-decoration: none; }
   opacity: 0;
   transition: opacity 0.6s ease;
   pointer-events: none;
+  z-index: 2;
 }
 
-.scene__play svg {
+.lifeframe__play svg {
   width: 40%;
   height: 40%;
   fill: currentColor;
   margin-left: 8%; /* optically centre the triangle */
 }
 
-.scene.is-paused .scene__play {
+.lifeframe.is-paused .lifeframe__play {
   opacity: 1;
   animation: hint-pulse 2.6s ease-in-out infinite;
 }
-
-.scene--novideo .scene__play { display: none; }
 
 @keyframes hint-pulse {
   0%, 100% { box-shadow: 0 0 0 rgba(91, 194, 231, 0); }
   50% { box-shadow: 0 0 26px rgba(91, 194, 231, 0.5); }
 }
 
-.scene__caption {
+.lifeframe__caption {
   position: relative;
   width: 100%;
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 0 var(--pad) clamp(3rem, 10vh, 6rem);
+  padding: 0 var(--pad) clamp(5.5rem, 15vh, 9rem);
 }
 
-.scene__index {
+.lifeframe__index {
   font-size: 0.8rem;
   letter-spacing: 0.3em;
   color: var(--zima);
   margin-bottom: 1rem;
 }
 
-.scene__title {
+.lifeframe__title {
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(2.4rem, 6vw, 4.5rem);
@@ -497,11 +508,66 @@ a { color: inherit; text-decoration: none; }
   color: var(--text);
 }
 
-.scene__text {
+.lifeframe__text {
   margin-top: 1rem;
   max-width: 36rem;
   color: var(--muted);
   font-size: clamp(1rem, 1.8vw, 1.2rem);
+}
+
+/* ---------- life: nav (arrows + dots) ---------- */
+
+.lifeframe__nav {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.75rem, 5vh, 3rem);
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.lifeframe__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(91, 194, 231, 0.45);
+  border-radius: 50%;
+  background: rgba(2, 2, 2, 0.3);
+  color: var(--zima);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.lifeframe__arrow svg { width: 0.85rem; height: 0.85rem; }
+
+.lifeframe__arrow:hover {
+  border-color: var(--zima);
+  box-shadow: 0 0 18px rgba(91, 194, 231, 0.35);
+}
+
+.lifeframe__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.lifeframe__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  border: 1px solid var(--muted);
+  background: transparent;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.lifeframe__dot:hover { border-color: var(--zima); }
+
+.lifeframe__dot.is-active {
+  background: var(--zima);
+  border-color: var(--zima);
+  transform: scale(1.2);
 }
 
 /* ---------- gallery preview (homepage) ---------- */
@@ -746,7 +812,8 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .ray, .bubble, .hero__scrollcue::after { animation: none; }
-  .scene.is-paused .scene__play { animation: none; }
+  .lifeframe.is-paused .lifeframe__play { animation: none; }
+  .lifeframe__slide { transition: none; }
   .bubble { display: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }

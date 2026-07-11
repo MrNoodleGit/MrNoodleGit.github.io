@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=16" />
+    <link rel="stylesheet" href="css/style.css?v=17" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -233,79 +233,169 @@
         </div>
 
         <!-- Drop video files into media/ — see media/README.txt for expected names -->
-        <article class="scene">
-          <video
-            class="scene__video"
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster="media/dancing.jpg"
+        <div
+          class="lifeframe"
+          id="lifeframe"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Life"
+        >
+          <div
+            class="lifeframe__slide is-active"
+            data-index="0"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="1 of 3: Dancing"
           >
-            <source src="media/dancing.mp4?v=2" type="video/mp4" />
-          </video>
-          <div class="scene__scrim" aria-hidden="true"></div>
-          <div class="scene__caption reveal">
-            <p class="scene__index">01 / 03</p>
-            <h2 class="scene__title">Dancing</h2>
-            <p class="scene__text">
-              Skilled movement became an essential part of my life during the
-              pandemic. I've since participated in a variety of workshops and
-              dance studios around the world. I'm especially interested in
-              improvisational genres, such as freestyle hiphop, breaking, house,
-              and contemporary.
-            </p>
+            <video
+              class="lifeframe__video"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="media/dancing.jpg"
+            >
+              <source src="media/dancing.mp4?v=2" type="video/mp4" />
+            </video>
+            <div class="lifeframe__scrim" aria-hidden="true"></div>
+            <div class="lifeframe__caption">
+              <p class="lifeframe__index">01 / 03</p>
+              <h2 class="lifeframe__title">Dancing</h2>
+              <p class="lifeframe__text">
+                Skilled movement became an essential part of my life during the
+                pandemic. I've since participated in a variety of workshops and
+                dance studios around the world. I'm especially interested in
+                improvisational genres, such as freestyle hiphop, breaking, house,
+                and contemporary.
+              </p>
+            </div>
           </div>
-        </article>
 
-        <article class="scene">
-          <video
-            class="scene__video"
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster="media/martial-arts.jpg"
+          <div
+            class="lifeframe__slide"
+            data-index="1"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="2 of 3: Martial arts"
+            aria-hidden="true"
           >
-            <source src="media/martial-arts.mp4?v=2" type="video/mp4" />
-          </video>
-          <div class="scene__scrim" aria-hidden="true"></div>
-          <div class="scene__caption reveal">
-            <p class="scene__index">02 / 03</p>
-            <h2 class="scene__title">Martial arts</h2>
-            <p class="scene__text">
-              For me, martial arts represents respect for one's opponents,
-              humility, fortitude, and elegance. They have taught me how to
-              remain calm under severe physical pressure, how to learn with and
-              teach people of every skill level, and how to handle distress by
-              challenging one's body and embracing discomfort.
-            </p>
+            <video
+              class="lifeframe__video"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="media/martial-arts.jpg"
+            >
+              <source src="media/martial-arts.mp4?v=2" type="video/mp4" />
+            </video>
+            <div class="lifeframe__scrim" aria-hidden="true"></div>
+            <div class="lifeframe__caption">
+              <p class="lifeframe__index">02 / 03</p>
+              <h2 class="lifeframe__title">Martial arts</h2>
+              <p class="lifeframe__text">
+                For me, martial arts represents respect for one's opponents,
+                humility, fortitude, and elegance. They have taught me how to
+                remain calm under severe physical pressure, how to learn with and
+                teach people of every skill level, and how to handle distress by
+                challenging one's body and embracing discomfort.
+              </p>
+            </div>
           </div>
-        </article>
 
-        <article class="scene">
-          <video
-            class="scene__video"
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster="media/meditation.jpg"
+          <div
+            class="lifeframe__slide"
+            data-index="2"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="3 of 3: Meditation"
+            aria-hidden="true"
           >
-            <source src="media/meditation.mp4?v=2" type="video/mp4" />
-          </video>
-          <div class="scene__scrim" aria-hidden="true"></div>
-          <div class="scene__caption reveal">
-            <p class="scene__index">03 / 03</p>
-            <h2 class="scene__title">Meditation</h2>
-            <p class="scene__text">
-              Mediation is an enormous aspect of my life. It has shown me that
-              we can cultivate a way of relating to our subjective experience
-              that promotes peace and mitigates suffering. I’ve had the
-              privilege of attending several silent 10-day retreats.
-            </p>
+            <video
+              class="lifeframe__video"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="media/meditation.jpg"
+            >
+              <source src="media/meditation.mp4?v=2" type="video/mp4" />
+            </video>
+            <div class="lifeframe__scrim" aria-hidden="true"></div>
+            <div class="lifeframe__caption">
+              <p class="lifeframe__index">03 / 03</p>
+              <h2 class="lifeframe__title">Meditation</h2>
+              <p class="lifeframe__text">
+                Mediation is an enormous aspect of my life. It has shown me that
+                we can cultivate a way of relating to our subjective experience
+                that promotes peace and mitigates suffering. I’ve had the
+                privilege of attending several silent 10-day retreats.
+              </p>
+            </div>
           </div>
-        </article>
+
+          <div class="lifeframe__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+          </div>
+
+          <div class="lifeframe__nav">
+            <button
+              class="lifeframe__arrow"
+              type="button"
+              data-dir="-1"
+              aria-label="Previous scene"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M15 4 7 12l8 8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div class="lifeframe__dots">
+              <button
+                class="lifeframe__dot is-active"
+                type="button"
+                data-index="0"
+                aria-label="Show slide 1: Dancing"
+                aria-current="true"
+              ></button>
+              <button
+                class="lifeframe__dot"
+                type="button"
+                data-index="1"
+                aria-label="Show slide 2: Martial arts"
+              ></button>
+              <button
+                class="lifeframe__dot"
+                type="button"
+                data-index="2"
+                aria-label="Show slide 3: Meditation"
+              ></button>
+            </div>
+            <button
+              class="lifeframe__arrow"
+              type="button"
+              data-dir="1"
+              aria-label="Next scene"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M9 4l8 8-8 8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </section>
 
       <!-- ============ GALLERY PREVIEW ============ -->
@@ -632,7 +722,8 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
-    <script src="js/main.js?v=6"></script>
+    <script src="js/main.js?v=7"></script>
+    <script src="js/lifeframe.js?v=1"></script>
     <script src="js/gallery-discovery.js?v=1"></script>
     <script src="js/gallery-preview.js?v=1"></script>
   </body>

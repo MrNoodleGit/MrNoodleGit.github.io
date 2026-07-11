@@ -47,63 +47,6 @@ if ("IntersectionObserver" in window && sections.length) {
   sections.forEach((section) => navObserver.observe(section));
 }
 
-/* ---------- full-bleed scene videos ---------- */
-
-document.querySelectorAll(".scene").forEach((scene) => {
-  const video = scene.querySelector(".scene__video");
-  if (!video) return;
-
-  const fail = () => scene.classList.add("scene--novideo");
-  video.addEventListener("error", fail);
-  const lastSource = video.querySelector("source:last-of-type");
-  if (lastSource) lastSource.addEventListener("error", fail);
-  // networkState is unreliable mid-parse; check once everything has settled
-  window.addEventListener("load", () => {
-    if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) fail();
-  });
-
-  // tap to play/pause — fallback when autoplay is blocked (e.g. Android Data Saver)
-  scene.addEventListener("click", () => {
-    if (video.paused) video.play().catch(() => {});
-    else video.pause();
-  });
-
-  // play hint — shown while paused, fades out once the video plays
-  const hint = document.createElement("div");
-  hint.className = "scene__play";
-  hint.setAttribute("aria-hidden", "true");
-  hint.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>';
-  scene.appendChild(hint);
-  scene.classList.add("is-paused");
-  video.addEventListener("play", () => scene.classList.remove("is-paused"));
-  video.addEventListener("pause", () => scene.classList.add("is-paused"));
-
-  if (reducedMotion) return;
-
-  // set as properties (not just attributes) so programmatic play()
-  // satisfies mobile autoplay policies
-  video.muted = true;
-  video.playsInline = true;
-
-  if ("IntersectionObserver" in window) {
-    const sceneObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
-        }
-      },
-      { threshold: 0.35 }
-    );
-    sceneObserver.observe(scene);
-  } else {
-    video.autoplay = true;
-  }
-});
-
 /* ---------- rising bubbles in the hero ---------- */
 
 const bubbleHost = document.querySelector(".hero__bubbles");
