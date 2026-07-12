@@ -67,7 +67,6 @@
 }
 
 .music-card__note {
-  font-style: italic;
   font-size: 0.95rem;
   color: var(--text);
   margin-bottom: 0.9rem;

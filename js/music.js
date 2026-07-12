@@ -45,7 +45,7 @@ function parseMusic(md) {
 
 async function listMusic() {
   try {
-    const res = await fetch("music.md");
+    const res = await fetch("music.md", { cache: "no-store" });
     if (!res.ok) return [];
     return parseMusic(await res.text());
   } catch {
