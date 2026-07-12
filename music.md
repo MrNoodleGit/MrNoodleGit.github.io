@@ -25,4 +25,4 @@ track: 7zHd9LxIZB8WKosSWN9Umj
 Spiegel im Spiegel. Returned to more than almost any other piece — mirror in the mirror, still water. -->
 
 playlist: https://open.spotify.com/playlist/0Y2tvr6S0WDXgtJYu9OoTc?si=c7881a7cfb5748bc
-One hour of pure, delightful focus. Perfect for a sunny day sitting infront of a large window at a library or coffee shop. It never gets old.
+One hour of pure, delightful focus. Perfect for a sunny day sitting infront of a large window at a library or coffee shop. This one never gets old.
