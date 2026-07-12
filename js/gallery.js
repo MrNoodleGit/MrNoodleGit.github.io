@@ -167,5 +167,5 @@ Promise.all([discoverGalleryImages(), listQuotes()])
   })
   .catch(() => {
     document.getElementById("wall").innerHTML =
-      '<p class="wall__error">The gallery couldn’t be loaded right now. <a href="index.html">Back home</a>.</p>';
+      '<p class="wall__error">The altar couldn’t be loaded right now. <a href="index.html">Back home</a>.</p>';
   });

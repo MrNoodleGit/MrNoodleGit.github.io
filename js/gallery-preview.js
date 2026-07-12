@@ -16,7 +16,7 @@ function collageItem(name, featured) {
     ? "gallery-preview__item gallery-preview__item--featured"
     : "gallery-preview__item";
   a.href = "gallery.html";
-  a.setAttribute("aria-label", "View the full gallery");
+  a.setAttribute("aria-label", "View the full altar");
 
   const img = document.createElement("img");
   img.src = gallerySrc(name);
