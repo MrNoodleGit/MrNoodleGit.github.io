@@ -99,4 +99,8 @@
 
 ---
 
-> Technology can make us forget what we know about life
+> Technology can make us forget what we know about life.
+
+---
+
+> No hay mal que dure cien años, ni cuerpo que lo resista.
