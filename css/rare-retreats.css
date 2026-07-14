@@ -1,6 +1,6 @@
 /* ============================================================
    RARE. Retreats — placeholder page
-   Fullscreen black hole with a "strange loop" at its core.
+   A large framed painting hangs on a gilded, glowing gallery wall.
    Relies on :root variables + base styles from style.css
    ============================================================ */
 
@@ -42,186 +42,112 @@
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  display: grid;
-  place-items: center;
-  perspective: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  padding: 6rem 4vw 2.5rem;
+  box-sizing: border-box;
   background:
-    radial-gradient(130% 100% at 50% 46%, rgba(20, 99, 111, 0.16), transparent 62%),
-    #000;
+    radial-gradient(120% 90% at 50% 30%, rgba(120, 88, 34, 0.16), transparent 60%),
+    linear-gradient(to bottom, #14100b 0%, #0a0806 68%, #050403 100%);
 }
 
-/* faint, slowly twinkling starfield */
-.rr-stars {
+/* faint floor line grounding the gallery wall */
+.rr-scene::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(1.4px 1.4px at 12% 22%, #ffffff, transparent),
-    radial-gradient(1.2px 1.2px at 82% 16%, #cfeefb, transparent),
-    radial-gradient(1px 1px at 67% 34%, #ffffff, transparent),
-    radial-gradient(1.3px 1.3px at 28% 68%, #d6f7ff, transparent),
-    radial-gradient(1px 1px at 91% 71%, #ffffff, transparent),
-    radial-gradient(1.1px 1.1px at 45% 88%, #bfe7f5, transparent),
-    radial-gradient(1px 1px at 8% 84%, #ffffff, transparent),
-    radial-gradient(1.2px 1.2px at 58% 8%, #ffffff, transparent),
-    radial-gradient(1px 1px at 73% 92%, #cfeefb, transparent),
-    radial-gradient(1.1px 1.1px at 36% 14%, #ffffff, transparent),
-    radial-gradient(1px 1px at 20% 47%, #d6f7ff, transparent),
-    radial-gradient(1.2px 1.2px at 95% 44%, #ffffff, transparent);
-  opacity: 0.55;
-  animation: rr-twinkle 7s ease-in-out infinite;
+  inset: auto 0 0 0;
+  height: 22%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  pointer-events: none;
 }
 
-/* ---------- the black hole ---------- */
+/* ---------- the framed painting ---------- */
 
-.rr-hole {
-  --s: min(64vmin, 600px);
+.rr-gallery {
   position: relative;
-  width: var(--s);
-  height: var(--s);
-  transform-style: preserve-3d;
-  margin-bottom: 14vh; /* lift above centre so the copy sits below */
+  flex: 1 1 auto;
+  min-height: 0;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  justify-content: center;
 }
 
-.rr-hole > * {
+/* ambient golden glow bleeding onto the wall around the frame */
+.rr-halo {
   position: absolute;
-  border-radius: 50%;
-}
-
-/* gravitational glow bleeding into space */
-.rr-glow {
-  inset: -55%;
+  inset: -18% -55%;
   background: radial-gradient(
-    circle at 50% 50%,
-    rgba(91, 194, 231, 0.3),
-    rgba(20, 99, 111, 0.12) 34%,
-    transparent 64%
+    ellipse at 50% 42%,
+    rgba(217, 164, 65, 0.32),
+    rgba(217, 164, 65, 0.1) 42%,
+    transparent 70%
   );
-  filter: blur(18px);
+  filter: blur(24px);
   animation: rr-breathe 8s ease-in-out infinite;
 }
 
-/* tilted, spinning accretion disk */
-.rr-disk {
-  inset: -16%;
-  background: conic-gradient(
-    from 0deg,
-    rgba(91, 194, 231, 0) 0deg,
-    rgba(91, 194, 231, 0.85) 55deg,
-    rgba(214, 247, 255, 1) 92deg,
-    rgba(91, 194, 231, 0.55) 150deg,
-    rgba(20, 99, 111, 0.12) 232deg,
-    rgba(91, 194, 231, 0.7) 320deg,
-    rgba(91, 194, 231, 0) 360deg
+/* the gilded frame */
+.rr-frame {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 1.1rem;
+  box-sizing: border-box;
+  background: linear-gradient(
+    155deg,
+    #8a6a29 0%,
+    #f5dfa0 16%,
+    #b68a3e 32%,
+    #f8e8b8 48%,
+    #a17c34 64%,
+    #f5dfa0 82%,
+    #7c5a22 100%
   );
-  -webkit-mask: radial-gradient(
-    circle,
-    transparent 0 30%,
-    #000 37% 58%,
-    transparent 66%
-  );
-  mask: radial-gradient(
-    circle,
-    transparent 0 30%,
-    #000 37% 58%,
-    transparent 66%
-  );
-  filter: blur(3px) brightness(1.08);
-  animation: rr-spin 16s linear infinite;
-}
-
-/* bright photon ring hugging the horizon */
-.rr-ring {
-  inset: 15%;
-  border: 1px solid rgba(224, 248, 255, 0.9);
   box-shadow:
-    0 0 3px 1px rgba(224, 248, 255, 0.85),
-    0 0 22px 5px rgba(91, 194, 231, 0.6),
-    inset 0 0 16px 3px rgba(91, 194, 231, 0.4);
+    0 0 46px 10px rgba(217, 164, 65, 0.45),
+    0 0 110px 34px rgba(217, 164, 65, 0.22),
+    0 26px 50px rgba(0, 0, 0, 0.75);
+  animation: rr-frame-glow 6s ease-in-out infinite;
 }
 
-/* event horizon */
-.rr-horizon {
-  inset: 21%;
-  background: radial-gradient(circle at 50% 50%, #000 58%, #04070a 100%);
-  box-shadow:
-    inset 0 0 24px 6px #000,
-    0 0 34px 10px rgba(0, 0, 0, 0.92);
+.rr-frame__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 35%;
+  box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.5);
 }
 
-/* strange loop, part 1 — rings receding endlessly into the core */
-.rr-rec {
-  inset: 21%;
-  border: 1px solid rgba(91, 194, 231, 0.45);
-  box-shadow: 0 0 8px rgba(91, 194, 231, 0.3);
-  animation: rr-recede 6s linear infinite;
-}
-
-.rr-rec:nth-child(6) { animation-delay: -1.5s; }
-.rr-rec:nth-child(7) { animation-delay: -3s; }
-.rr-rec:nth-child(8) { animation-delay: -4.5s; }
-
-/* strange loop, part 2 — an endless figure-eight of light */
-.rr-loop {
-  inset: 0;
-  margin: auto;
-  width: 44%;
-  height: 44%;
-  overflow: visible;
-  filter: drop-shadow(0 0 6px rgba(91, 194, 231, 0.85));
-  animation: rr-loop-turn 30s linear infinite;
-}
-
-.rr-loop__path {
-  fill: none;
-  stroke: #e0f8ff;
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-dasharray: 13 11;
-  animation: rr-flow 2.6s linear infinite;
+/* soft contact shadow grounding the frame on the wall/floor */
+.rr-frame__shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -6%;
+  width: 78%;
+  height: 14%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55), transparent 72%);
+  filter: blur(4px);
 }
 
 /* ---------- foreground copy ---------- */
 
-.rr-scrim {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 48%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 12%, transparent);
-  pointer-events: none;
-  z-index: 4;
-}
-
 .rr-copy {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(2.5rem, 9vh, 6rem);
-  transform: translateX(-50%);
+  position: relative;
+  flex: 0 0 auto;
   width: min(90%, 46rem);
   text-align: center;
   z-index: 5;
 }
 
-.rr-title {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2.3rem, 6.5vw, 4.75rem);
-  letter-spacing: 0.06em;
-  color: var(--text);
-  text-shadow: 0 0 30px rgba(91, 194, 231, 0.4);
-}
-
-.rr-dot { color: var(--crimson); }
-
-.rr-sub {
-  margin: 1.15rem auto 0;
-  max-width: 38rem;
-  font-size: clamp(1.02rem, 2vw, 1.3rem);
-  line-height: 1.6;
-  color: var(--muted);
-}
-
 .rr-soon {
-  margin-top: 1.7rem;
   font-size: 0.78rem;
   letter-spacing: 0.34em;
   text-transform: uppercase;
@@ -234,51 +160,37 @@
 
 /* ---------- keyframes ---------- */
 
-@keyframes rr-spin {
-  from { transform: rotateX(74deg) rotateZ(0deg); }
-  to   { transform: rotateX(74deg) rotateZ(360deg); }
-}
-
 @keyframes rr-breathe {
   0%, 100% { opacity: 0.75; transform: scale(1); }
   50%      { opacity: 1; transform: scale(1.05); }
 }
 
-@keyframes rr-twinkle {
-  0%, 100% { opacity: 0.4; }
-  50%      { opacity: 0.7; }
-}
-
-@keyframes rr-recede {
-  from { transform: scale(1); opacity: 0.55; }
-  to   { transform: scale(0.04); opacity: 0; }
-}
-
-@keyframes rr-flow {
-  to { stroke-dashoffset: -48; }
-}
-
-@keyframes rr-loop-turn {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+@keyframes rr-frame-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 46px 10px rgba(217, 164, 65, 0.45),
+      0 0 110px 34px rgba(217, 164, 65, 0.22),
+      0 26px 50px rgba(0, 0, 0, 0.75);
+  }
+  50% {
+    box-shadow:
+      0 0 56px 14px rgba(217, 164, 65, 0.6),
+      0 0 130px 44px rgba(217, 164, 65, 0.3),
+      0 26px 50px rgba(0, 0, 0, 0.75);
+  }
 }
 
 /* ---------- mobile ---------- */
 
 @media (max-width: 40rem) {
-  .rr-hole { --s: min(78vmin, 460px); margin-bottom: 20vh; }
+  .rr-scene { padding: 5.5rem 6vw 2rem; gap: 1.25rem; }
 }
 
 /* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .rr-disk,
-  .rr-glow,
-  .rr-stars,
-  .rr-rec,
-  .rr-loop,
-  .rr-loop__path {
+  .rr-halo,
+  .rr-frame {
     animation: none;
   }
-  .rr-disk { transform: rotateX(74deg); }
 }
