@@ -1,0 +1,68 @@
+/* ============================================================
+   Writing — essay archive page. Same room as the base site
+   (ink/teal/zima), no separate palette.
+   ============================================================ */
+
+.writing-back {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  padding: 1.25rem var(--pad);
+  background: linear-gradient(to bottom, rgba(2, 2, 2, 0.9), transparent);
+}
+
+.writing-back a {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--zima);
+  font-size: 0.95rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.writing-back a::before { content: "← "; }
+
+.writing-back a:hover {
+  color: #d6f7ff;
+  text-shadow: 0 0 18px rgba(91, 194, 231, 0.55);
+}
+
+/* ---------- intro ---------- */
+
+.writing-intro {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: clamp(6.5rem, 16vh, 10rem) var(--pad) clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.writing-intro h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--zima);
+  margin-bottom: 0.75rem;
+}
+
+.writing-intro p {
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* ---------- list ---------- */
+
+.writing-list {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--pad) clamp(4rem, 10vh, 7rem);
+}
+
+/* ---------- footer ---------- */
+
+.writing-footer {
+  padding: 2.5rem var(--pad);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-align: center;
+}

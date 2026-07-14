@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ra Mour — Writing</title>
+    <meta
+      name="description"
+      content="Essays by Ra Mour on art, science, philosophy, and spirituality."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css?v=18" />
+    <link rel="stylesheet" href="css/writing.css?v=1" />
+  </head>
+  <body class="writing">
+    <header class="writing-back">
+      <a href="index.html">Ra Mour</a>
+    </header>
+
+    <section class="writing-intro">
+      <p>Essays on art, science, philosophy, and spirituality.</p>
+    </section>
+
+    <!-- Filled by js/writing-archive.js from writing.md (template inside) —
+       add an entry there and it appears here. -->
+    <div class="writing-list">
+      <ul class="essays" id="essays-list" aria-live="polite"></ul>
+
+      <p class="essays__more">
+        <a
+          class="textlink"
+          href="https://substack.com/@ramour"
+          target="_blank"
+          rel="noopener"
+          >Read on Substack &rarr;</a
+        >
+      </p>
+    </div>
+
+    <noscript>
+      <p
+        class="essays-note"
+        style="
+          max-width: var(--measure);
+          margin: 0 auto;
+          padding: 0 var(--pad) 3rem;
+        "
+      >
+        Enable JavaScript to view the archive.
+      </p>
+    </noscript>
+
+    <footer class="writing-footer">
+      <p>&copy; 2026 Ra Mour</p>
+    </footer>
+
+    <script src="js/writing-data.js?v=1"></script>
+    <script src="js/writing-archive.js?v=1"></script>
+  </body>
+</html>

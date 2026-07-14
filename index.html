@@ -176,33 +176,12 @@
       <section class="section section--abyss" id="mind">
         <p class="section__label reveal">Mind</p>
 
-        <!-- EDIT: Replace the three placeholder essays below with your own.
-           Each entry needs: a title, a date, and a link (e.g. to the Substack post). -->
-        <ul class="essays">
-          <li class="essays__item reveal">
-            <a href=""
-              ><!-- EDIT: essay URL -->
-              <span class="essays__title">Human After All</span>
-              <span class="essays__date">August 2026</span>
-            </a>
-          </li>
-          <li class="essays__item reveal">
-            <a href=""
-              ><!-- EDIT: essay URL -->
-              <span class="essays__title">Wandering Spirits</span>
-              <span class="essays__date">August 2026</span>
-            </a>
-          </li>
-        </ul>
+        <!-- Filled by js/writing-home.js from writing.md (template inside) —
+           add an essay there and the most recent ones appear here. -->
+        <ul class="essays" id="essays-teaser" aria-live="polite"></ul>
 
         <p class="essays__more reveal">
-          <a
-            class="textlink"
-            href="https://substack.com/@ramour"
-            target="_blank"
-            rel="noopener"
-            >Read more on Substack &rarr;</a
-          >
+          <a class="textlink" href="writing.html">Read more &rarr;</a>
         </p>
 
         <a class="wu-feature reveal" href="waking-up.html">
@@ -720,5 +699,7 @@
     <script src="js/lifeframe.js?v=1"></script>
     <script src="js/gallery-discovery.js?v=1"></script>
     <script src="js/gallery-preview.js?v=2"></script>
+    <script src="js/writing-data.js?v=1"></script>
+    <script src="js/writing-home.js?v=1"></script>
   </body>
 </html>

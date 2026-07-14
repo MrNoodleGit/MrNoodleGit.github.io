@@ -613,18 +613,22 @@ a { color: inherit; text-decoration: none; }
 
 .essays { list-style: none; }
 
-.essays__item a {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 2rem;
+.essays__item-inner {
+  display: block;
   padding: 1.4rem 0;
   border-top: 1px solid rgba(20, 99, 111, 0.45);
   transition: border-color 0.4s;
 }
 
-.essays__item:last-of-type a { border-bottom: 1px solid rgba(20, 99, 111, 0.45); }
-.essays__item a:hover { border-color: var(--zima); }
+.essays__item:last-of-type .essays__item-inner { border-bottom: 1px solid rgba(20, 99, 111, 0.45); }
+a.essays__item-inner:hover { border-color: var(--zima); }
+
+.essays__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+}
 
 .essays__title {
   font-family: var(--font-display);
@@ -633,7 +637,7 @@ a { color: inherit; text-decoration: none; }
   transition: color 0.3s;
 }
 
-.essays__item a:hover .essays__title { color: var(--zima); }
+a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
 .essays__date {
   flex-shrink: 0;
@@ -642,7 +646,22 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.1em;
 }
 
+.essays__excerpt {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--muted);
+  max-width: 42rem;
+}
+
+.essays__item--soon .essays__date::after {
+  content: " · soon";
+  text-transform: uppercase;
+}
+
 .essays__more { margin-top: 3rem; }
+
+.essays-note { color: var(--muted); }
+.essays-note a { color: var(--zima); }
 
 /* ---------- waking-up feature card (homepage) ---------- */
 
@@ -858,7 +877,7 @@ a { color: inherit; text-decoration: none; }
 
   .work__entry .work__meta { flex-wrap: wrap; gap: 0.4rem 1rem; }
 
-  .essays__item a { flex-direction: column; gap: 0.3rem; align-items: flex-start; }
+  .essays__row { flex-direction: column; gap: 0.3rem; align-items: flex-start; }
 
   .about { grid-template-columns: 1fr; }
   .about__portrait { max-width: 14rem; }
