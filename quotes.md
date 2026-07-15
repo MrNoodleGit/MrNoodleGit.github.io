@@ -104,3 +104,9 @@
 ---
 
 > No hay mal que dure cien años, ni cuerpo que lo resista.
+
+---
+
+> Tools will evolve, but the fundamental work of science endures:
+> asking incisive questions, challenging prevailing assumptions
+> and uncovering novel connections and insights.
