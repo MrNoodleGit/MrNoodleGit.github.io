@@ -1,9 +1,11 @@
 name: Sync Substack essays
 
 on:
-  schedule:
-    - cron: "0 13 * * *"
   workflow_dispatch:
+# on:
+#   schedule:
+#     - cron: "0 13 * * *"
+#   workflow_dispatch:
 
 permissions:
   contents: write
