@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Posts one image+caption pair to Instagram via the raw Graph API.
-// Run weekly by .github/workflows/post-instagram.yml, or manually with:
+// Triggered manually via .github/workflows/post-instagram.yml
+// (Actions tab -> "Post to Instagram" -> Run workflow), or locally with:
 //   node scripts/post-instagram.mjs [--dry-run]
 //
 // Source content: quotes.md entries that have an "image:" line (see the

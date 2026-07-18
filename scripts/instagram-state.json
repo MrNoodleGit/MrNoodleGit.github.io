@@ -1,7 +1,12 @@
 {
   "version": 1,
   "queue": [],
-  "posted": {},
-  "lastPostedId": null,
-  "lastRunAt": null
+  "posted": {
+    "we_the_unbound.jpeg": {
+      "postedAt": "2026-07-18T02:31:28.848Z",
+      "igMediaId": "17979042162025673"
+    }
+  },
+  "lastPostedId": "we_the_unbound.jpeg",
+  "lastRunAt": "2026-07-18T02:31:28.855Z"
 }

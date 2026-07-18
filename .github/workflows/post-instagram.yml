@@ -2,14 +2,16 @@ name: Post to Instagram
 
 on:
   workflow_dispatch:
-  schedule:
-    # 21:00 UTC = 3:00 PM Mountain Daylight Time (MDT, UTC-6), in effect
-    # roughly March-November. During Mountain Standard Time (MST,
-    # UTC-7, roughly November-March) this fires at 2:00 PM Mountain
-    # instead - GitHub Actions cron is fixed-UTC with no DST awareness.
-    # Accepted drift; not worth a second seasonal cron line for a
-    # personal weekly post.
-    - cron: "0 21 * * 5"
+# Manual-only by design: tag a quote in quotes.md with an "image:" line,
+# push, then trigger a run yourself from the Actions tab when you're
+# ready to post. To go back to an automatic weekly cadence, uncomment
+# the schedule below (21:00 UTC = 3:00 PM Mountain Daylight Time;
+# during Mountain Standard Time it fires at 2:00 PM Mountain instead,
+# since GitHub Actions cron is fixed-UTC with no DST awareness).
+# on:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: "0 21 * * 5"
 
 permissions:
   contents: write
@@ -28,7 +30,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Post weekly Instagram update
+      - name: Post to Instagram
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
