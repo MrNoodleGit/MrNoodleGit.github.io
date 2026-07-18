@@ -2,6 +2,10 @@
 .claude/
 .DS_Store
 
+# local secrets — never commit tokens
+meta-developer-token.txt
+*.env
+
 # original uncompressed videos (the site uses the compressed renames)
 media/bjj_rolling.mp4
 media/red_twist_short.mp4

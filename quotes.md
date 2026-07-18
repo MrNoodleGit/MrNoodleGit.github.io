@@ -4,6 +4,7 @@
   TEMPLATE — copy the block below, paste it after a "---" separator,
   and edit. The gallery page picks this file up automatically.
 
+  image: filename.jpg
   > The quote itself, written as a blockquote.
   > It can span several lines; line breaks are kept.
   > — Attribution
@@ -13,6 +14,12 @@
   · lines starting with ">" are the quote text
   · a line starting with "—" (or "--") is the attribution (optional)
   · this comment and the "#" heading are ignored
+  · an optional "image:" line names a JPG/PNG file in media/art-gallery/
+    and marks this quote for the weekly Instagram post (see
+    scripts/post-instagram.mjs) — quotes without one are gallery-only,
+    same as before. The filename is also this entry's tracking ID for
+    the Instagram posting queue, so keep it unique and don't rename an
+    image once it's been posted.
 -->
 
 > To see a world in a grain of sand

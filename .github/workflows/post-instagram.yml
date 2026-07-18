@@ -1,0 +1,47 @@
+name: Post to Instagram
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 21:00 UTC = 3:00 PM Mountain Daylight Time (MDT, UTC-6), in effect
+    # roughly March-November. During Mountain Standard Time (MST,
+    # UTC-7, roughly November-March) this fires at 2:00 PM Mountain
+    # instead - GitHub Actions cron is fixed-UTC with no DST awareness.
+    # Accepted drift; not worth a second seasonal cron line for a
+    # personal weekly post.
+    - cron: "0 21 * * 5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: post-instagram
+  cancel-in-progress: false # never cancel a run that might be mid-publish
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Post weekly Instagram update
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: node scripts/post-instagram.mjs
+
+      - name: Commit state if changed
+        run: |
+          if git diff --quiet -- scripts/instagram-state.json; then
+            echo "No state change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/instagram-state.json
+          git commit -m "update instagram post queue"
+          git push

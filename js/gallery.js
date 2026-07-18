@@ -6,8 +6,10 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
 /* ---------- quotes.md ---------- */
 
 // Blocks separated by "---" lines; "> " lines are the quote (line breaks
-// kept); a line starting with "—" or "--" is the attribution. Comments
-// and "#" headings are ignored. See the template inside quotes.md.
+// kept); a line starting with "—" or "--" is the attribution. An optional
+// "image:" line tags a quote for the weekly Instagram post (see
+// scripts/post-instagram.mjs) and is ignored here. Comments and "#"
+// headings are ignored. See the template inside quotes.md.
 function parseQuotes(md) {
   const quotes = [];
   const blocks = md.replace(/<!--[\s\S]*?-->/g, "").split(/\n\s*---+\s*\n/);
@@ -15,7 +17,7 @@ function parseQuotes(md) {
     const lines = block
       .split("\n")
       .map((l) => l.replace(/^\s*>\s?/, "").trim())
-      .filter((l) => l && !l.startsWith("#"));
+      .filter((l) => l && !l.startsWith("#") && !/^image:\s*/i.test(l));
     const textLines = [];
     const attribution = [];
     for (const line of lines) {
