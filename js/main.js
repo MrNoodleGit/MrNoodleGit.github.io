@@ -81,6 +81,38 @@ if ("IntersectionObserver" in window && navSections.length) {
   checkBottom();
 }
 
+/* ---------- glossary term modal ---------- */
+
+const glossaryModal = document.getElementById("glossary-modal");
+
+if (glossaryModal) {
+  const glossaryClose = document.getElementById("glossary-modal-close");
+  let glossaryOpener = null;
+
+  function openGlossary(opener) {
+    glossaryOpener = opener;
+    glossaryModal.hidden = false;
+    glossaryClose.focus();
+  }
+
+  function closeGlossary() {
+    glossaryModal.hidden = true;
+    if (glossaryOpener) glossaryOpener.focus();
+  }
+
+  document.querySelectorAll("[data-glossary-open]").forEach((trigger) => {
+    trigger.addEventListener("click", () => openGlossary(trigger));
+  });
+
+  glossaryClose.addEventListener("click", closeGlossary);
+  glossaryModal.addEventListener("click", (e) => {
+    if (!e.target.closest(".glossary-modal__panel")) closeGlossary();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!glossaryModal.hidden && e.key === "Escape") closeGlossary();
+  });
+}
+
 /* ---------- rising bubbles in the hero ---------- */
 
 const bubbleHost = document.querySelector(".hero__bubbles");

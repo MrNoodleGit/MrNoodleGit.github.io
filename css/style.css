@@ -783,6 +783,87 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   color: var(--muted);
 }
 
+/* ---------- glossary term + modal ---------- */
+
+.glossary-term {
+  font: inherit;
+  color: var(--zima);
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--zima);
+  padding: 0;
+  cursor: pointer;
+}
+
+.glossary-term:hover,
+.glossary-term:focus-visible {
+  border-bottom-style: solid;
+}
+
+.glossary-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.25rem, 5vw, 3rem);
+  background: rgba(2, 2, 2, 0.85);
+}
+
+.glossary-modal[hidden] { display: none; }
+
+.glossary-modal__panel {
+  position: relative;
+  max-width: 36rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: var(--abyss);
+  border: 1px solid var(--teal);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.glossary-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--zima);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.glossary-modal__close:hover { color: var(--text); }
+
+.glossary-modal__title {
+  font-family: var(--font-display);
+  color: var(--zima);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.glossary-modal__entry {
+  display: grid;
+  gap: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.glossary-modal__heading {
+  font-family: var(--font-display);
+  color: var(--zima);
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.glossary-modal__entry ul {
+  display: grid;
+  gap: 0.6rem;
+  padding-left: 1.25rem;
+}
+
 /* ---------- contact ---------- */
 
 .section--contact { text-align: center; }

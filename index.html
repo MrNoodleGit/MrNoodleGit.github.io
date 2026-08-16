@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=18" />
+    <link rel="stylesheet" href="css/style.css?v=19" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -139,7 +139,8 @@
             <p>
               I'm a performer, contemplative, consultant, and experience
               architect. I studied Computation and Cognition as well as Theater
-              Arts at MIT.
+              Arts at
+              <button type="button" class="glossary-term" data-glossary-open="mit">MIT</button>.
             </p>
 
             <p>
@@ -693,7 +694,67 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
-    <script src="js/main.js?v=9"></script>
+    <div class="glossary-modal" id="glossary-modal" hidden>
+      <div class="glossary-modal__panel" role="dialog" aria-modal="true" aria-labelledby="glossary-modal-title">
+        <button type="button" class="glossary-modal__close" id="glossary-modal-close" aria-label="Close">&times;</button>
+        <div id="glossary-mit" class="glossary-modal__entry">
+          <p class="glossary-modal__title" id="glossary-modal-title">MIT</p>
+          <p>
+            The people at MIT are undeniably exceptional, though their genius
+            is often misunderstood. Popular culture frames them as effortless
+            prodigies, but the reality on campus is defined far more by
+            relentless curiosity, insane discipline, and sheer
+            problem-solving grit than raw, effortless IQ.
+          </p>
+
+          <p class="glossary-modal__heading">Raw Cognitive Ability</p>
+          <ul>
+            <li>
+              <strong>The Baseline:</strong> The average student sat near the
+              top of their high school class with near-perfect SAT/ACT scores
+              and stellar math/science credentials.
+            </li>
+            <li>
+              <strong>The Outliers:</strong> MIT attracts a concentration of
+              global outliers&mdash;International Math and Physics Olympiad
+              medalists, teenagers with published research papers, and young
+              prodigies capable of taking graduate-level courses as freshmen.
+            </li>
+          </ul>
+
+          <p class="glossary-modal__heading">What Sets Them Apart</p>
+          <ul>
+            <li>
+              <strong>Obsessive Curiosity:</strong> They don't just learn a
+              subject to pass a test; they dig until they understand every
+              fundamental layer and want to know "what happens next".
+            </li>
+            <li>
+              <strong>Relentless Work Ethic:</strong> Brilliant ideas on
+              campus rarely come from sudden lightbulb moments. They are
+              usually the result of long hours, dozens of failed attempts,
+              and an extraordinary tolerance for complex, grueling problem
+              sets.
+            </li>
+            <li>
+              <strong>Playful Engineering Culture:</strong> MIT brilliance
+              comes with a unique brand of humor and practical application,
+              famously visible in their complex, highly technical "hacks"
+              (pranks), like placing a life-sized Apollo lunar module on top
+              of the Great Dome.
+            </li>
+          </ul>
+
+          <p>
+            While natural brainpower sets the floor, it's their relentless
+            drive to build, test, fail, and rebuild that truly makes MIT
+            minds stand out.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/main.js?v=10"></script>
     <script src="js/lifeframe.js?v=1"></script>
     <script src="js/gallery-discovery.js?v=1"></script>
     <script src="js/gallery-preview.js?v=2"></script>
