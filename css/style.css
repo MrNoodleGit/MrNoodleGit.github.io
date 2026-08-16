@@ -837,11 +837,31 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
 .glossary-modal__close:hover { color: var(--text); }
 
+.glossary-modal__header {
+  display: grid;
+  gap: 0.4rem;
+}
+
 .glossary-modal__title {
   font-family: var(--font-display);
   color: var(--zima);
   font-size: 1.3rem;
-  margin-bottom: 1rem;
+}
+
+.glossary-modal__source {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: #34a853;
+}
+
+.glossary-modal__source-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: #34a853;
+  flex-shrink: 0;
 }
 
 .glossary-modal__entry {
