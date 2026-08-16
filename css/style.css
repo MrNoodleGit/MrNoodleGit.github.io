@@ -848,6 +848,13 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   font-size: 1.3rem;
 }
 
+.glossary-modal__sources {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
 .glossary-modal__source {
   display: flex;
   align-items: center;
@@ -860,8 +867,23 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 .glossary-modal__source-icon {
   width: 0.85rem;
   height: 0.85rem;
-  fill: #34a853;
+  fill: currentColor;
   flex-shrink: 0;
+}
+
+.glossary-modal__source-icon--gemini { fill: #34a853; }
+
+.glossary-modal__source--link {
+  color: var(--muted);
+  border: 1px solid var(--teal);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.glossary-modal__source--link:hover {
+  color: var(--text);
+  border-color: var(--zima);
 }
 
 .glossary-modal__entry {
