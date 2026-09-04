@@ -90,12 +90,24 @@
 .dw-hero {
   min-height: 82vh;
   min-height: 82svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 22rem) 1fr;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
   max-width: var(--measure);
   margin: 0 auto;
   padding: 8rem var(--pad) clamp(4rem, 10vw, 7rem);
+}
+
+.dw-hero__poster {
+  border: 1px solid rgba(91, 194, 231, 0.25);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65), 0 0 60px rgba(174, 14, 54, 0.15);
+}
+
+.dw-hero__poster img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .dw-hero__where {
@@ -255,5 +267,15 @@
 /* ---------- mobile ---------- */
 
 @media (max-width: 40rem) {
-  .dw-hero { padding-top: 7rem; min-height: 74svh; }
+  .dw-hero {
+    grid-template-columns: 1fr;
+    padding-top: 7rem;
+    min-height: 0;
+  }
+
+  .dw-hero__poster { max-width: 16rem; margin: 0 auto; }
+}
+
+@media (max-width: 60rem) and (min-width: 40.01rem) {
+  .dw-hero { grid-template-columns: minmax(0, 17rem) 1fr; }
 }
