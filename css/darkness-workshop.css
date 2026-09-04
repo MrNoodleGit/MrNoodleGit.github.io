@@ -1,0 +1,259 @@
+/* ============================================================
+   Darkness Workshop — Denver, Fall 2026
+   A page that opens nearly black and lets the eye adjust.
+   Relies on :root variables + base styles from style.css
+   ============================================================ */
+
+.dw {
+  background: #000;
+}
+
+/* the whole page sits inside a slow warm glow, like a single
+   low lamp in a dark room — fixed so it doesn't scroll away */
+.dw::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(90% 60% at 50% 12%, rgba(174, 14, 54, 0.10), transparent 62%),
+    radial-gradient(120% 80% at 50% 100%, rgba(20, 99, 111, 0.14), transparent 65%),
+    linear-gradient(to bottom, #000 0%, #04090a 55%, #000 100%);
+}
+
+.dw > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- back link ---------- */
+
+.dw-back {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  padding: 1.25rem var(--pad);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+}
+
+.dw-back a {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--zima);
+  font-size: 0.95rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.dw-back a::before { content: "← "; }
+
+.dw-back a:hover {
+  color: #d6f7ff;
+  text-shadow: 0 0 18px rgba(91, 194, 231, 0.6);
+}
+
+/* ---------- shared rhythm ---------- */
+
+.dw-section {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--pad) clamp(3.5rem, 9vw, 6rem);
+}
+
+.dw-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.dw-section h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  line-height: 1.25;
+  margin-bottom: 1.25rem;
+}
+
+.dw-section p + p {
+  margin-top: 1.1rem;
+}
+
+.dw-section p {
+  max-width: 34em;
+  color: #cfe0e0;
+}
+
+/* ---------- hero ---------- */
+
+.dw-hero {
+  min-height: 82vh;
+  min-height: 82svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 8rem var(--pad) clamp(4rem, 10vw, 7rem);
+}
+
+.dw-hero__where {
+  font-size: 0.78rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  margin-bottom: 1.75rem;
+}
+
+.dw-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 10vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  margin-bottom: 1.75rem;
+  text-shadow: 0 0 60px rgba(91, 194, 231, 0.18);
+}
+
+.dw-hero__lede {
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  line-height: 1.55;
+  color: #cfe0e0;
+  max-width: 32em;
+}
+
+.dw-hero__rule {
+  width: 4rem;
+  height: 1px;
+  margin-top: 2.5rem;
+  background: linear-gradient(to right, var(--zima), transparent);
+}
+
+/* ---------- the arc: three movements ---------- */
+
+.dw-arc {
+  list-style: none;
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.75rem);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-top: 2.5rem;
+}
+
+.dw-arc li {
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(20, 99, 111, 0.55);
+}
+
+.dw-arc__n {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--zima);
+  margin-bottom: 0.75rem;
+}
+
+.dw-arc h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.35rem;
+  margin-bottom: 0.6rem;
+}
+
+.dw-arc p {
+  font-size: 0.98rem;
+  color: var(--muted);
+}
+
+/* ---------- practical details ---------- */
+
+.dw-facts {
+  display: grid;
+  gap: 1.5rem clamp(2rem, 5vw, 4rem);
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin-top: 2.5rem;
+}
+
+.dw-facts dt {
+  font-size: 0.72rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.dw-facts dd {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.dw-facts .dw-tba {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- interest / subscribe ---------- */
+
+.dw-signup {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--pad) clamp(4rem, 10vw, 7rem);
+  text-align: center;
+}
+
+.dw-signup h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  margin-bottom: 0.9rem;
+}
+
+.dw-signup p {
+  color: var(--muted);
+  max-width: 30em;
+  margin: 0 auto 1.75rem;
+}
+
+.dw-subscribe {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* ---------- footer ---------- */
+
+.dw-footer {
+  padding: 2.5rem var(--pad) 3rem;
+  border-top: 1px solid rgba(20, 99, 111, 0.4);
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- eyes adjusting to the dark ----------
+   each block surfaces a beat after the one above it   */
+
+@media (prefers-reduced-motion: no-preference) {
+  .dw-hero,
+  .dw-section,
+  .dw-signup {
+    animation: dw-adjust 1.6s ease-out both;
+  }
+
+  /* the hero is section 1 inside <main>; the rest follow it */
+  .dw-section:nth-of-type(2) { animation-delay: 0.15s; }
+  .dw-section:nth-of-type(3) { animation-delay: 0.3s; }
+  .dw-section:nth-of-type(4) { animation-delay: 0.45s; }
+  .dw-signup { animation-delay: 0.6s; }
+}
+
+@keyframes dw-adjust {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 40rem) {
+  .dw-hero { padding-top: 7rem; min-height: 74svh; }
+}
