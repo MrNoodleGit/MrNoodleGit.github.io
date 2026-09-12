@@ -938,6 +938,211 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   text-align: center;
 }
 
+/* ---------- services (work) page ---------- */
+
+.svc-back {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  padding: 1.25rem var(--pad);
+  background: linear-gradient(to bottom, rgba(2, 2, 2, 0.9), transparent);
+}
+
+.svc-back a {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--zima);
+  font-size: 0.95rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.svc-back a::before { content: "← "; }
+
+.svc-back a:hover {
+  color: #d6f7ff;
+  text-shadow: 0 0 18px rgba(91, 194, 231, 0.55);
+}
+
+.svc-hero {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: clamp(7.5rem, 18vh, 11rem) var(--pad) clamp(2rem, 5vh, 3rem);
+}
+
+.svc-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 6vw, 3.75rem);
+  letter-spacing: 0.02em;
+  color: var(--text);
+  max-width: 40rem;
+}
+
+.svc-hero__sub {
+  margin-top: 1.25rem;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  max-width: 36rem;
+}
+
+.svc-section {
+  padding: clamp(3rem, 8vh, 5rem) var(--pad);
+}
+
+.svc-section > * {
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.svc-intro {
+  display: grid;
+  gap: 1.25rem;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  max-width: 42rem;
+}
+
+.svc-steps {
+  list-style: none;
+  counter-reset: svc-step;
+  display: grid;
+  gap: 2rem;
+}
+
+.svc-step {
+  counter-increment: svc-step;
+  position: relative;
+  padding-left: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(20, 99, 111, 0.45);
+}
+
+.svc-step::before {
+  content: counter(svc-step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  font-family: var(--font-display);
+  color: var(--zima);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+.svc-step h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.svc-step p { color: var(--muted); max-width: 36rem; }
+
+.svc-list {
+  display: grid;
+  gap: 1rem;
+  padding-left: 1.25rem;
+  max-width: 42rem;
+  color: var(--text);
+}
+
+.svc-closing {
+  margin-top: 1.75rem;
+  color: var(--muted);
+  font-style: italic;
+  max-width: 42rem;
+}
+
+/* ---------- services form ---------- */
+
+.svc-form-intro {
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+  max-width: 34rem;
+}
+
+.svc-form {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 34rem;
+}
+
+.svc-field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.svc-field label {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.svc-field input,
+.svc-field select,
+.svc-field textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--text);
+  background: rgba(2, 2, 2, 0.35);
+  border: 1px solid rgba(20, 99, 111, 0.6);
+  border-radius: 2px;
+  padding: 0.7em 0.85em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.svc-field textarea { resize: vertical; min-height: 6rem; }
+
+.svc-field input:hover,
+.svc-field select:hover,
+.svc-field textarea:hover {
+  border-color: var(--teal);
+}
+
+.svc-field input:focus-visible,
+.svc-field select:focus-visible,
+.svc-field textarea:focus-visible {
+  outline: none;
+  border-color: var(--zima);
+  box-shadow: 0 0 0 3px rgba(91, 194, 231, 0.25);
+}
+
+.svc-submit {
+  justify-self: start;
+  font: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--zima);
+  background: none;
+  border: 1px solid rgba(91, 194, 231, 0.5);
+  border-radius: 2px;
+  padding: 0.75em 1.75em;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.svc-submit:hover {
+  color: #d6f7ff;
+  border-color: var(--zima);
+  background: rgba(91, 194, 231, 0.12);
+  box-shadow: 0 0 18px rgba(91, 194, 231, 0.35);
+}
+
+.svc-submit:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(91, 194, 231, 0.35);
+}
+
+.svc-footer {
+  padding: 2.5rem var(--pad);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-align: center;
+}
+
 /* ---------- scroll reveals ---------- */
 
 /* hidden state only applies once JS tags <html> with .js — no-JS stays visible */
@@ -1008,4 +1213,10 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   .gallery-preview__collage { grid-template-columns: repeat(2, 1fr); }
 
   .contact__links { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+
+  .svc-step { padding-left: 2.25rem; }
+  .svc-form,
+  .svc-intro,
+  .svc-list,
+  .svc-closing { max-width: 100%; }
 }
