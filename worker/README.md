@@ -1,0 +1,86 @@
+# Ra Mour Radio — setup
+
+The site is static, so it can't hold Spotify credentials: anything in the page
+is readable by anyone who views source. This Worker holds them instead and
+hands the browser one small JSON answer.
+
+Roughly ten minutes, once. Until it's done the radio band stays hidden and the
+Music page looks exactly as it did before — nothing here breaks the live site.
+
+## 1. Register the Spotify app
+
+1. Go to <https://developer.spotify.com/dashboard> and **Create app**.
+2. Name it anything (`Ra Mour Radio`).
+3. Add **Redirect URI**: `http://127.0.0.1:8888/callback`
+   — the literal loopback IP, not `localhost`; Spotify rejects `localhost`.
+4. Select the **Web API** checkbox and save.
+5. Copy the **Client ID** and **Client Secret** from Settings.
+
+The app stays in development mode. That's fine — you are its only user.
+
+## 2. Mint a refresh token
+
+```sh
+node scripts/spotify-auth.mjs <client-id> <client-secret>
+```
+
+It prints an authorization URL. Open it, approve, and the script prints a
+refresh token. That token doesn't expire; the Worker trades it for a fresh
+hour-long access token whenever it needs one.
+
+The scopes requested are `user-read-currently-playing` and
+`user-read-recently-played` — read-only, no playback control, no library
+access.
+
+## 3. Deploy the Worker
+
+```sh
+cd worker
+npx wrangler login
+npx wrangler secret put SPOTIFY_CLIENT_ID
+npx wrangler secret put SPOTIFY_CLIENT_SECRET
+npx wrangler secret put SPOTIFY_REFRESH_TOKEN
+npx wrangler deploy
+```
+
+Wrangler prints the deployed URL, something like
+`https://ra-mour-radio.<your-subdomain>.workers.dev`.
+
+Check it:
+
+```sh
+curl https://ra-mour-radio.<your-subdomain>.workers.dev
+```
+
+## 4. Point the site at it
+
+In `js/radio.js`, replace the placeholder on line 13:
+
+```js
+const ENDPOINT = "https://ra-mour-radio.<your-subdomain>.workers.dev";
+```
+
+Commit and push. Done.
+
+## What the page shows
+
+| Spotify says | The band shows |
+| --- | --- |
+| a song playing | **On air**, crimson dot, waveform filling in real time |
+| a song paused | **Last played**, that song |
+| a podcast episode | **Last played**, the last actual *song* — episodes never appear |
+| nothing playing | **Last played**, from recently-played, with "about 3 hours ago" |
+| nothing at all, or an error | the band hides itself; the page reads as if it were never there |
+
+## Notes
+
+- **The Worker's allowlist.** `ALLOWED_ORIGINS` in `now-playing.js` lists the
+  origins allowed to read it. If the site moves domains, add it there and
+  redeploy, or the browser will block the response.
+- **Load.** Answers are edge-cached for 20s and the page polls every 25s, so
+  visitor count barely affects how often Spotify is called. A backgrounded tab
+  stops polling entirely.
+- **Privacy.** This publishes your listening to anyone who opens the Music
+  page, live. To go dark, delete the `SPOTIFY_REFRESH_TOKEN` secret (or revoke
+  the app at <https://www.spotify.com/account/apps/>) — the Worker starts
+  failing, and the band hides itself.

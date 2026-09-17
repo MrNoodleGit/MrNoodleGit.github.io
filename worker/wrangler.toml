@@ -1,0 +1,8 @@
+name = "ra-mour-radio"
+main = "now-playing.js"
+compatibility_date = "2026-09-01"
+
+# Secrets are NOT set here — they would end up in git. Set them with:
+#   npx wrangler secret put SPOTIFY_CLIENT_ID
+#   npx wrangler secret put SPOTIFY_CLIENT_SECRET
+#   npx wrangler secret put SPOTIFY_REFRESH_TOKEN
