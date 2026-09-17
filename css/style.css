@@ -967,7 +967,8 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
   .nav { flex-wrap: wrap; row-gap: 0.85rem; }
 
-  .nav__links { width: 100%; justify-content: space-between; }
+  .nav__links { width: 100%; justify-content: space-between; gap: clamp(0.35rem, 1.8vw, 0.75rem); }
+  .nav__links a { letter-spacing: 0.1em; }
 
   .nav__cta { margin: 0 auto; }
 
