@@ -3,6 +3,12 @@
  *
  *   node scripts/spotify-auth.mjs <client-id> <client-secret>
  *
+ * or, with a .env (repo root or worker/.env) holding
+ *   SPOTIFY_CLIENT_ID=...
+ *   SPOTIFY_CLIENT_SECRET=...
+ *
+ *   node scripts/spotify-auth.mjs
+ *
  * Register http://127.0.0.1:8888/callback as a Redirect URI on the app first
  * (Spotify's dashboard rejects "localhost" — it wants the loopback IP).
  *
@@ -12,14 +18,50 @@
 
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
+import { readFileSync } from "node:fs";
 
 const REDIRECT_URI = "http://127.0.0.1:8888/callback";
 const SCOPES = "user-read-currently-playing user-read-recently-played";
 
-const [clientId, clientSecret] = process.argv.slice(2);
+// Minimal .env reader — no dependency, and never touches process.env for
+// keys that are already set (a real exported env var always wins).
+function loadDotEnv(path) {
+  let text;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch {
+    return;
+  }
+  for (const line of text.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (!(key in process.env)) process.env[key] = value;
+  }
+}
+
+loadDotEnv(new URL("../.env", import.meta.url));
+loadDotEnv(new URL("../worker/.env", import.meta.url));
+
+const [argId, argSecret] = process.argv.slice(2);
+const clientId = argId || process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = argSecret || process.env.SPOTIFY_CLIENT_SECRET;
 
 if (!clientId || !clientSecret) {
-  console.error("Usage: node scripts/spotify-auth.mjs <client-id> <client-secret>");
+  console.error(
+    "Usage: node scripts/spotify-auth.mjs <client-id> <client-secret>\n" +
+      "   or: set SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET in a .env file " +
+      "(repo root or worker/.env) and run with no arguments."
+  );
   process.exit(1);
 }
 

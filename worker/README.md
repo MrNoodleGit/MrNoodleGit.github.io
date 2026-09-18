@@ -24,9 +24,22 @@ The app stays in development mode. That's fine — you are its only user.
 node scripts/spotify-auth.mjs <client-id> <client-secret>
 ```
 
-It prints an authorization URL. Open it, approve, and the script prints a
-refresh token. That token doesn't expire; the Worker trades it for a fresh
-hour-long access token whenever it needs one.
+Or, if you'd rather not put credentials on the command line (they land in
+shell history), put them in a `.env` file — either at the repo root or
+`worker/.env`, both git-ignored — and run the script with no arguments:
+
+```
+SPOTIFY_CLIENT_ID=...
+SPOTIFY_CLIENT_SECRET=...
+```
+
+```sh
+node scripts/spotify-auth.mjs
+```
+
+Either way, it prints an authorization URL. Open it, approve, and the script
+prints a refresh token. That token doesn't expire; the Worker trades it for a
+fresh hour-long access token whenever it needs one.
 
 The scopes requested are `user-read-currently-playing` and
 `user-read-recently-played` — read-only, no playback control, no library

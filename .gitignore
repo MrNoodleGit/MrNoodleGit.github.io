@@ -2,6 +2,12 @@
 .claude/
 .DS_Store
 
+# Worker secrets — never committed, read by scripts/spotify-auth.mjs
+.env
+.env.*
+worker/.env
+worker/.env.*
+
 # original uncompressed videos (the site uses the compressed renames)
 media/bjj_rolling.mp4
 media/red_twist_short.mp4
