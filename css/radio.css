@@ -1,0 +1,228 @@
+/* ============================================================
+   Ra Mour Radio — the live band at the top of the Music page.
+   Same room as the rest of the site (ink/teal/zima/crimson);
+   the only new colour is the blurred cover art itself.
+   ============================================================ */
+
+.radio {
+  position: relative;
+  overflow: hidden;
+  /* same left/right edges as .music-grid's cards, at every width */
+  width: calc(100% - var(--pad) * 2);
+  max-width: calc(var(--measure) - var(--pad) * 2);
+  margin: 0 auto clamp(2rem, 6vh, 3.5rem);
+  border: 1px solid rgba(91, 194, 231, 0.18);
+  background: var(--abyss);
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+/* the section ships hidden and is only revealed once real data lands,
+   so a missing endpoint or a Spotify outage leaves no empty frame */
+.radio[hidden] { display: none; }
+
+/* ---------- the cover, blurred, as the room's light ---------- */
+
+.radio__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.radio__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.3);
+  filter: blur(56px) saturate(1.4);
+  opacity: 0.62;
+}
+
+.radio__backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(2, 2, 2, 0.4) 0%, rgba(2, 2, 2, 0.86) 62%),
+    rgba(6, 23, 25, 0.55);
+}
+
+/* ---------- cover ---------- */
+
+.radio__cover {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.radio__art {
+  display: block;
+  width: clamp(120px, 20vw, 240px);
+  height: clamp(120px, 20vw, 240px);
+  object-fit: cover;
+  background: var(--ink);
+  border: 1px solid rgba(91, 194, 231, 0.3);
+  box-shadow: 0 0 60px rgba(91, 194, 231, 0.14);
+}
+
+/* ---------- body ---------- */
+
+.radio__body {
+  position: relative;
+  z-index: 1;
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.75rem, 4vw, 2.75rem)
+    clamp(1.75rem, 4vw, 2.75rem) 0;
+}
+
+.radio__status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+
+.radio__brand { color: var(--muted); }
+
+.radio__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--crimson);
+  box-shadow: 0 0 12px rgba(174, 14, 54, 0.95);
+  flex-shrink: 0;
+}
+
+.radio.is-recent .radio__status { color: var(--muted); }
+
+.radio.is-recent .radio__dot {
+  background: rgba(127, 168, 173, 0.7);
+  box-shadow: none;
+}
+
+.radio.is-playing .radio__dot { animation: radio-pulse 2.4s ease-in-out infinite; }
+
+@keyframes radio-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.radio__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  line-height: 1.1;
+  color: var(--text);
+  margin: 0.15rem 0 0;
+}
+
+.radio__artist {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.radio__album {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- waveform ---------- */
+
+.radio__wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 40px;
+  margin-top: 0.5rem;
+}
+
+.radio__bar {
+  flex-grow: 1;
+  min-width: 2px;
+  background: rgba(127, 168, 173, 0.3);
+  transition: background-color 0.4s;
+}
+
+.radio__bar.is-lit { background: rgba(91, 194, 231, 0.85); }
+
+.radio.is-recent .radio__bar { background: rgba(127, 168, 173, 0.28); }
+
+/* ---------- meta row ---------- */
+
+.radio__meta {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.radio__time {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.radio__link {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--zima);
+  border-bottom: 1px solid rgba(91, 194, 231, 0.5);
+  padding-bottom: 3px;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.radio__link:hover {
+  color: #d6f7ff;
+  border-color: #d6f7ff;
+}
+
+/* ---------- phone ---------- */
+
+@media (max-width: 40rem) {
+  .radio {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .radio__cover { padding: 2rem 1.5rem 0.5rem; }
+
+  .radio__body {
+    padding: 1rem 1.5rem 2rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .radio__status,
+  .radio__meta { justify-content: center; }
+
+  .radio__wave { width: 100%; }
+
+  .radio__backdrop::after {
+    background:
+      linear-gradient(180deg, rgba(2, 2, 2, 0.45) 0%, rgba(2, 2, 2, 0.9) 58%),
+      rgba(6, 23, 25, 0.55);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radio.is-playing .radio__dot { animation: none; }
+  .radio__bar { transition: none; }
+}

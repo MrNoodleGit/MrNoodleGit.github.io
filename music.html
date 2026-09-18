@@ -17,6 +17,7 @@
     />
     <link rel="stylesheet" href="css/style.css?v=18" />
     <link rel="stylesheet" href="css/music.css?v=2" />
+    <link rel="stylesheet" href="css/radio.css?v=1" />
   </head>
   <body class="music">
     <header class="music-back">
@@ -26,6 +27,51 @@
     <section class="music-intro">
       <h1>Music</h1>
       <!-- <p>Songs and playlists I keep returning to.</p> -->
+    </section>
+
+    <!-- Ra Mour Radio — live now-playing band, filled by js/radio.js from the
+       Cloudflare Worker in worker/now-playing.js. Ships hidden: if the Worker
+       isn't reachable, the page simply doesn't show it. -->
+    <section
+      class="radio"
+      id="radio"
+      aria-label="Ra Mour Radio"
+      aria-live="polite"
+      hidden
+    >
+      <div class="radio__backdrop" aria-hidden="true">
+        <img id="radio-backdrop" alt="" />
+      </div>
+
+      <div class="radio__cover">
+        <img class="radio__art" id="radio-art" alt="" />
+      </div>
+
+      <div class="radio__body">
+        <p class="radio__status">
+          <span class="radio__dot" aria-hidden="true"></span>
+          <span id="radio-status">On air</span>
+          <span class="radio__brand">&middot; Ra Mour Radio</span>
+        </p>
+
+        <h2 class="radio__title" id="radio-title"></h2>
+        <p class="radio__artist" id="radio-artist"></p>
+        <p class="radio__album" id="radio-album"></p>
+
+        <div class="radio__wave" id="radio-wave" aria-hidden="true"></div>
+
+        <p class="radio__meta">
+          <span class="radio__time" id="radio-time"></span>
+          <a
+            class="radio__link"
+            id="radio-link"
+            href="https://open.spotify.com"
+            target="_blank"
+            rel="noopener"
+            >Listen along</a
+          >
+        </p>
+      </div>
     </section>
 
     <!-- Filled by js/music.js from music.md (template inside) —
@@ -50,6 +96,7 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
+    <script src="js/radio.js?v=1"></script>
     <script src="js/music.js?v=2"></script>
   </body>
 </html>
