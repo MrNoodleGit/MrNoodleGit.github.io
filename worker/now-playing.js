@@ -20,6 +20,8 @@ const ALLOWED_ORIGINS = new Set([
   "https://mrnoodlegit.github.io",
   "http://127.0.0.1:8080",
   "http://localhost:8080",
+  "http://127.0.0.1:8123",
+  "http://localhost:8123",
 ]);
 
 // How long the edge holds an answer. The page polls every 25s; this keeps a

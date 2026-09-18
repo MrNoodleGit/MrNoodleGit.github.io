@@ -10,7 +10,7 @@
   // Set this to your deployed Worker URL, e.g.
   // "https://ra-mour-radio.ramour.workers.dev". Until it's set the radio
   // stays hidden and the page looks exactly as it did before.
-  const ENDPOINT = "REPLACE_WITH_YOUR_WORKER_URL";
+  const ENDPOINT = "https://ra-mour-radio.ronald1andres2.workers.dev";
 
   const POLL_MS = 25000; // how often we ask the Worker
   const TICK_MS = 500; // how often the local clock advances the bar
