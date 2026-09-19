@@ -193,6 +193,56 @@
   border-color: #d6f7ff;
 }
 
+/* ---------- dancing robot ---------- */
+
+/* Tucked into the top-right corner, clear of the cover art and the
+   waveform below. Dances only while something is actually on air
+   (.radio.is-playing) — otherwise it freezes mid-pose rather than
+   disappearing, so a glance still tells you the room is quiet.
+   Tempo lives in one place: --robot-beat is the length of one full
+   sway (2 dance beats), so BPM = 120 / (seconds in --robot-beat). */
+.radio__bot {
+  --robot-beat: 2.667s; /* 45 BPM */
+  position: absolute;
+  z-index: 2;
+  top: clamp(1rem, 2.6vw, 1.5rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  width: clamp(40px, 5vw, 56px);
+  height: auto;
+  pointer-events: none;
+}
+
+/* reserve room in the title column so long song titles wrap around
+   the bot instead of running under it */
+.radio__body { padding-right: calc(clamp(1.75rem, 4vw, 2.75rem) + 3.25rem); }
+
+.rb-part { transform-box: fill-box; }
+.rb-all   { transform-origin: 50% 100%; animation: rb-sway   var(--robot-beat) ease-in-out infinite; }
+.rb-head  { transform-origin: 50% 100%; animation: rb-head   calc(var(--robot-beat) / 2) ease-in-out infinite; }
+.rb-torso { transform-origin: 50% 100%; animation: rb-torso  calc(var(--robot-beat) / 2) ease-in-out infinite; }
+.rb-arm-l { transform-origin: 80% 8%;   animation: rb-arm-l  calc(var(--robot-beat) / 2) ease-in-out infinite; }
+.rb-arm-r { transform-origin: 20% 8%;   animation: rb-arm-r  calc(var(--robot-beat) / 2) ease-in-out infinite; }
+.rb-leg-l { transform-origin: 50% 0%;   animation: rb-leg-l  calc(var(--robot-beat) / 2) ease-in-out infinite; }
+.rb-leg-r { transform-origin: 50% 0%;   animation: rb-leg-r  calc(var(--robot-beat) / 2) ease-in-out infinite; }
+.rb-ant   { transform-origin: 50% 100%; animation: rb-ant    calc(var(--robot-beat) / 2) ease-in-out infinite; }
+
+@keyframes rb-sway   { 0%, 100% { transform: translateX(-3px) rotate(-3deg); } 50% { transform: translateX(3px) rotate(3deg); } }
+@keyframes rb-head   { 0%, 100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-2px) rotate(6deg); } }
+@keyframes rb-torso  { 0%, 100% { transform: rotate(3deg); } 50% { transform: rotate(-3deg); } }
+@keyframes rb-arm-l  { 0%, 100% { transform: rotate(38deg); } 50% { transform: rotate(-105deg); } }
+@keyframes rb-arm-r  { 0%, 100% { transform: rotate(105deg); } 50% { transform: rotate(-38deg); } }
+@keyframes rb-leg-l  { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(12deg); } }
+@keyframes rb-leg-r  { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-12deg); } }
+@keyframes rb-ant    { 0%, 100% { transform: rotate(-16deg); } 50% { transform: rotate(16deg); } }
+
+.rb-body { fill: var(--zima); }
+.rb-dark { fill: var(--teal); }
+.rb-eye  { fill: var(--crimson); }
+.radio__bot .rb-glow { filter: drop-shadow(0 0 4px rgba(91, 194, 231, 0.5)); }
+
+/* nothing on air: freeze mid-pose instead of resetting to a rest frame */
+.radio.is-recent .rb-part { animation-play-state: paused; }
+
 /* ---------- phone ---------- */
 
 @media (max-width: 40rem) {
@@ -215,6 +265,9 @@
 
   .radio__wave { width: 100%; }
 
+  /* stacked layout leaves no corner to tuck it into */
+  .radio__bot { display: none; }
+
   .radio__backdrop::after {
     background:
       linear-gradient(180deg, rgba(2, 2, 2, 0.45) 0%, rgba(2, 2, 2, 0.9) 58%),
@@ -225,4 +278,5 @@
 @media (prefers-reduced-motion: reduce) {
   .radio.is-playing .radio__dot { animation: none; }
   .radio__bar { transition: none; }
+  .rb-part { animation: none; }
 }
