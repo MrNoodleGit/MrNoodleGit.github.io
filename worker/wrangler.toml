@@ -6,3 +6,12 @@ compatibility_date = "2026-09-01"
 #   npx wrangler secret put SPOTIFY_CLIENT_ID
 #   npx wrangler secret put SPOTIFY_CLIENT_SECRET
 #   npx wrangler secret put SPOTIFY_REFRESH_TOKEN
+#   npx wrangler secret put HISTORY_TOKEN     (any random string you pick;
+#                                              guards GET /history)
+
+# Private listen-history log. Create it once with:
+#   npx wrangler kv namespace create HISTORY
+# then paste the "id" it prints below.
+[[kv_namespaces]]
+binding = "HISTORY"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

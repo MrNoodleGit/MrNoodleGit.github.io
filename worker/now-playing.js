@@ -7,6 +7,12 @@
  *   SPOTIFY_CLIENT_ID
  *   SPOTIFY_CLIENT_SECRET
  *   SPOTIFY_REFRESH_TOKEN     (minted once by scripts/spotify-auth.mjs)
+ *   HISTORY_TOKEN             (any random string of your choosing; guards
+ *                              the private /history endpoint below)
+ *
+ * Also needs a KV namespace bound as HISTORY (see wrangler.toml) — every
+ * distinct track we see gets appended there, privately, as a listen-history
+ * log. Nothing about it is exposed on the public /now-playing response.
  *
  * Songs only: a podcast episode is reported by Spotify as
  * currently_playing_type "episode" with a null item, so it falls through to
@@ -125,6 +131,78 @@ async function nowPlaying(env) {
   };
 }
 
+/* ---------- private listen history (Cloudflare KV) ---------- */
+
+// One key per calendar day keeps any single key well under KV's size limit
+// and makes "what did I listen to on X" a single get instead of a scan.
+function historyDayKey(date) {
+  return `history:${date.toISOString().slice(0, 10)}`;
+}
+
+function trackSignature(track) {
+  return `${track.title}::${track.artist}::${track.album}`;
+}
+
+// Appends a play to today's log, but only when the track actually changed —
+// otherwise every 25s poll from every open tab would log the same song over
+// and over. "Last logged" is tracked in KV (not memory) since Workers
+// isolates are short-lived and shouldn't be trusted to remember anything.
+async function logHistory(env, track, playedAt) {
+  if (!env.HISTORY) return;
+
+  const signature = trackSignature(track);
+  const last = await env.HISTORY.get("history:last");
+  if (last === signature) return;
+
+  const entry = {
+    title: track.title,
+    artist: track.artist,
+    album: track.album,
+    url: track.url,
+    at: playedAt || new Date().toISOString(),
+  };
+
+  const dayKey = historyDayKey(new Date());
+  const existingRaw = await env.HISTORY.get(dayKey);
+  const existing = existingRaw ? JSON.parse(existingRaw) : [];
+  existing.push(entry);
+
+  await Promise.all([
+    env.HISTORY.put(dayKey, JSON.stringify(existing)),
+    env.HISTORY.put("history:last", signature),
+  ]);
+}
+
+function timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return mismatch === 0;
+}
+
+// Not a public API: reachable only to whoever holds HISTORY_TOKEN, which
+// lives solely as a Worker secret. Lists every day-log in the KV namespace.
+async function handleHistory(request, env) {
+  const token = new URL(request.url).searchParams.get("token") || "";
+  if (!env.HISTORY_TOKEN || !timingSafeEqual(token, env.HISTORY_TOKEN)) {
+    return new Response("Not found", { status: 404 });
+  }
+
+  const days = {};
+  let cursor;
+  do {
+    const page = await env.HISTORY.list({ prefix: "history:20", cursor });
+    for (const key of page.keys) {
+      days[key.name] = JSON.parse((await env.HISTORY.get(key.name)) || "[]");
+    }
+    cursor = page.cursor;
+  } while (cursor);
+
+  return new Response(JSON.stringify(days, null, 2), {
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 function corsHeaders(origin) {
   const headers = { Vary: "Origin" };
   if (origin && ALLOWED_ORIGINS.has(origin)) {
@@ -149,6 +227,9 @@ export default {
       return new Response("Method not allowed", { status: 405, headers: cors });
     }
 
+    const url = new URL(request.url);
+    if (url.pathname === "/history") return handleHistory(request, env);
+
     const cache = caches.default;
     const cacheKey = new Request(new URL(request.url).toString(), { method: "GET" });
 
@@ -169,6 +250,10 @@ export default {
         status: 502,
         headers: { ...cors, "Content-Type": "application/json" },
       });
+    }
+
+    if (payload.status === "playing" || payload.status === "recent") {
+      ctx.waitUntil(logHistory(env, payload, payload.playedAt));
     }
 
     const body = JSON.stringify(payload);

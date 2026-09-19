@@ -53,6 +53,12 @@ npx wrangler login
 npx wrangler secret put SPOTIFY_CLIENT_ID
 npx wrangler secret put SPOTIFY_CLIENT_SECRET
 npx wrangler secret put SPOTIFY_REFRESH_TOKEN
+
+# Private listen-history log — create the KV namespace, paste the id it
+# prints into wrangler.toml, then pick any random string as your token:
+npx wrangler kv namespace create HISTORY
+npx wrangler secret put HISTORY_TOKEN
+
 npx wrangler deploy
 ```
 
@@ -84,6 +90,23 @@ Commit and push. Done.
 | a podcast episode | **Last played**, the last actual *song* — episodes never appear |
 | nothing playing | **Last played**, from recently-played, with "about 3 hours ago" |
 | nothing at all, or an error | the band hides itself; the page reads as if it were never there |
+
+## Listen history
+
+Every distinct track the Worker sees (playing or last-played) gets appended to
+a private Cloudflare KV log, grouped by day, deduplicated so repeated polls of
+the same song don't create repeat entries. It's never included in the public
+JSON the page reads.
+
+To read it back yourself:
+
+```sh
+curl "https://ra-mour-radio.<your-subdomain>.workers.dev/history?token=<HISTORY_TOKEN>"
+```
+
+Returns `{"history:2026-09-19": [{title, artist, album, url, at}, ...], ...}`
+for every day logged so far. Anyone without the token gets a plain 404, same
+as a route that doesn't exist.
 
 ## Notes
 
