@@ -86,7 +86,39 @@ function shapeTrack(track) {
   };
 }
 
-async function lastPlayedTrack(token) {
+// The last track we actually saw playing live, remembered in KV. Preferred
+// over Spotify's recently-played, which skips short plays, hides private
+// sessions and can lag by hours — so it can keep naming an old song.
+const LAST_LIVE_KEY = "last-live";
+
+async function readLastLive(env) {
+  if (!env.HISTORY) return null;
+  try {
+    return await env.HISTORY.get(LAST_LIVE_KEY, "json");
+  } catch {
+    return null;
+  }
+}
+
+// Only writes when the track changed: KV writes are limited, and every poll
+// from every open tab lands here while a song plays.
+async function saveLastLive(env, track) {
+  if (!env.HISTORY) return;
+
+  const last = await readLastLive(env);
+  if (last && last.url === track.url) return;
+
+  const { title, artist, album, url, image, durationMs } = track;
+  await env.HISTORY.put(
+    LAST_LIVE_KEY,
+    JSON.stringify({ title, artist, album, url, image, durationMs, playedAt: new Date().toISOString() }),
+  );
+}
+
+async function lastPlayedTrack(env, token) {
+  const live = await readLastLive(env);
+  if (live) return { status: "recent", ...live, progressMs: null };
+
   const res = await api("/me/player/recently-played?limit=1", token);
   if (!res.ok) return { status: "silent" };
 
@@ -107,7 +139,7 @@ async function nowPlaying(env) {
   const res = await api("/me/player/currently-playing", token);
 
   // 204: nothing on any device. 202: player warming up.
-  if (res.status === 204 || res.status === 202) return lastPlayedTrack(token);
+  if (res.status === 204 || res.status === 202) return lastPlayedTrack(env, token);
   if (!res.ok) throw new Error(`currently-playing failed: ${res.status}`);
 
   const data = await res.json();
@@ -115,7 +147,7 @@ async function nowPlaying(env) {
 
   // No item, or an item that isn't a song (podcast episode, local file with no
   // track object) — fall through to the last real song.
-  if (!item || item.type !== "track") return lastPlayedTrack(token);
+  if (!item || item.type !== "track") return lastPlayedTrack(env, token);
 
   // Paused: still the truest answer to "what was he listening to", and fresher
   // than recently-played, which hasn't logged this track yet.
@@ -255,6 +287,7 @@ export default {
     if (payload.status === "playing" || payload.status === "recent") {
       ctx.waitUntil(logHistory(env, payload, payload.playedAt));
     }
+    if (payload.status === "playing") ctx.waitUntil(saveLastLive(env, payload));
 
     const body = JSON.stringify(payload);
     const cacheable = new Response(body, {
