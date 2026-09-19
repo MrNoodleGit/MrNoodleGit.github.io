@@ -234,11 +234,6 @@
   margin-bottom: 0.35rem;
 }
 
-.radio__moment audio {
-  width: 100%;
-  height: 32px;
-}
-
 /* ---------- phone ---------- */
 
 @media (max-width: 40rem) {

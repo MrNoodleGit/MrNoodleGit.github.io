@@ -169,11 +169,9 @@
         item.appendChild(p);
       }
 
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.preload = "none";
-      audio.src = `${ENDPOINT}${m.audioUrl}`;
-      item.appendChild(audio);
+      const playerHost = document.createElement("div");
+      item.appendChild(playerHost);
+      RaMourPlayer.create(playerHost, `${ENDPOINT}${m.audioUrl}`, m.id);
 
       els.momentsList.appendChild(item);
     }

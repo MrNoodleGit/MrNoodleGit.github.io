@@ -14,7 +14,8 @@
     />
     <link rel="stylesheet" href="css/style.css?v=18" />
     <link rel="stylesheet" href="css/music.css?v=2" />
-    <link rel="stylesheet" href="css/studio.css?v=1" />
+    <link rel="stylesheet" href="css/moment-player.css?v=1" />
+    <link rel="stylesheet" href="css/studio.css?v=2" />
   </head>
   <body class="music">
     <header class="music-back">
@@ -79,25 +80,24 @@
         <p class="studio-note" id="studio-anchor-status"></p>
       </div>
 
-      <!-- ---------- recorder ---------- -->
+      <!-- ---------- upload: record elsewhere, bring the file here ---------- -->
       <div class="studio-panel">
-        <h2>Record</h2>
+        <h2>Upload</h2>
 
-        <div class="studio-recorder">
-          <button type="button" id="studio-record" class="studio-btn-record">
-            Record
-          </button>
-          <span class="studio-timer" id="studio-timer">0:00</span>
-        </div>
+        <label class="studio-dropzone" id="studio-dropzone" for="studio-file-input">
+          <span class="studio-dropzone__title">Choose a recording</span>
+          <span class="studio-dropzone__hint">or drag an audio file here</span>
+        </label>
+        <input type="file" id="studio-file-input" accept="audio/*" hidden />
 
         <div class="studio-preview" id="studio-preview" hidden>
-          <audio controls id="studio-audio"></audio>
+          <div id="studio-player-host"></div>
           <div class="studio-field">
             <label for="studio-caption">Caption (optional)</label>
             <textarea id="studio-caption" rows="2"></textarea>
           </div>
           <div class="studio-preview__actions">
-            <button type="button" id="studio-save" class="studio-btn-record">
+            <button type="button" id="studio-save" class="studio-btn-primary">
               Save moment
             </button>
             <button type="button" id="studio-discard" class="studio-btn-ghost">
@@ -121,6 +121,7 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
-    <script src="js/studio.js?v=1"></script>
+    <script src="js/moment-player.js?v=1"></script>
+    <script src="js/studio.js?v=2"></script>
   </body>
 </html>

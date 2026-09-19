@@ -1,7 +1,12 @@
-/* Ra Mour Studio — private page for recording a "moment": a short voice
+/* Ra Mour Studio — private page for uploading a "moment": a short voice
    clip anchored to a track, not to a point in time (the site can't
    broadcast the Spotify audio, so nothing here is ever in sync with what a
    visitor hears — this attaches instead to *which track*, permanently).
+
+   Recording itself happens elsewhere (phone voice memo, whatever) — this
+   page just takes the resulting file, lets you preview and caption it, and
+   uploads it. Playback, here and on the public band, goes through the
+   shared js/player.js instead of the browser's own <audio> chrome.
 
    Talks to the same Worker as js/radio.js, plus two endpoints only this
    page uses: POST /moments (guarded by a token) and its GET/list sibling. */
@@ -24,10 +29,10 @@
     refresh: document.getElementById("studio-refresh"),
     anchorStatus: document.getElementById("studio-anchor-status"),
 
-    record: document.getElementById("studio-record"),
-    timer: document.getElementById("studio-timer"),
+    dropzone: document.getElementById("studio-dropzone"),
+    fileInput: document.getElementById("studio-file-input"),
     preview: document.getElementById("studio-preview"),
-    audio: document.getElementById("studio-audio"),
+    playerHost: document.getElementById("studio-player-host"),
     caption: document.getElementById("studio-caption"),
     save: document.getElementById("studio-save"),
     discard: document.getElementById("studio-discard"),
@@ -39,12 +44,8 @@
 
   let token = localStorage.getItem(TOKEN_KEY) || "";
 
-  let mediaStream = null;
-  let recorder = null;
-  let chunks = [];
-  let recordedBlob = null;
-  let startedAt = 0;
-  let timerId = null;
+  let selectedFile = null;
+  let selectedDurationSec = 0;
 
   const fmt = (sec) => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
 
@@ -162,10 +163,9 @@
           li.appendChild(cap);
         }
 
-        const audio = document.createElement("audio");
-        audio.controls = true;
-        audio.src = `${ENDPOINT}${m.audioUrl}`;
-        li.appendChild(audio);
+        const playerHost = document.createElement("div");
+        li.appendChild(playerHost);
+        RaMourPlayer.create(playerHost, `${ENDPOINT}${m.audioUrl}`, m.id);
 
         els.momentsList.appendChild(li);
       }
@@ -174,75 +174,68 @@
     }
   }
 
-  /* ---------- recording ---------- */
+  /* ---------- upload: recording happens elsewhere, this just takes the file ---------- */
 
-  function pickMimeType() {
-    const candidates = [
-      "audio/webm;codecs=opus",
-      "audio/webm",
-      "audio/mp4",
-      "audio/ogg;codecs=opus",
-    ];
-    return candidates.find((type) => window.MediaRecorder?.isTypeSupported?.(type)) || "";
+  // Voice-memo exports are usually fine, but a file with no duration header
+  // (some webm/ogg captures) reports Infinity until forced to seek once.
+  function getAudioDuration(file) {
+    return new Promise((resolve) => {
+      const probe = document.createElement("audio");
+      probe.preload = "metadata";
+      probe.src = URL.createObjectURL(file);
+
+      probe.addEventListener("loadedmetadata", () => {
+        if (Number.isFinite(probe.duration)) {
+          resolve(probe.duration);
+          return;
+        }
+        probe.currentTime = Number.MAX_SAFE_INTEGER;
+        probe.addEventListener(
+          "timeupdate",
+          () => {
+            resolve(Number.isFinite(probe.duration) ? probe.duration : 0);
+          },
+          { once: true }
+        );
+      });
+    });
   }
 
-  function updateTimer() {
-    els.timer.textContent = fmt(Math.floor((Date.now() - startedAt) / 1000));
-  }
+  async function useFile(file) {
+    if (!file) return;
 
-  async function startRecording() {
+    selectedFile = file;
     els.recordStatus.textContent = "";
-    try {
-      mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch {
-      els.recordStatus.textContent = "Microphone access denied or unavailable.";
-      return;
-    }
+    els.playerHost.textContent = "";
+    RaMourPlayer.create(els.playerHost, URL.createObjectURL(file), file.name);
+    els.preview.hidden = false;
 
-    const mimeType = pickMimeType();
-    recorder = mimeType ? new MediaRecorder(mediaStream, { mimeType }) : new MediaRecorder(mediaStream);
-    chunks = [];
-
-    recorder.ondataavailable = (e) => {
-      if (e.data.size > 0) chunks.push(e.data);
-    };
-
-    recorder.onstop = () => {
-      recordedBlob = new Blob(chunks, { type: recorder.mimeType || mimeType || "audio/webm" });
-      els.audio.src = URL.createObjectURL(recordedBlob);
-      els.preview.hidden = false;
-      mediaStream.getTracks().forEach((t) => t.stop());
-      mediaStream = null;
-    };
-
-    recorder.start();
-    startedAt = Date.now();
-    timerId = setInterval(updateTimer, 500);
-    updateTimer();
-
-    els.record.textContent = "Stop";
-    els.record.classList.add("is-recording");
-    els.preview.hidden = true;
+    selectedDurationSec = Math.round(await getAudioDuration(file));
   }
 
-  function stopRecording() {
-    clearInterval(timerId);
-    recorder?.stop();
-    els.record.textContent = "Record";
-    els.record.classList.remove("is-recording");
-  }
+  els.fileInput.addEventListener("change", () => useFile(els.fileInput.files[0]));
 
-  els.record.addEventListener("click", () => {
-    if (recorder && recorder.state === "recording") stopRecording();
-    else startRecording();
+  ["dragover", "dragenter"].forEach((evt) =>
+    els.dropzone.addEventListener(evt, (e) => {
+      e.preventDefault();
+      els.dropzone.classList.add("is-dragover");
+    })
+  );
+  ["dragleave", "drop"].forEach((evt) =>
+    els.dropzone.addEventListener(evt, () => els.dropzone.classList.remove("is-dragover"))
+  );
+  els.dropzone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    useFile(e.dataTransfer.files[0]);
   });
 
   els.discard.addEventListener("click", () => {
-    recordedBlob = null;
-    els.audio.removeAttribute("src");
+    selectedFile = null;
+    selectedDurationSec = 0;
+    els.playerHost.textContent = "";
     els.caption.value = "";
     els.preview.hidden = true;
-    els.timer.textContent = "0:00";
+    els.fileInput.value = "";
   });
 
   els.save.addEventListener("click", async () => {
@@ -251,20 +244,19 @@
       els.recordStatus.textContent = "Fill in a title (or a Spotify link) before saving.";
       return;
     }
-    if (!recordedBlob) return;
+    if (!selectedFile) return;
 
     els.save.disabled = true;
     els.recordStatus.textContent = "Saving…";
 
-    const durationSec = Math.round((Date.now() - startedAt) / 1000);
     const form = new FormData();
-    form.append("audio", recordedBlob, "moment");
+    form.append("audio", selectedFile, selectedFile.name);
     form.append("trackId", trackId);
     form.append("title", els.title.value.trim());
     form.append("artist", els.artist.value.trim());
     form.append("album", els.album.value.trim());
     form.append("caption", els.caption.value.trim());
-    form.append("durationSec", String(durationSec));
+    form.append("durationSec", String(selectedDurationSec));
 
     try {
       const res = await fetch(`${ENDPOINT}/moments`, {

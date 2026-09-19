@@ -1,6 +1,7 @@
 /* ============================================================
-   Studio — private recording page. Same room as the rest of the
-   site; no new colours, just forms and a record button.
+   Studio — private upload page. Same room as the rest of the
+   site; no new colours, just forms and a dropzone. Playback
+   comes from css/player.css, not the browser's own <audio>.
    ============================================================ */
 
 .studio-gate,
@@ -63,7 +64,7 @@ button {
 }
 
 #studio-unlock,
-.studio-btn-record {
+.studio-btn-primary {
   background: var(--teal);
   color: var(--text);
   padding: 0.6rem 1.4rem;
@@ -71,12 +72,7 @@ button {
 }
 
 #studio-unlock:hover,
-.studio-btn-record:hover { background: var(--zima); color: var(--ink); }
-
-.studio-btn-record.is-recording {
-  background: var(--crimson);
-  color: var(--text);
-}
+.studio-btn-primary:hover { background: var(--zima); color: var(--ink); }
 
 .studio-btn-ghost {
   font-size: 0.68rem;
@@ -116,16 +112,35 @@ button {
 
 .studio-field { display: flex; flex-direction: column; }
 
-.studio-recorder {
+.studio-dropzone {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  justify-content: center;
+  gap: 0.3rem;
+  border: 1px dashed rgba(91, 194, 231, 0.35);
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
-.studio-timer {
-  font-variant-numeric: tabular-nums;
+.studio-dropzone:hover,
+.studio-dropzone.is-dragover {
+  border-color: var(--zima);
+  background: rgba(91, 194, 231, 0.06);
+}
+
+.studio-dropzone__title {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  color: var(--zima);
+}
+
+.studio-dropzone__hint {
+  font-size: 0.8rem;
   color: var(--muted);
-  font-size: 1.1rem;
+  font-style: italic;
 }
 
 .studio-preview {
@@ -135,8 +150,6 @@ button {
 }
 
 .studio-preview[hidden] { display: none; }
-
-.studio-preview audio { width: 100%; }
 
 .studio-preview__actions { display: flex; gap: 1rem; align-items: center; }
 
@@ -154,8 +167,6 @@ button {
   flex-direction: column;
   gap: 0.4rem;
 }
-
-.studio-moments audio { width: 100%; }
 
 .studio-moments__meta {
   font-size: 0.78rem;

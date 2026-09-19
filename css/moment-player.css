@@ -1,0 +1,56 @@
+/* ============================================================
+   Ra Mour Player — small playback control for a moment, styled
+   like the band's waveform instead of the browser's own <audio>
+   chrome. Shared by the studio and the public band.
+   ============================================================ */
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.player__btn {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: var(--teal);
+  color: var(--text);
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.player__btn:hover { background: var(--zima); color: var(--ink); }
+
+.player__wave {
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.player__bar {
+  flex-grow: 1;
+  min-width: 2px;
+  background: rgba(127, 168, 173, 0.3);
+  transition: background-color 0.2s;
+}
+
+.player__bar.is-lit { background: rgba(91, 194, 231, 0.85); }
+
+.player__time {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
