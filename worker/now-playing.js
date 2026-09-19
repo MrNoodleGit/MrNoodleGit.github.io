@@ -12,7 +12,10 @@
  *
  * Also needs a KV namespace bound as HISTORY (see wrangler.toml) — every
  * distinct track we see gets appended there, privately, as a listen-history
- * log. Nothing about it is exposed on the public /now-playing response.
+ * log. Nothing about it is exposed on the public /now-playing response. The
+ * same namespace holds a `last-live` key: the last track actually seen
+ * playing, kept fresh by a 1-minute cron (see `scheduled` below) so "last
+ * played" can't go stale for hours between visits.
  *
  * Songs only: a podcast episode is reported by Spotify as
  * currently_playing_type "episode" with a null item, so it falls through to
@@ -100,25 +103,43 @@ async function readLastLive(env) {
   }
 }
 
-// Only writes when the track changed: KV writes are limited, and every poll
-// from every open tab lands here while a song plays.
+// Only writes when the track changed: KV writes are limited (~1,000/day on
+// the free plan), and every poll from every open tab, plus the cron, lands
+// here while a song plays.
 async function saveLastLive(env, track) {
   if (!env.HISTORY) return;
 
   const last = await readLastLive(env);
-  if (last && last.url === track.url) return;
+  if (last && trackSignature(last) === trackSignature(track)) return;
 
   const { title, artist, album, url, image, durationMs } = track;
-  await env.HISTORY.put(
-    LAST_LIVE_KEY,
-    JSON.stringify({ title, artist, album, url, image, durationMs, playedAt: new Date().toISOString() }),
-  );
+  await env.HISTORY.put(LAST_LIVE_KEY, JSON.stringify({ title, artist, album, url, image, durationMs }));
+}
+
+// Shared by the web path (which already has the currently-playing response)
+// and the 1-minute cron (which has to fetch it itself). Fetches
+// currently-playing and remembers it in `last-live` if a real song is
+// actively playing and it differs from what's already stored. Silent no-op
+// when paused, on a podcast, or when nothing is playing.
+async function captureLive(env) {
+  if (!env.HISTORY) return;
+
+  try {
+    const token = await getAccessToken(env);
+    const res = await api("/me/player/currently-playing", token);
+    if (res.status === 204 || res.status === 202 || !res.ok) return;
+
+    const data = await res.json();
+    const item = data.item;
+    if (!item || item.type !== "track" || !data.is_playing) return;
+
+    await saveLastLive(env, shapeTrack(item));
+  } catch {
+    // Best effort — the next cron tick or page poll tries again.
+  }
 }
 
 async function lastPlayedTrack(env, token) {
-  const live = await readLastLive(env);
-  if (live) return { status: "recent", ...live, progressMs: null };
-
   const res = await api("/me/player/recently-played?limit=1", token);
   if (!res.ok) return { status: "silent" };
 
@@ -134,25 +155,31 @@ async function lastPlayedTrack(env, token) {
   };
 }
 
+// Nothing is actively playing (silent, a podcast, or paused): the last track
+// actually seen live is a truer answer than Spotify's recently-played, which
+// only logs a track once it ends and can lag by hours. Fall back to
+// recently-played only when we've never captured a live track.
+async function recentOrLastPlayed(env, token) {
+  const live = await readLastLive(env);
+  if (live) return { status: "recent", ...live, progressMs: null };
+  return lastPlayedTrack(env, token);
+}
+
 async function nowPlaying(env) {
   const token = await getAccessToken(env);
   const res = await api("/me/player/currently-playing", token);
 
   // 204: nothing on any device. 202: player warming up.
-  if (res.status === 204 || res.status === 202) return lastPlayedTrack(env, token);
+  if (res.status === 204 || res.status === 202) return recentOrLastPlayed(env, token);
   if (!res.ok) throw new Error(`currently-playing failed: ${res.status}`);
 
   const data = await res.json();
   const item = data.item;
 
-  // No item, or an item that isn't a song (podcast episode, local file with no
-  // track object) — fall through to the last real song.
-  if (!item || item.type !== "track") return lastPlayedTrack(env, token);
-
-  // Paused: still the truest answer to "what was he listening to", and fresher
-  // than recently-played, which hasn't logged this track yet.
-  if (!data.is_playing) {
-    return { status: "recent", ...shapeTrack(item), progressMs: null, playedAt: null };
+  // No item, an item that isn't a song (podcast episode, local file with no
+  // track object), or paused — fall through to the last live/recent song.
+  if (!item || item.type !== "track" || !data.is_playing) {
+    return recentOrLastPlayed(env, token);
   }
 
   return {
@@ -244,6 +271,12 @@ function corsHeaders(origin) {
 }
 
 export default {
+  // Runs every minute (see [triggers] in wrangler.toml) so `last-live` stays
+  // fresh even when nobody's polling the Music page.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(captureLive(env));
+  },
+
   async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin");
     const cors = corsHeaders(origin);
