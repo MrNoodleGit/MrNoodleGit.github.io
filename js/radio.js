@@ -15,27 +15,6 @@
   const POLL_MS = 25000; // how often we ask the Worker
   const TICK_MS = 500; // how often the local clock advances the bar
   const BAR_COUNT = 40;
-  const CACHE_KEY = "ra-mour-radio-last-track";
-
-  // Remembers the last song we successfully drew, across page loads, so a
-  // visitor who lands while the Worker/Spotify is down still sees something
-  // instead of a blank spot.
-  function saveCache(data) {
-    try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-    } catch {
-      // Private browsing, storage full, etc. — not worth failing over.
-    }
-  }
-
-  function loadCache() {
-    try {
-      const raw = localStorage.getItem(CACHE_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  }
 
   const section = document.getElementById("radio");
   if (!section || ENDPOINT.startsWith("REPLACE_")) return;
@@ -192,16 +171,6 @@
 
     section.hidden = false;
     shown = true;
-    saveCache(data);
-  }
-
-  // A cached track is always stale by definition — show it as "last played"
-  // and skip the live progress bar, whatever status it was saved under.
-  function renderFromCache() {
-    const cached = loadCache();
-    if (!cached) return false;
-    render({ ...cached, status: "recent" });
-    return true;
   }
 
   /* ---------- talking to the Worker ---------- */
@@ -216,13 +185,12 @@
 
       const data = await res.json();
       if (data.status === "playing" || data.status === "recent") render(data);
-      else if (!shown && !renderFromCache()) section.hidden = true;
+      else if (!shown) section.hidden = true;
     } catch {
       // Spotify unreachable, Worker down, endpoint wrong. If the band was
-      // never shown, fall back to the last cached track rather than stay
-      // silent; if it was already shown, leave the last good song up rather
-      // than blinking out under someone reading it.
-      if (!shown && !renderFromCache()) section.hidden = true;
+      // never shown, stay silent; if it was, leave the last good song up
+      // rather than blinking out under someone reading it.
+      if (!shown) section.hidden = true;
     } finally {
       inFlight = false;
     }
