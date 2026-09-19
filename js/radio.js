@@ -50,10 +50,14 @@
     wave: document.getElementById("radio-wave"),
     time: document.getElementById("radio-time"),
     link: document.getElementById("radio-link"),
+    moments: document.getElementById("radio-moments"),
+    momentsSummary: document.getElementById("radio-moments-summary"),
+    momentsList: document.getElementById("radio-moments-list"),
   };
 
   let bars = [];
   let currentUrl = null; // the track we're drawing, so we know when it changes
+  let currentTrackId = null; // separately, so a re-fetch of the same track skips /moments
   let shown = false; // once real data has landed, never yank it away
   let pollTimer = null;
   let tickTimer = null;
@@ -146,6 +150,54 @@
     els.time.textContent = `${fmt(at)} / ${fmt(state.durationMs)}`;
   }
 
+  /* ---------- moments: voice clips anchored to this track ---------- */
+
+  function renderMoments(list) {
+    if (!list.length) {
+      els.moments.hidden = true;
+      return;
+    }
+
+    els.momentsList.textContent = "";
+    for (const m of list) {
+      const item = document.createElement("div");
+      item.className = "radio__moment";
+
+      if (m.caption) {
+        const p = document.createElement("p");
+        p.textContent = m.caption;
+        item.appendChild(p);
+      }
+
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.preload = "none";
+      audio.src = `${ENDPOINT}${m.audioUrl}`;
+      item.appendChild(audio);
+
+      els.momentsList.appendChild(item);
+    }
+
+    els.momentsSummary.textContent =
+      list.length === 1 ? "A moment, about this one" : `${list.length} moments, about this one`;
+    els.moments.hidden = false;
+  }
+
+  async function loadMoments(trackId) {
+    if (!trackId) {
+      els.moments.hidden = true;
+      return;
+    }
+
+    try {
+      const res = await fetch(`${ENDPOINT}/moments?track=${encodeURIComponent(trackId)}`);
+      const data = await res.json();
+      renderMoments(data.moments || []);
+    } catch {
+      els.moments.hidden = true;
+    }
+  }
+
   /* ---------- drawing ---------- */
 
   function render(data) {
@@ -160,6 +212,12 @@
         els.art.alt = data.album ? `${data.album} cover art` : "Album cover art";
         els.backdrop.src = data.image;
       }
+    }
+
+    if (data.trackId !== currentTrackId) {
+      currentTrackId = data.trackId;
+      els.moments.open = false;
+      loadMoments(data.trackId);
     }
 
     els.title.textContent = data.title;

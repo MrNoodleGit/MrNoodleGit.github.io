@@ -17,7 +17,7 @@
     />
     <link rel="stylesheet" href="css/style.css?v=18" />
     <link rel="stylesheet" href="css/music.css?v=2" />
-    <link rel="stylesheet" href="css/radio.css?v=1" />
+    <link rel="stylesheet" href="css/radio.css?v=2" />
   </head>
   <body class="music">
     <header class="music-back">
@@ -71,6 +71,14 @@
             >Listen along</a
           >
         </p>
+
+        <!-- Voice moments recorded against this track (js/radio.js fills
+           this only when the currently shown track has any). Not synced
+           to playback — a moment is anchored to the track, not a time. -->
+        <details class="radio__moments" id="radio-moments" hidden>
+          <summary id="radio-moments-summary"></summary>
+          <div class="radio__moments-list" id="radio-moments-list"></div>
+        </details>
       </div>
     </section>
 
@@ -96,7 +104,7 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
-    <script src="js/radio.js?v=1"></script>
+    <script src="js/radio.js?v=2"></script>
     <script src="js/music.js?v=2"></script>
   </body>
 </html>

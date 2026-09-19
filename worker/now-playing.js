@@ -9,10 +9,16 @@
  *   SPOTIFY_REFRESH_TOKEN     (minted once by scripts/spotify-auth.mjs)
  *   HISTORY_TOKEN             (any random string of your choosing; guards
  *                              the private /history endpoint below)
+ *   MOMENTS_TOKEN             (any random string of your choosing; guards
+ *                              uploading a moment from the private studio)
  *
- * Also needs a KV namespace bound as HISTORY (see wrangler.toml) — every
- * distinct track we see gets appended there, privately, as a listen-history
- * log. Nothing about it is exposed on the public /now-playing response.
+ * Also needs:
+ *   - a KV namespace bound as HISTORY (see wrangler.toml) — every distinct
+ *     track we see gets appended there, privately, as a listen-history log.
+ *     Nothing about it is exposed on the public /now-playing response.
+ *   - a KV namespace bound as MOMENTS and an R2 bucket bound as
+ *     MOMENTS_AUDIO — voice recordings anchored to a track, recorded from
+ *     the private studio page and shown publicly alongside that track.
  *
  * Songs only: a podcast episode is reported by Spotify as
  * currently_playing_type "episode" with a null item, so it falls through to
@@ -70,17 +76,26 @@ function api(path, token) {
   });
 }
 
+// Spotify track URLs are https://open.spotify.com/track/<id>[?...] — the id
+// is the stable anchor a voice moment attaches to (titles can retag, ids don't).
+function trackIdFromUrl(url) {
+  const match = /\/track\/([a-zA-Z0-9]+)/.exec(url || "");
+  return match ? match[1] : null;
+}
+
 // Spotify's track object -> the only fields the page actually draws.
 function shapeTrack(track) {
   const covers = track.album?.images ?? [];
   // images come widest-first; the second is ~300px, plenty for a 212px block
   const image = covers[1]?.url ?? covers[0]?.url ?? null;
+  const url = track.external_urls?.spotify ?? null;
 
   return {
     title: track.name,
     artist: (track.artists ?? []).map((a) => a.name).join(", "),
     album: track.album?.name ?? "",
-    url: track.external_urls?.spotify ?? null,
+    url,
+    trackId: trackIdFromUrl(url),
     image,
     durationMs: track.duration_ms ?? null,
   };
@@ -203,6 +218,109 @@ async function handleHistory(request, env) {
   });
 }
 
+/* ---------- moments: short voice recordings anchored to a track ---------- */
+//
+// Not synced to what a visitor hears — the site can't broadcast Spotify's
+// audio — so a moment is stored against the track's id, not a point in time.
+// It surfaces later, on the band, wherever that track comes back around.
+
+function momentsListKey(trackId) {
+  return `track:${trackId}`;
+}
+
+async function getMomentsList(env, trackId) {
+  const raw = await env.MOMENTS.get(momentsListKey(trackId));
+  return raw ? JSON.parse(raw) : [];
+}
+
+async function handleMomentsGet(request, env, cors) {
+  if (!env.MOMENTS) {
+    return new Response(JSON.stringify({ moments: [] }), {
+      headers: { ...cors, "Content-Type": "application/json" },
+    });
+  }
+
+  const trackId = new URL(request.url).searchParams.get("track") || "";
+  const stored = trackId ? await getMomentsList(env, trackId) : [];
+
+  const moments = stored
+    .map((m) => ({
+      id: m.id,
+      createdAt: m.createdAt,
+      durationSec: m.durationSec ?? null,
+      caption: m.caption || "",
+      audioUrl: `/moment-audio/${m.id}`,
+    }))
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+
+  return new Response(JSON.stringify({ moments }), {
+    headers: { ...cors, "Content-Type": "application/json", "Cache-Control": "public, max-age=20" },
+  });
+}
+
+// Not a public API: reachable only to whoever holds MOMENTS_TOKEN, entered
+// once in the private studio page and sent as a bearer token.
+function checkMomentsAuth(request, env) {
+  const auth = request.headers.get("Authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  return Boolean(env.MOMENTS_TOKEN) && timingSafeEqual(token, env.MOMENTS_TOKEN);
+}
+
+async function handleMomentsPost(request, env, cors) {
+  if (!checkMomentsAuth(request, env)) {
+    return new Response("Unauthorized", { status: 401, headers: cors });
+  }
+  if (!env.MOMENTS || !env.MOMENTS_AUDIO) {
+    return new Response("Not configured", { status: 501, headers: cors });
+  }
+
+  const form = await request.formData();
+  const audio = form.get("audio");
+  const trackId = String(form.get("trackId") || "").trim();
+  if (!(audio instanceof File) || !trackId) {
+    return new Response("Missing audio or trackId", { status: 400, headers: cors });
+  }
+
+  const id = crypto.randomUUID();
+  const contentType = audio.type || "application/octet-stream";
+  await env.MOMENTS_AUDIO.put(id, await audio.arrayBuffer(), { httpMetadata: { contentType } });
+
+  const entry = {
+    id,
+    createdAt: new Date().toISOString(),
+    durationSec: Number(form.get("durationSec")) || null,
+    caption: String(form.get("caption") || "").slice(0, 500),
+    title: String(form.get("title") || "").slice(0, 200),
+    artist: String(form.get("artist") || "").slice(0, 200),
+    album: String(form.get("album") || "").slice(0, 200),
+  };
+
+  const list = await getMomentsList(env, trackId);
+  list.push(entry);
+  await env.MOMENTS.put(momentsListKey(trackId), JSON.stringify(list));
+
+  return new Response(JSON.stringify({ id, audioUrl: `/moment-audio/${id}` }), {
+    status: 201,
+    headers: { ...cors, "Content-Type": "application/json" },
+  });
+}
+
+async function handleMomentAudio(id, env, cors) {
+  if (!env.MOMENTS_AUDIO) return new Response("Not found", { status: 404, headers: cors });
+
+  const object = await env.MOMENTS_AUDIO.get(id);
+  if (!object) return new Response("Not found", { status: 404, headers: cors });
+
+  return new Response(object.body, {
+    headers: {
+      ...cors,
+      "Content-Type": object.httpMetadata?.contentType || "application/octet-stream",
+      // recordings are immutable once saved — safe to cache forever
+      "Cache-Control": "public, max-age=31536000, immutable",
+    },
+  });
+}
+
 function corsHeaders(origin) {
   const headers = { Vary: "Origin" };
   if (origin && ALLOWED_ORIGINS.has(origin)) {
@@ -219,15 +337,31 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, {
         status: 204,
-        headers: { ...cors, "Access-Control-Allow-Methods": "GET, OPTIONS" },
+        headers: {
+          ...cors,
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
       });
+    }
+
+    const url = new URL(request.url);
+
+    if (url.pathname === "/moments") {
+      if (request.method === "GET") return handleMomentsGet(request, env, cors);
+      if (request.method === "POST") return handleMomentsPost(request, env, cors);
+      return new Response("Method not allowed", { status: 405, headers: cors });
+    }
+
+    if (url.pathname.startsWith("/moment-audio/")) {
+      if (request.method !== "GET") return new Response("Method not allowed", { status: 405, headers: cors });
+      return handleMomentAudio(url.pathname.slice("/moment-audio/".length), env, cors);
     }
 
     if (request.method !== "GET") {
       return new Response("Method not allowed", { status: 405, headers: cors });
     }
 
-    const url = new URL(request.url);
     if (url.pathname === "/history") return handleHistory(request, env);
 
     const cache = caches.default;

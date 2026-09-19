@@ -59,6 +59,13 @@ npx wrangler secret put SPOTIFY_REFRESH_TOKEN
 npx wrangler kv namespace create HISTORY
 npx wrangler secret put HISTORY_TOKEN
 
+# Moments — voice recordings anchored to a track (see "Moments" below).
+# Create the KV namespace and R2 bucket, paste the KV id into wrangler.toml,
+# then pick any random string as your token:
+npx wrangler kv namespace create MOMENTS
+npx wrangler r2 bucket create ra-mour-moments
+npx wrangler secret put MOMENTS_TOKEN
+
 npx wrangler deploy
 ```
 
@@ -107,6 +114,34 @@ curl "https://ra-mour-radio.<your-subdomain>.workers.dev/history?token=<HISTORY_
 Returns `{"history:2026-09-19": [{title, artist, album, url, at}, ...], ...}`
 for every day logged so far. Anyone without the token gets a plain 404, same
 as a route that doesn't exist.
+
+## Moments
+
+A moment is a short voice recording, made in the private studio
+(`studio.html`), that attaches to a track rather than to a point in time —
+the site can't broadcast the Spotify audio itself, so a visitor's clock is
+never in sync with what's actually playing. Recording "about" a song and
+recording "during" it are different problems; this only solves the first.
+Instead, a moment surfaces later on the band whenever that same track comes
+back around, however long after it was recorded.
+
+- `GET /moments?track=<spotify-track-id>` — public, returns
+  `{"moments": [{id, createdAt, durationSec, caption, audioUrl}, ...]}`,
+  newest first. `js/radio.js` calls this whenever the displayed track
+  changes.
+- `POST /moments` — private, guarded by `MOMENTS_TOKEN` as
+  `Authorization: Bearer <token>`. Body is `multipart/form-data`: `audio`
+  (the recording), `trackId` (required), plus `title`, `artist`, `album`,
+  `caption`, `durationSec`. Used only by `studio.html`.
+- `GET /moment-audio/<id>` — public, streams the recording from R2.
+
+The studio page itself carries no login of its own — it asks once for
+`MOMENTS_TOKEN` and remembers it in `localStorage`. That's enough to stop a
+stray visitor from posting a recording, but the page is still reachable by
+anyone with the URL. If that's not private enough, put `studio.html` behind
+[Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/policies/access/)
+(free for a handful of users) — a few minutes in the dashboard, no code here
+changes.
 
 ## Notes
 
