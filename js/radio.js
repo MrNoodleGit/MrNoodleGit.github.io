@@ -166,7 +166,7 @@
       tick();
     } else {
       litBars(0);
-      els.time.textContent = data.playedAt ? relTime(data.playedAt) : "";
+      els.time.textContent = "";
     }
 
     section.hidden = false;
