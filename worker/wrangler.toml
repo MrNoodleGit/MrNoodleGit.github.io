@@ -15,3 +15,8 @@ compatibility_date = "2026-09-01"
 [[kv_namespaces]]
 binding = "HISTORY"
 id = "059c6524bb344a359bdbe70918e8fd67"
+
+# Captures whatever's live into the `last-live` KV key every minute, so
+# "Last played" can't go stale for hours between page visits.
+[triggers]
+crons = ["* * * * *"]

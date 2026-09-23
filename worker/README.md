@@ -98,6 +98,14 @@ a private Cloudflare KV log, grouped by day, deduplicated so repeated polls of
 the same song don't create repeat entries. It's never included in the public
 JSON the page reads.
 
+A 1-minute cron (`[triggers]` in `wrangler.toml`, running `scheduled()`)
+independently asks Spotify what's live and, when a real song is actively
+playing and it's changed, saves it to the `last-live` KV key. `now-playing`
+reads that key whenever nothing is actively playing (paused, a podcast, or
+silent) so "Last played" stays current between page visits, instead of
+drifting for hours on Spotify's `recently-played`, which is only used as a
+last resort when `last-live` is still empty.
+
 To read it back yourself:
 
 ```sh
