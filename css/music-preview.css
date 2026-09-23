@@ -1,0 +1,157 @@
+/* ============================================================
+   Waking Up preview — a compact strip in the header corner of the
+   Music page. Plays a 1:45 excerpt (js/music-preview.js).
+   Kept small on purpose so it clears the Ra Mour Radio band.
+   ============================================================ */
+
+.wu-preview {
+  position: relative;
+  z-index: 11; /* above the fixed header gradient */
+  width: min(21rem, calc(100% - 2 * var(--pad)));
+  margin: 4.5rem var(--pad) 0 auto;
+  display: grid;
+  grid-template-columns: 2.75rem 1fr auto;
+  align-items: center;
+  gap: 0.2rem 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid rgba(91, 194, 231, 0.18);
+  border-radius: 10px;
+  background: linear-gradient(160deg, #0c2226, var(--abyss) 70%);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+
+.wu-preview + .music-intro {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 1100px) {
+  .wu-preview {
+    position: absolute;
+    top: 0.6rem;
+    right: var(--pad);
+    margin: 0;
+  }
+  .wu-preview + .music-intro {
+    padding-top: 5rem; /* just clears the fixed "← Ra Mour" header */
+  }
+}
+
+.wu-preview__cover {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 5px;
+  object-fit: cover;
+  display: block;
+}
+
+.wu-preview__body { min-width: 0; line-height: 1.2; }
+
+.wu-preview__series {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.wu-preview__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.wu-preview__link {
+  font-size: 0.72rem;
+  color: var(--zima);
+  letter-spacing: 0.04em;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.wu-preview__link:hover {
+  color: #d6f7ff;
+  text-shadow: 0 0 18px rgba(91, 194, 231, 0.55);
+}
+
+.wu-preview__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.wu-preview button {
+  background: none;
+  border: 0;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, box-shadow 0.3s;
+}
+
+.wu-preview button:hover { opacity: 0.8; }
+.wu-preview button:focus-visible { outline: 2px solid var(--zima); outline-offset: 2px; }
+
+.wu-preview__skip { width: 1.7rem; height: 1.7rem; }
+.wu-preview__skip svg { width: 100%; height: 100%; }
+
+.wu-preview__play {
+  width: 2.2rem;
+  height: 2.2rem;
+  background: var(--text);
+  color: var(--ink);
+}
+
+.wu-preview button.wu-preview__play:hover {
+  opacity: 1;
+  box-shadow: 0 0 18px rgba(91, 194, 231, 0.5);
+}
+
+.wu-preview__play svg { width: 1rem; height: 1rem; }
+
+.wu-preview__player {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr 2.6rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.wu-preview__remain { text-align: right; }
+
+.wu-preview__bar {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--text) var(--fill, 0%),
+    rgba(232, 240, 240, 0.22) var(--fill, 0%)
+  );
+  cursor: pointer;
+}
+
+.wu-preview__bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 0;
+}
+
+.wu-preview__bar::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 0;
+}
