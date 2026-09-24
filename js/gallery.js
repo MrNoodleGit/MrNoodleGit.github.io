@@ -102,6 +102,13 @@ function imageTile(name) {
   img.loading = "lazy";
   img.decoding = "async";
 
+  // tile shimmers as a placeholder until its image is ready, then the
+  // image fades in (styles in gallery.css); errors too, so none stick
+  const markLoaded = () => item.classList.add("is-loaded");
+  img.addEventListener("load", markLoaded);
+  img.addEventListener("error", markLoaded);
+  if (img.complete && img.naturalWidth) markLoaded();
+
   item.appendChild(img);
   item.addEventListener("click", () => openLightbox(index));
   return item;

@@ -97,6 +97,30 @@
   display: block;
   width: 100%;
   height: auto;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.wall__item.is-loaded img { opacity: 1; }
+
+/* placeholder until the image arrives: a sized panel with a slow amber sheen */
+.wall__item:not(.is-loaded) {
+  aspect-ratio: 4 / 5;
+  background:
+    linear-gradient(
+      100deg,
+      transparent 30%,
+      rgba(217, 164, 65, 0.07) 50%,
+      transparent 70%
+    )
+    var(--g-panel);
+  background-size: 250% 100%;
+  animation: wall-shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes wall-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -150% 0; }
 }
 
 /* ---------- interspersed quotes (from quotes.md) ---------- */
@@ -216,5 +240,6 @@
 /* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .wall__item { transition: none; }
+  .wall__item { transition: none; animation: none; }
+  .wall__item img { transition: none; }
 }
