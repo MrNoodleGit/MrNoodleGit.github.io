@@ -1,55 +1,47 @@
 /* ============================================================
-   Waking Up preview — a compact strip in the header corner of the
-   Music page. Plays a 1:45 excerpt (js/music-preview.js).
-   Kept small on purpose so it clears the Ra Mour Radio band.
+   Waking Up preview — full-size player band under Ra Mour Radio.
+   Plays a 1:45 excerpt (js/music-preview.js).
    ============================================================ */
 
 .wu-preview {
-  position: relative;
-  z-index: 11; /* above the fixed header gradient */
-  width: min(21rem, calc(100% - 2 * var(--pad)));
-  margin: 4.5rem var(--pad) 0 auto;
-  display: grid;
-  grid-template-columns: 2.75rem 1fr auto;
-  align-items: center;
-  gap: 0.2rem 0.75rem;
-  padding: 0.6rem 0.75rem;
+  /* same frame as .radio and the .music-grid cards, at every width */
+  width: calc(100% - var(--pad) * 2);
+  max-width: calc(var(--measure) - var(--pad) * 2);
+  margin: 0 auto clamp(2rem, 6vh, 3.5rem);
   border: 1px solid rgba(91, 194, 231, 0.18);
-  border-radius: 10px;
-  background: linear-gradient(160deg, #0c2226, var(--abyss) 70%);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  background: var(--abyss);
+  display: grid;
+  grid-template-columns: minmax(9rem, 13rem) 1fr auto;
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  align-items: center;
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.75rem, 4vw, 2.75rem);
 }
 
-.wu-preview + .music-intro {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+@media (max-width: 860px) {
+  .wu-preview { grid-template-columns: minmax(9rem, 13rem) 1fr; }
+  /* two-column layout: gift card gets its own top-right row */
+  .wu-preview__foot { grid-row: 1; grid-column: 1 / -1; justify-self: end; }
 }
 
-@media (min-width: 1100px) {
-  .wu-preview {
-    position: absolute;
-    top: 0.6rem;
-    right: var(--pad);
-    margin: 0;
-  }
-  .wu-preview + .music-intro {
-    padding-top: 5rem; /* just clears the fixed "← Ra Mour" header */
-  }
+@media (max-width: 640px) {
+  .wu-preview { grid-template-columns: 1fr; }
+  .wu-preview__cover { max-width: 14rem; margin: 0 auto; }
+  .wu-preview__foot { justify-self: center; }
 }
 
 .wu-preview__cover {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 5px;
+  width: 100%;
+  aspect-ratio: 1;
   object-fit: cover;
   display: block;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-.wu-preview__body { min-width: 0; line-height: 1.2; }
+.wu-preview__body { min-width: 0; }
 
 .wu-preview__series {
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -57,27 +49,85 @@
 .wu-preview__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 0.95rem;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
   color: var(--text);
+  margin: 0.15rem 0;
 }
 
-.wu-preview__link {
-  font-size: 0.72rem;
+.wu-preview__teacher {
+  font-style: italic;
   color: var(--zima);
-  letter-spacing: 0.04em;
-  transition: color 0.3s, text-shadow 0.3s;
 }
 
-.wu-preview__link:hover {
-  color: #d6f7ff;
-  text-shadow: 0 0 18px rgba(91, 194, 231, 0.55);
+.wu-preview__desc {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.wu-preview__player { margin-top: 1.2rem; }
+
+.wu-preview__bar,
+.wu-preview__vol {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--text) var(--fill, 0%),
+    rgba(232, 240, 240, 0.22) var(--fill, 0%)
+  );
+  cursor: pointer;
+  display: block;
+}
+
+.wu-preview__bar { width: 100%; height: 4px; }
+.wu-preview__vol { width: 6rem; height: 3px; }
+
+.wu-preview__bar::-webkit-slider-thumb,
+.wu-preview__vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 0;
+}
+
+.wu-preview__bar::-moz-range-thumb,
+.wu-preview__vol::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 0;
+}
+
+.wu-preview__times {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.wu-preview__row {
+  display: grid;
+  grid-template-columns: 6rem 1fr 6rem;
+  align-items: center;
+  margin-top: 0.6rem;
 }
 
 .wu-preview__controls {
+  grid-column: 2;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.3rem;
+  gap: 1.5rem;
 }
+
+.wu-preview__row .wu-preview__vol { grid-column: 3; justify-self: end; }
 
 .wu-preview button {
   background: none;
@@ -95,63 +145,45 @@
 .wu-preview button:hover { opacity: 0.8; }
 .wu-preview button:focus-visible { outline: 2px solid var(--zima); outline-offset: 2px; }
 
-.wu-preview__skip { width: 1.7rem; height: 1.7rem; }
+.wu-preview__skip { width: 2.4rem; height: 2.4rem; }
 .wu-preview__skip svg { width: 100%; height: 100%; }
 
 .wu-preview__play {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3.6rem;
+  height: 3.6rem;
   background: var(--text);
   color: var(--ink);
 }
 
 .wu-preview button.wu-preview__play:hover {
   opacity: 1;
-  box-shadow: 0 0 18px rgba(91, 194, 231, 0.5);
+  box-shadow: 0 0 24px rgba(91, 194, 231, 0.5);
 }
 
-.wu-preview__play svg { width: 1rem; height: 1rem; }
+.wu-preview__play svg { width: 1.5rem; height: 1.5rem; }
 
-.wu-preview__player {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 2.4rem 1fr 2.6rem;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.7rem;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+/* gift card image is the button */
+.wu-preview__foot { margin: 0; align-self: start; } /* top-right corner */
+
+.wu-preview__gift {
+  display: block;
+  width: 12rem;
+  color: var(--zima);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  transition: color 0.3s, transform 0.3s;
 }
 
-.wu-preview__remain { text-align: right; }
-
-.wu-preview__bar {
+.wu-preview__gift img {
+  display: block;
   width: 100%;
-  height: 4px;
-  -webkit-appearance: none;
-  appearance: none;
-  border-radius: 2px;
-  background: linear-gradient(
-    to right,
-    var(--text) var(--fill, 0%),
-    rgba(232, 240, 240, 0.22) var(--fill, 0%)
-  );
-  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 0.4rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  transition: box-shadow 0.3s;
 }
 
-.wu-preview__bar::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--text);
-  border: 0;
-}
-
-.wu-preview__bar::-moz-range-thumb {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--text);
-  border: 0;
-}
+.wu-preview__gift:hover { color: #d6f7ff; transform: translateY(-2px); }
+.wu-preview__gift:hover img { box-shadow: 0 8px 26px rgba(91, 194, 231, 0.4); }
+.wu-preview__gift:focus-visible { outline: 2px solid var(--zima); outline-offset: 4px; border-radius: 8px; }

@@ -1,4 +1,4 @@
-// Waking Up preview card on music.html. The audio file is already trimmed to
+// Waking Up preview player on music.html. The audio file is already trimmed to
 // 1:45, but LIMIT is enforced here too so a longer file can't leak past it.
 (function () {
   const root = document.getElementById("wu-preview");
@@ -6,6 +6,7 @@
 
   const LIMIT = 105; // seconds
   const audio = root.querySelector("audio");
+  const vol = root.querySelector(".wu-preview__vol");
   const bar = root.querySelector(".wu-preview__bar");
   const play = root.querySelector(".wu-preview__play");
   const elapsed = root.querySelector(".wu-preview__elapsed");
@@ -60,6 +61,12 @@
       if (was) audio.play().catch(() => {});
     })
     .catch(() => {});
+
+  vol.addEventListener("input", () => {
+    audio.volume = Number(vol.value);
+    fill(vol, vol.value * 100);
+  });
+  fill(vol, 100);
 
   bar.max = LIMIT;
   render();

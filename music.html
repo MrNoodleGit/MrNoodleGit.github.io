@@ -18,50 +18,12 @@
     <link rel="stylesheet" href="css/style.css?v=18" />
     <link rel="stylesheet" href="css/music.css?v=2" />
     <link rel="stylesheet" href="css/radio.css?v=1" />
-    <link rel="stylesheet" href="css/music-preview.css?v=3" />
+    <link rel="stylesheet" href="css/music-preview.css?v=10" />
   </head>
   <body class="music">
     <header class="music-back">
       <a href="index.html">Ra Mour</a>
     </header>
-
-    <!-- Waking Up preview — 1:45 excerpt (track 1:00–2:45), driven by js/music-preview.js.
-       The audio is pre-trimmed to 1:45 (media/waking-up/atmosphere-4-preview.m4a). -->
-    <aside class="wu-preview" id="wu-preview" aria-label="Waking Up preview">
-      <img
-        class="wu-preview__cover"
-        src="media/waking-up/atmosphere-4-cover.jpg"
-        alt="Painting of a cloud split open, silver liquid pouring into a lake"
-      />
-      <div class="wu-preview__body">
-        <p class="wu-preview__series">Waking Up &middot; Ambient</p>
-        <h2 class="wu-preview__title">Atmosphere 4</h2>
-        <a
-          class="wu-preview__link"
-          href="https://dynamic.wakingup.com/pack/PK2DE94?code=SC6BE8A9F&amp;share_id=511C3500&amp;source=content%20share"
-          target="_blank"
-          rel="noopener"
-          >Full session &rarr;</a
-        >
-      </div>
-      <div class="wu-preview__controls">
-        <button class="wu-preview__skip wu-preview__back" type="button" aria-label="Back 15 seconds">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v4h4"/><text x="12" y="15.2" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">15</text></svg>
-        </button>
-        <button class="wu-preview__play" type="button" aria-label="Play preview">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        </button>
-        <button class="wu-preview__skip wu-preview__fwd" type="button" aria-label="Forward 15 seconds">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v4h-4"/><text x="12" y="15.2" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">15</text></svg>
-        </button>
-      </div>
-      <div class="wu-preview__player">
-        <span class="wu-preview__elapsed">00:00</span>
-        <input class="wu-preview__bar" type="range" min="0" max="105" step="0.1" value="0" aria-label="Seek" />
-        <span class="wu-preview__remain">- 01:45</span>
-      </div>
-      <audio preload="auto" src="media/waking-up/atmosphere-4-preview.m4a"></audio>
-    </aside>
 
     <section class="music-intro">
       <h1>Music</h1>
@@ -113,6 +75,67 @@
       </div>
     </section>
 
+    <!-- Waking Up preview — 1:45 excerpt (track 1:00–2:45), driven by
+       js/music-preview.js. Audio is pre-trimmed (media/waking-up/atmosphere-4-preview.m4a). -->
+    <section class="wu-preview" id="wu-preview" aria-label="Waking Up preview">
+      <img
+        class="wu-preview__cover"
+        src="media/waking-up/atmosphere-4-cover.jpg"
+        alt="Painting of a cloud split open, silver liquid pouring into a lake"
+      />
+
+      <div class="wu-preview__body">
+        <p class="wu-preview__series">Waking Up &middot; Ambient</p>
+        <h2 class="wu-preview__title">Atmosphere 4</h2>
+        <p class="wu-preview__teacher">Mark Guiliana</p>
+        <p class="wu-preview__desc">
+          A selection from Jayasāra’s “Six Words of Advice” set to Mark’s
+          original composition.
+        </p>
+
+        <div class="wu-preview__player">
+          <input class="wu-preview__bar" type="range" min="0" max="105" step="0.1" value="0" aria-label="Seek" />
+          <div class="wu-preview__times">
+            <span class="wu-preview__elapsed">00:00</span>
+            <span class="wu-preview__remain">- 01:45</span>
+          </div>
+        </div>
+
+        <div class="wu-preview__row">
+          <div class="wu-preview__controls">
+            <button class="wu-preview__skip wu-preview__back" type="button" aria-label="Back 15 seconds">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v4h4"/><text x="12" y="15.2" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">15</text></svg>
+            </button>
+            <button class="wu-preview__play" type="button" aria-label="Play preview">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button class="wu-preview__skip wu-preview__fwd" type="button" aria-label="Forward 15 seconds">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v4h-4"/><text x="12" y="15.2" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">15</text></svg>
+            </button>
+          </div>
+          <input class="wu-preview__vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume" />
+        </div>
+      </div>
+
+      <p class="wu-preview__foot">
+        <a
+          class="wu-preview__gift"
+          href="https://wakingup.com/redeem/WU8A-93BB7E2CB1"
+          target="_blank"
+          rel="noopener"
+          aria-label="Redeem 3 months of Waking Up free (opens wakingup.com)"
+        >
+          <img
+            src="media/waking-up/3-month-gift-card.png"
+            alt="Waking Up gift card: three month membership"
+          />
+          <span>Get 3 months free &rarr;</span>
+        </a>
+      </p>
+
+      <audio preload="auto" src="media/waking-up/atmosphere-4-preview.m4a"></audio>
+    </section>
+
     <!-- Filled by js/music.js from music.md (template inside) —
        add a track or playlist entry there and it appears here. -->
     <div class="music-grid" id="music-grid" aria-live="polite"></div>
@@ -137,6 +160,6 @@
 
     <script src="js/radio.js?v=2"></script>
     <script src="js/music.js?v=2"></script>
-    <script src="js/music-preview.js?v=2"></script>
+    <script src="js/music-preview.js?v=3"></script>
   </body>
 </html>
