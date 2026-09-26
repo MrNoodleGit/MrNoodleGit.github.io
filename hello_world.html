@@ -8,7 +8,7 @@
     <meta property="og:title" content="Ra Mour — Alchemist" />
     <meta property="og:description" content="Links and contact." />
     <meta property="og:image" content="https://ramour.org/media/hello/portrait.jpg" />
-    <meta property="og:url" content="https://ramour.org/hello" />
+    <meta property="og:url" content="https://ramour.org/hello_world.html" />
     <meta name="theme-color" content="#020202" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/hello.css?v=2" />
+    <link rel="stylesheet" href="css/hello.css?v=6" />
   </head>
   <body class="hello">
     <main class="card">
@@ -70,20 +70,31 @@
               </a>
             </li>
             <li>
-              <a class="card__link" href="mailto:contact@ramour.org">
+              <a class="card__link" href="#" data-mail="contact|ramour.org">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm19 2.4-9 6.3-9-6.3V18h18zM3.6 6 12 11.9 20.4 6z" /></svg>
                 <span class="card__link-label">Email</span>
-                <span class="card__link-handle">contact@ramour.org</span>
+                <span class="card__link-handle">contact at ramour dot org</span>
               </a>
             </li>
           </ul>
         </nav>
 
         <figure class="card__qr">
-          <img src="media/hello/qr.svg" alt="QR code linking to ramour.org/hello" width="370" height="370" />
-          <figcaption>ramour.org/hello</figcaption>
+          <img src="media/hello/qr.svg" alt="QR code linking to ramour.org/hello_world.html" width="370" height="370" />
+          <figcaption>ramour.org/hello_world<wbr />.html</figcaption>
         </figure>
       </div>
     </main>
+
+    <!-- The address is only assembled on tap, so it never sits in the page as text. -->
+    <script>
+      document.querySelectorAll("[data-mail]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          const [user, domain] = link.dataset.mail.split("|");
+          location.href = "mailto:" + user + "@" + domain;
+        });
+      });
+    </script>
   </body>
 </html>
