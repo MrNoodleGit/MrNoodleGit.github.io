@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ra Mour — Hello</title>
-    <meta name="description" content="Ra Mour — Alchemist. Links and contact." />
+    <meta name="description" content="Ra Mour — Alchemist. Links." />
     <meta property="og:title" content="Ra Mour — Alchemist" />
-    <meta property="og:description" content="Links and contact." />
+    <meta property="og:description" content="Links." />
     <meta property="og:image" content="https://ramour.org/media/hello/portrait.jpg" />
     <meta property="og:url" content="https://ramour.org/hello_world.html" />
     <meta name="theme-color" content="#020202" />
@@ -69,13 +69,6 @@
                 <span class="card__link-handle">@Ra_Mour</span>
               </a>
             </li>
-            <li>
-              <a class="card__link" href="#" data-mail="contact|ramour.org">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm19 2.4-9 6.3-9-6.3V18h18zM3.6 6 12 11.9 20.4 6z" /></svg>
-                <span class="card__link-label">Email</span>
-                <span class="card__link-handle">contact at ramour dot org</span>
-              </a>
-            </li>
           </ul>
         </nav>
 
@@ -85,16 +78,5 @@
         </figure>
       </div>
     </main>
-
-    <!-- The address is only assembled on tap, so it never sits in the page as text. -->
-    <script>
-      document.querySelectorAll("[data-mail]").forEach((link) => {
-        link.addEventListener("click", (event) => {
-          event.preventDefault();
-          const [user, domain] = link.dataset.mail.split("|");
-          location.href = "mailto:" + user + "@" + domain;
-        });
-      });
-    </script>
   </body>
 </html>
