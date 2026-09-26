@@ -42,8 +42,8 @@ a { color: inherit; text-decoration: none; }
 
 .card {
   width: 100%;
-  max-width: 24rem;
-  padding: 2.25rem 1.5rem 1.75rem;
+  max-width: 26rem;
+  overflow: hidden;
   text-align: center;
   background: linear-gradient(to bottom, var(--abyss), var(--ink));
   border: 1px solid rgba(20, 99, 111, 0.5);
@@ -51,16 +51,16 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 0 60px rgba(91, 194, 231, 0.08);
 }
 
+/* The full painting, uncropped: 3:4, edge to edge across the card. */
 .card__portrait {
   display: block;
-  width: 8.5rem;
-  height: 8.5rem;
-  margin: 0 auto 1.25rem;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--zima);
-  box-shadow: 0 0 0 5px var(--ink), 0 0 0 6px rgba(174, 14, 54, 0.7),
-    0 0 30px rgba(91, 194, 231, 0.35);
+  width: 100%;
+  height: auto;
+  border-bottom: 2px solid var(--zima);
+}
+
+.card__body {
+  padding: 1.5rem 1.5rem 1.75rem;
 }
 
 .card__name {
