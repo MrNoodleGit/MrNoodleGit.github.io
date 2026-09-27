@@ -7,8 +7,10 @@
 //   card-front.png, card-back.png     300 dpi (675 × 1125 px)
 //
 // All sizes include 0.125 in bleed (2.25 × 3.75 in; trims to 2 × 3.5 in).
-// Needs Playwright with a Chromium build:
-//   npx -y -p playwright node scripts/render-card.mjs
+// Needs Playwright and its Chromium build, installed locally (node_modules/
+// is gitignored):
+//   npm install --no-save --no-package-lock playwright && npx playwright install chromium
+//   node scripts/render-card.mjs
 
 import { chromium } from "playwright";
 import { fileURLToPath } from "node:url";

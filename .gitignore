@@ -23,3 +23,5 @@ linkedin-Profile-06-23-2026.pdf
 
 # instagram auto-post
 meta-developer-token.txt
+# local tooling for scripts/render-card.mjs
+node_modules/
