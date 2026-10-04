@@ -217,6 +217,68 @@ a { color: inherit; text-decoration: none; }
 
 .hero__period { color: var(--crimson); }
 
+/* ---------- hero: "Currently:" daily activity ---------- */
+
+.currently {
+  max-width: 34rem;
+  min-height: 4.4em; /* label + two lines, so the name doesn't jump while deciphering */
+  margin: 2.25rem auto 0;
+  padding: 0 1rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.currently__label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-family: var(--font-display);
+  font-size: 0.72em;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.currently .currently__activity {
+  font-style: italic;
+  text-align: inherit;
+}
+
+.currently.is-deciphering .currently__activity {
+  border-bottom-color: transparent;
+  animation: cipher-flicker 0.14s steps(2) infinite;
+}
+
+.cipher {
+  font-style: normal;
+  color: rgba(91, 194, 231, 0.55);
+  text-shadow: 0 0 6px rgba(91, 194, 231, 0.5);
+}
+
+.cipher--hot {
+  color: var(--crimson);
+  text-shadow: 0 0 8px rgba(174, 14, 54, 0.85);
+}
+
+.cipher-lock {
+  animation: cipher-lock 0.38s ease-out;
+}
+
+@keyframes cipher-flicker {
+  from { opacity: 1; }
+  to   { opacity: 0.86; }
+}
+
+@keyframes cipher-lock {
+  from {
+    color: #fff;
+    text-shadow: 0 0 4px #fff, 0 0 14px var(--zima), 0 0 28px var(--zima);
+  }
+  to {
+    color: var(--zima);
+    text-shadow: none;
+  }
+}
+
 .hero__scrollcue {
   position: absolute;
   bottom: 2.5rem;
@@ -873,6 +935,29 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
 .glossary-modal__source-icon--gemini { fill: #34a853; }
 
+.glossary-modal__source--claude { color: #d97757; }
+
+.glossary-modal__source--claude .glossary-modal__source-icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.glossary-modal__kicker {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.glossary-modal__footnote {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
 .glossary-modal__source--link {
   color: var(--muted);
   border: 1px solid var(--teal);
@@ -954,6 +1039,7 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .ray, .bubble, .hero__scrollcue::after { animation: none; }
+  .currently__activity, .cipher-lock { animation: none; }
   .lifeframe.is-paused .lifeframe__play { animation: none; }
   .lifeframe__slide { transition: none; }
   .bubble { display: none; }

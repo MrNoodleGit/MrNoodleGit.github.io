@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=21" />
+    <link rel="stylesheet" href="css/style.css?v=22" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -119,6 +119,16 @@
         <h1 class="hero__name">Ra&nbsp;Mour</h1>
         <p class="hero__tagline">
           Alchemist<span class="hero__period">.</span>
+        </p>
+        <!-- Filled by js/currently.js from js/currently-data.js — one
+           activity per day, opening a pop-up with its description. -->
+        <p class="currently" id="currently">
+          <span class="currently__label">Currently:</span>
+          <button
+            type="button"
+            class="glossary-term currently__activity"
+            data-glossary-open="currently"
+          ><span class="currently__text">Translating for us and the Aliens</span><span class="hero__period">.</span></button>
         </p>
       </div>
 
@@ -693,7 +703,33 @@
     </footer>
 
 
+    <div class="glossary-modal" id="glossary-modal" hidden>
+      <div class="glossary-modal__panel" role="dialog" aria-modal="true" aria-labelledby="currently-modal-title">
+        <button type="button" class="glossary-modal__close" id="glossary-modal-close" aria-label="Close">&times;</button>
+        <div class="glossary-modal__entry">
+          <div class="glossary-modal__header">
+            <p class="glossary-modal__kicker">Currently</p>
+            <p class="glossary-modal__title" id="currently-modal-title"></p>
+            <div class="glossary-modal__sources">
+              <span class="glossary-modal__source glossary-modal__source--claude">
+                <svg class="glossary-modal__source-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3 5.3 18.7"
+                  />
+                </svg>
+                Claude
+              </span>
+            </div>
+          </div>
+          <p id="currently-modal-about"></p>
+          <p class="glossary-modal__footnote">A new transmission is deciphered every day.</p>
+        </div>
+      </div>
+    </div>
+
     <script src="js/main.js?v=10"></script>
+    <script src="js/currently-data.js?v=1"></script>
+    <script src="js/currently.js?v=1"></script>
     <script src="js/lifeframe.js?v=1"></script>
     <script src="js/gallery-discovery.js?v=1"></script>
     <script src="js/gallery-preview.js?v=2"></script>
