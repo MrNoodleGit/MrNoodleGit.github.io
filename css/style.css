@@ -777,6 +777,83 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   max-width: 40rem;
 }
 
+.about__text[hidden] { display: none; }
+
+/* experience patches — embroidered-patch badges beside the portrait */
+
+.patches {
+  display: grid;
+  gap: 1rem;
+  align-self: center;
+}
+
+.patches__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.patch {
+  display: block;
+  width: 4.25rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0.8;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.patch:hover,
+.patch[aria-pressed="true"] {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.patch:focus-visible {
+  outline: 1px solid var(--zima);
+  outline-offset: 4px;
+}
+
+.patch svg { display: block; width: 100%; height: auto; }
+
+.patch__s { fill: none; stroke: currentColor; }
+.patch__f { fill: currentColor; }
+.patch__thread { opacity: 0.88; }
+.patch__thread--zima { color: var(--zima); }
+.patch__thread--crimson { color: #c8274f; }
+.patch__thread--silver { color: #d6e0e1; }
+
+.patches__caption {
+  min-height: 3.6rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid transparent;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--muted);
+  transition: border-color 0.3s;
+}
+
+.patches__caption:not(:empty) { border-color: var(--teal); }
+
+.patches__caption strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.patches__caption em {
+  display: block;
+  font-style: normal;
+  color: var(--zima);
+}
+
+.patches__defs { position: absolute; }
+
 .about__note {
   font-style: italic;
   font-size: 0.95em;
