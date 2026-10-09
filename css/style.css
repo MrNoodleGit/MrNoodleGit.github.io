@@ -777,6 +777,81 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   max-width: 40rem;
 }
 
+.about__text[hidden] { display: none; }
+
+/* experience patches — embroidered-patch badges.
+   Bio visible: portrait on the left, patches above the bio on the right.
+   Bio hidden (`hidden` on .about__text): portrait centred, patches below it. */
+
+.about:has(> .patches) .about__portrait { grid-row: span 2; }
+
+.patches {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+
+.patches__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  list-style: none;
+}
+
+.about:has(> .about__text[hidden]) {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 2rem;
+}
+
+.about:has(> .about__text[hidden]) .about__portrait {
+  grid-row: auto;
+  width: min(16rem, 70vw);
+}
+
+.about:has(> .about__text[hidden]) .patches { justify-items: center; }
+.about:has(> .about__text[hidden]) .patches__row { justify-content: center; }
+.about:has(> .about__text[hidden]) .patches__caption { text-align: center; }
+
+.patch {
+  display: block;
+  width: 4.25rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0.8;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.patch:hover,
+.patch[aria-pressed="true"] {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.patch:focus-visible {
+  outline: 1px solid var(--zima);
+  outline-offset: 4px;
+}
+
+.patch svg { display: block; width: 100%; height: auto; }
+
+.patch__s { fill: none; stroke: currentColor; }
+.patch__f { fill: currentColor; }
+.patch__thread { color: #c8274f; }
+
+.patches__caption {
+  min-height: 1.6rem; /* reserve the line so tapping doesn't shift the page */
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.patches__defs { position: absolute; }
+
 .about__note {
   font-style: italic;
   font-size: 0.95em;
@@ -1005,6 +1080,7 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
   .about { grid-template-columns: 1fr; }
   .about__portrait { max-width: 14rem; }
+  .about:has(> .patches) .about__portrait { grid-row: auto; }
 
   .gallery-preview__collage { grid-template-columns: repeat(2, 1fr); }
 

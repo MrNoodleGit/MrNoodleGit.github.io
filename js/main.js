@@ -134,3 +134,27 @@ if (bubbleHost && !reducedMotion) {
     bubbleHost.appendChild(bubble);
   }
 }
+
+/* ---------- experience patches ---------- */
+
+const patches = document.querySelectorAll(".patch");
+const patchCaption = document.querySelector(".patches__caption");
+
+function showPatch(patch) {
+  patchCaption.textContent = patch ? patch.dataset.org : "";
+}
+
+const pressedPatch = () => document.querySelector('.patch[aria-pressed="true"]');
+
+patches.forEach((patch) => {
+  patch.setAttribute("aria-pressed", "false");
+  // a tap pins the caption open; tapping the same patch again closes it
+  patch.addEventListener("click", () => {
+    const wasPressed = patch.getAttribute("aria-pressed") === "true";
+    patches.forEach((p) => p.setAttribute("aria-pressed", "false"));
+    if (!wasPressed) patch.setAttribute("aria-pressed", "true");
+    showPatch(pressedPatch());
+  });
+  patch.addEventListener("mouseenter", () => showPatch(patch));
+  patch.addEventListener("mouseleave", () => showPatch(pressedPatch()));
+});
