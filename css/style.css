@@ -14,6 +14,7 @@
 
   --font-display: "Marcellus", "Times New Roman", serif;
   --font-body: "EB Garamond", Georgia, serif;
+  --font-patch: "Marcellus", "Times New Roman", serif; /* institution names under the patches */
 
   --measure: 64rem;
   --pad: clamp(1.25rem, 5vw, 4rem);
@@ -849,11 +850,23 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 .patch__thread { color: #c8274f; }
 
 .patches__caption {
-  min-height: 1.6rem; /* reserve the line so tapping doesn't shift the page */
-  font-family: var(--font-display);
+  display: grid;
+  gap: 0.15rem;
+  min-height: 3.2rem; /* reserve both lines so tapping doesn't shift the page */
+  line-height: 1.35;
+}
+
+.patches__org {
+  font-family: var(--font-patch);
   font-size: 0.95rem;
   letter-spacing: 0.08em;
   color: var(--text);
+}
+
+.patches__role {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--muted);
 }
 
 .about__note {
