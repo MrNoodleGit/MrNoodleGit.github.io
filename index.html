@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=26" />
+    <link rel="stylesheet" href="css/style.css?v=27" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -135,13 +135,14 @@
             <img src="soul-city-art.png" alt="Ra Mour" />
           </div>
           <!-- Experience patches: tap or hover one to show its caption.
-             Emblems are drawn inline below; add a patch by copying a <li>. -->
+             Each patch is drawn inline; add one by copying a <li>. -->
           <div class="patches">
             <ul class="patches__row">
               <li>
                 <button class="patch" type="button" data-org="Apollo Information Systems">
                   <svg viewBox="0 0 120 112" role="img" aria-label="Apollo Information Systems">
-                    <use href="#patch-body" />
+                    <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+                    <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
                     <g transform="translate(26 22) scale(.68)" class="patch__thread">
                       <path class="patch__s" stroke-width="6" d="M50 7 L93 50 L50 93 L7 50Z" />
                       <path class="patch__f" d="M27 50 L37 38 L63 38 L73 50 L63 62 L37 62Z" />
@@ -152,7 +153,8 @@
               <li>
                 <button class="patch" type="button" data-org="RARE.">
                   <svg viewBox="0 0 120 112" role="img" aria-label="RARE.">
-                    <use href="#patch-body" />
+                    <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+                    <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
                     <g transform="translate(26 22) scale(.68)" class="patch__thread">
                       <path class="patch__s" stroke-width="7" d="M41 8 H59 L70 19 V35 L59 46 H41 L30 35 V19Z" />
                       <path class="patch__s" stroke-width="8" d="M50 46 V93 M50 68 H65 M50 82 H65" />
@@ -163,7 +165,8 @@
               <li>
                 <button class="patch" type="button" data-org="Massachusetts Institute of Technology">
                   <svg viewBox="0 0 120 112" role="img" aria-label="Massachusetts Institute of Technology">
-                    <use href="#patch-body" />
+                    <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+                    <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
                     <g transform="translate(26 22) scale(.68)" class="patch__thread">
                       <path class="patch__f" d="M14 22h9v56h-9z M28 22h9v34h-9z M42 22h9v56h-9z M56 22h9v10h-9z M56 38h9v40h-9z M70 22h20v9h-20z M70 38h9v40h-9z" />
                     </g>
@@ -173,7 +176,8 @@
               <li>
                 <button class="patch" type="button" data-org="Harvard University">
                   <svg viewBox="0 0 120 112" role="img" aria-label="Harvard University">
-                    <use href="#patch-body" />
+                    <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+                    <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
                     <g transform="translate(26 22) scale(.68)" class="patch__thread">
                       <path class="patch__s" stroke-width="6" d="M16 12 H84 V48 C84 72 68 86 50 94 C32 86 16 72 16 48Z" />
                       <path class="patch__f" d="M28 24 L37 26 V40 L28 38Z M48 24 L39 26 V40 L48 38Z M52 24 L61 26 V40 L52 38Z M72 24 L63 26 V40 L72 38Z M40 50 L49 52 V66 L40 64Z M60 50 L51 52 V66 L60 64Z" />
@@ -183,20 +187,6 @@
               </li>
             </ul>
             <p class="patches__caption" aria-live="polite"></p>
-
-            <!-- shared patch body: twill fill, merrowed edge, inner stitch line -->
-            <svg width="0" height="0" class="patches__defs" aria-hidden="true">
-              <defs>
-                <pattern id="patch-twill" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                  <rect width="3" height="3" fill="#080808" />
-                  <rect width="1.2" height="3" fill="#111" />
-                </pattern>
-                <g id="patch-body">
-                  <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="url(#patch-twill)" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
-                  <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
-                </g>
-              </defs>
-            </svg>
           </div>
 
           <!-- Bio text — hidden for now. To bring it back, delete `hidden` below;
