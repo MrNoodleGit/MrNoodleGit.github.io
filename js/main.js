@@ -143,13 +143,13 @@ const patchCaption = document.querySelector(".patches__caption");
 function showPatch(patch) {
   patchCaption.replaceChildren();
   if (!patch) return;
-  const org = document.createElement("span");
   const role = document.createElement("span");
-  org.className = "patches__org";
+  const org = document.createElement("span");
   role.className = "patches__role";
-  org.textContent = patch.dataset.org;
+  org.className = "patches__org";
   role.textContent = patch.dataset.role;
-  patchCaption.append(org, role);
+  org.textContent = patch.dataset.org;
+  patchCaption.append(role, org);
 }
 
 const pressedPatch = () => document.querySelector('.patch[aria-pressed="true"]');

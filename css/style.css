@@ -14,7 +14,7 @@
 
   --font-display: "Marcellus", "Times New Roman", serif;
   --font-body: "EB Garamond", Georgia, serif;
-  --font-patch: "Marcellus", "Times New Roman", serif; /* institution names under the patches */
+  --font-patch: "Marcellus", "Times New Roman", serif; /* role titles under the patches */
 
   --measure: 64rem;
   --pad: clamp(1.25rem, 5vw, 4rem);
@@ -856,14 +856,16 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   line-height: 1.35;
 }
 
-.patches__org {
+/* role title on top in the display face; institution below in italics */
+.patches__role {
   font-family: var(--font-patch);
   font-size: 0.95rem;
   letter-spacing: 0.08em;
   color: var(--text);
+  text-wrap: balance;
 }
 
-.patches__role {
+.patches__org {
   font-size: 0.9rem;
   font-style: italic;
   color: var(--muted);
