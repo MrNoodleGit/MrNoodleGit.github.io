@@ -141,14 +141,7 @@ const patches = document.querySelectorAll(".patch");
 const patchCaption = document.querySelector(".patches__caption");
 
 function showPatch(patch) {
-  patchCaption.replaceChildren();
-  if (!patch) return;
-  const { title, org, meta } = patch.dataset;
-  const strong = document.createElement("strong");
-  const em = document.createElement("em");
-  strong.textContent = title;
-  em.textContent = org;
-  patchCaption.append(strong, em, meta || "");
+  patchCaption.textContent = patch ? patch.dataset.org : "";
 }
 
 const pressedPatch = () => document.querySelector('.patch[aria-pressed="true"]');

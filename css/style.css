@@ -833,26 +833,12 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 .patch__thread { color: #c8274f; }
 
 .patches__caption {
-  min-height: 3.8rem; /* reserve the space so tapping doesn't shift the page */
-  max-width: 22rem;
-  text-align: center;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: var(--muted);
-}
-
-.patches__caption strong {
-  display: block;
+  min-height: 1.6rem; /* reserve the line so tapping doesn't shift the page */
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1rem;
-  color: var(--text);
-}
-
-.patches__caption em {
-  display: block;
-  font-style: normal;
-  color: #c8274f;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--muted);
 }
 
 .patches__defs { position: absolute; }
