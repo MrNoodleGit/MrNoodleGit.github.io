@@ -148,7 +148,7 @@ function showPatch(patch) {
   const em = document.createElement("em");
   strong.textContent = title;
   em.textContent = org;
-  patchCaption.append(strong, em, meta);
+  patchCaption.append(strong, em, meta || "");
 }
 
 const pressedPatch = () => document.querySelector('.patch[aria-pressed="true"]');
