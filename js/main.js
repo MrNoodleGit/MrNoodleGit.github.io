@@ -141,7 +141,15 @@ const patches = document.querySelectorAll(".patch");
 const patchCaption = document.querySelector(".patches__caption");
 
 function showPatch(patch) {
-  patchCaption.textContent = patch ? patch.dataset.org : "";
+  patchCaption.replaceChildren();
+  if (!patch) return;
+  const org = document.createElement("span");
+  const role = document.createElement("span");
+  org.className = "patches__org";
+  role.className = "patches__role";
+  org.textContent = patch.dataset.org;
+  role.textContent = patch.dataset.role;
+  patchCaption.append(org, role);
 }
 
 const pressedPatch = () => document.querySelector('.patch[aria-pressed="true"]');
