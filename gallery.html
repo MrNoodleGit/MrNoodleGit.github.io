@@ -15,8 +15,8 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=16" />
-    <link rel="stylesheet" href="css/gallery.css?v=4" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
   </head>
   <body class="gallery">
     <header class="gal-back">
@@ -28,7 +28,8 @@
     </section>
 
     <!-- Filled by js/gallery.js from the contents of media/art-gallery/ —
-       drop an image into that folder and it appears here.
+       drop an image into that folder and it appears here once the
+       "Build altar gallery" GitHub Action has run (about a minute).
        Quotes come from quotes.md (template inside). -->
     <div class="wall" id="wall" aria-live="polite"></div>
 
@@ -45,8 +46,24 @@
       hidden
     >
       <figure class="lightbox__figure">
-        <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+        <img class="lightbox__img" id="lightbox-img" alt="" />
       </figure>
+      <button
+        class="lightbox__step lightbox__step--prev"
+        type="button"
+        data-step="-1"
+        aria-label="Previous image"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" /></svg>
+      </button>
+      <button
+        class="lightbox__step lightbox__step--next"
+        type="button"
+        data-step="1"
+        aria-label="Next image"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8" /></svg>
+      </button>
       <button
         class="lightbox__close"
         id="lightbox-close"
@@ -61,7 +78,8 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
-    <script src="js/gallery-discovery.js?v=1"></script>
-    <script src="js/gallery.js?v=7"></script>
+    <script src="js/reveal.js"></script>
+    <script src="js/gallery-discovery.js"></script>
+    <script src="js/gallery.js"></script>
   </body>
 </html>

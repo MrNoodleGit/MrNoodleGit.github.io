@@ -1,7 +1,5 @@
-/* Ra Mour — gallery: auto-discovers images in media/art-gallery/
-   (js/gallery-discovery.js), interspersed with quotes from quotes.md */
-
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* Ra Mour — gallery: every image in media/art-gallery/ (listed by
+   js/gallery-discovery.js), interspersed with quotes from quotes.md */
 
 /* ---------- quotes.md ---------- */
 
@@ -44,18 +42,22 @@ async function listQuotes() {
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 const lightboxClose = document.getElementById("lightbox-close");
+const lightboxButtons = [...lightbox.querySelectorAll("button")];
 let lastFocus = null;
 
 // every image in wall order, so the lightbox can step through them
-// with the arrow keys regardless of the quote tiles interspersed
-const lightboxImages = [];
+// regardless of the quote tiles interspersed
+let lightboxImages = [];
 let lightboxIndex = -1;
 
 function showLightboxImage(index) {
   lightboxIndex = (index + lightboxImages.length) % lightboxImages.length;
-  const { src, alt } = lightboxImages[lightboxIndex];
-  lightboxImg.src = src;
+  const { large, alt } = lightboxImages[lightboxIndex];
+  lightboxImg.src = large;
   lightboxImg.alt = alt;
+  // warm the cache for the next image so stepping forward feels instant
+  const next = lightboxImages[(lightboxIndex + 1) % lightboxImages.length];
+  new Image().src = next.large;
 }
 
 function openLightbox(index) {
@@ -68,39 +70,75 @@ function openLightbox(index) {
 
 function closeLightbox() {
   lightbox.hidden = true;
-  lightboxImg.src = "";
+  lightboxImg.removeAttribute("src");
   document.body.style.overflow = "";
   if (lastFocus) lastFocus.focus();
 }
 
 lightboxClose.addEventListener("click", closeLightbox);
-lightbox.addEventListener("click", (e) => {
-  if (!e.target.closest(".lightbox__figure")) closeLightbox();
+lightbox.querySelectorAll("[data-step]").forEach((button) => {
+  button.addEventListener("click", () => showLightboxImage(lightboxIndex + Number(button.dataset.step)));
 });
+lightbox.addEventListener("click", (e) => {
+  if (!e.target.closest(".lightbox__figure, button")) closeLightbox();
+});
+
 document.addEventListener("keydown", (e) => {
   if (lightbox.hidden) return;
   if (e.key === "Escape") closeLightbox();
   else if (e.key === "ArrowLeft") showLightboxImage(lightboxIndex - 1);
   else if (e.key === "ArrowRight") showLightboxImage(lightboxIndex + 1);
+  else if (e.key === "Tab") {
+    // keep focus on the lightbox's own buttons while it's open
+    const first = lightboxButtons[0];
+    const last = lightboxButtons[lightboxButtons.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    } else if (!lightbox.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+});
+
+// swipe left/right to step through images on touch screens
+let touchStart = null;
+lightbox.addEventListener(
+  "touchstart",
+  (e) => {
+    touchStart = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : null;
+  },
+  { passive: true }
+);
+lightbox.addEventListener("touchend", (e) => {
+  if (!touchStart) return;
+  const dx = e.changedTouches[0].clientX - touchStart.x;
+  const dy = e.changedTouches[0].clientY - touchStart.y;
+  touchStart = null;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    showLightboxImage(lightboxIndex + (dx < 0 ? 1 : -1));
+  }
 });
 
 /* ---------- render ---------- */
 
-function imageTile(name) {
-  const alt = galleryAltFrom(name);
-  const src = gallerySrc(name);
-  const index = lightboxImages.push({ src, alt }) - 1;
+// the wall is 3 columns, then 2 under 64rem, then 1 under 40rem
+const WALL_SIZES = "(max-width: 40rem) 100vw, (max-width: 64rem) 50vw, min(33vw, 560px)";
 
+function imageTile(image, index) {
   const item = document.createElement("button");
   item.type = "button";
   item.className = "wall__item reveal";
-  item.setAttribute("aria-label", `View ${alt}`);
+  item.setAttribute("aria-label", `View ${image.alt}`);
+  // the placeholder takes the image's shape, so nothing jumps on load
+  item.style.setProperty("--ratio", `${image.width} / ${image.height}`);
 
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = alt;
-  img.loading = "lazy";
-  img.decoding = "async";
+  const img = galleryImg(image, WALL_SIZES);
+  img.alt = image.alt;
 
   // tile shimmers as a placeholder until its image is ready, then the
   // image fades in (styles in gallery.css); errors too, so none stick
@@ -132,15 +170,16 @@ function quoteTile({ text, attribution }) {
   return quote;
 }
 
-function render(names, quotes) {
+function render(images, quotes) {
   const wall = document.getElementById("wall");
+  lightboxImages = images;
 
   // spread quotes evenly through the image sequence
-  const gap = quotes.length ? Math.ceil(names.length / (quotes.length + 1)) : Infinity;
+  const gap = quotes.length ? Math.ceil(images.length / (quotes.length + 1)) : Infinity;
   let quoteIndex = 0;
 
-  names.forEach((name, i) => {
-    wall.appendChild(imageTile(name));
+  images.forEach((image, i) => {
+    wall.appendChild(imageTile(image, i));
     if (quoteIndex < quotes.length && (i + 1) % gap === 0) {
       wall.appendChild(quoteTile(quotes[quoteIndex++]));
     }
@@ -149,29 +188,12 @@ function render(names, quotes) {
     wall.appendChild(quoteTile(quotes[quoteIndex++]));
   }
 
-  // same reveal-on-scroll pattern as js/main.js (.reveal styles live in style.css)
-  if ("IntersectionObserver" in window && !reducedMotion) {
-    document.documentElement.classList.add("js");
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            revealObserver.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-    wall.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
-  }
+  observeReveals(wall);
 }
 
-Promise.all([discoverGalleryImages(), listQuotes()])
-  .then(([names, quotes]) => {
-    names.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-    render(names, quotes);
-  })
+// the manifest is already sorted by filename (scripts/build-gallery.mjs)
+Promise.all([loadGallery(), listQuotes()])
+  .then(([images, quotes]) => render(images, quotes))
   .catch(() => {
     document.getElementById("wall").innerHTML =
       '<p class="wall__error">The altar couldn’t be loaded right now. <a href="index.html">Back home</a>.</p>';

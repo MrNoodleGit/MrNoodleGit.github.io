@@ -1,4 +1,5 @@
-/* Ra Mour — essays: fetch + parse writing.md (template inside).
+/* Ra Mour — essays: fetch + parse writing.md (template inside), and
+   build one list item per essay.
    Shared by the homepage Mind teaser (js/writing-home.js) and the
    writing.html archive (js/writing-archive.js). */
 
@@ -35,4 +36,46 @@ async function listEssays() {
   } catch {
     return [];
   }
+}
+
+// one <li> for the essay lists; links out when the essay has a url,
+// otherwise shows as "coming soon"
+function essayItem({ title, date, url, excerpt }) {
+  const item = document.createElement("li");
+  item.className = "essays__item reveal";
+
+  const inner = document.createElement(url ? "a" : "div");
+  if (url) {
+    inner.href = url;
+    inner.target = "_blank";
+    inner.rel = "noopener";
+  } else {
+    item.classList.add("essays__item--soon");
+  }
+  inner.className = "essays__item-inner";
+
+  const row = document.createElement("span");
+  row.className = "essays__row";
+
+  const titleEl = document.createElement("span");
+  titleEl.className = "essays__title";
+  titleEl.textContent = title;
+  row.appendChild(titleEl);
+
+  const dateEl = document.createElement("span");
+  dateEl.className = "essays__date";
+  dateEl.textContent = date;
+  row.appendChild(dateEl);
+
+  inner.appendChild(row);
+
+  if (excerpt) {
+    const excerptEl = document.createElement("span");
+    excerptEl.className = "essays__excerpt";
+    excerptEl.textContent = excerpt;
+    inner.appendChild(excerptEl);
+  }
+
+  item.appendChild(inner);
+  return item;
 }

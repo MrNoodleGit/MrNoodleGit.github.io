@@ -105,7 +105,7 @@
 
 /* placeholder until the image arrives: a sized panel with a slow amber sheen */
 .wall__item:not(.is-loaded) {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: var(--ratio, 4 / 5); /* set per tile from the image's size */
   background:
     linear-gradient(
       100deg,
@@ -225,6 +225,48 @@
 .lightbox__close:hover {
   color: #f4e3bc;
   text-shadow: 0 0 18px rgba(217, 164, 65, 0.55);
+}
+
+/* previous / next — beside the image on wide screens, along the bottom on phones */
+.lightbox__step {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(217, 164, 65, 0.35);
+  border-radius: 50%;
+  background: rgba(10, 8, 6, 0.6);
+  color: var(--g-amber);
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.lightbox__step--prev { left: clamp(0.5rem, 2vw, 1.5rem); }
+.lightbox__step--next { right: clamp(0.5rem, 2vw, 1.5rem); }
+
+.lightbox__step svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lightbox__step:hover {
+  border-color: var(--g-amber);
+  box-shadow: 0 0 18px rgba(217, 164, 65, 0.3);
+}
+
+@media (max-width: 40rem) {
+  .lightbox__step { top: auto; bottom: 1.25rem; transform: none; }
+  .lightbox__step--prev { left: calc(50% - 3.5rem); }
+  .lightbox__step--next { right: calc(50% - 3.5rem); }
+  .lightbox__img { max-height: 72vh; } /* leave room for the buttons below */
 }
 
 /* ---------- footer ---------- */

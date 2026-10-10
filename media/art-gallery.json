@@ -1,0 +1,554 @@
+[
+  {
+    "file": "media/art-gallery/3-idiots.png",
+    "thumb": "media/art-gallery-thumbs/3-idiots.png.webp",
+    "large": "media/art-gallery-large/3-idiots.png.webp",
+    "width": 1108,
+    "height": 1488,
+    "hash": "11a372a9fbd9"
+  },
+  {
+    "file": "media/art-gallery/10-Thich-Nhat-Hanh-drinking-tea-1970s-PHOTO-©-Jim-Forest-698x1024.jpg",
+    "thumb": "media/art-gallery-thumbs/10-Thich-Nhat-Hanh-drinking-tea-1970s-PHOTO-©-Jim-Forest-698x1024.jpg.webp",
+    "large": "media/art-gallery-large/10-Thich-Nhat-Hanh-drinking-tea-1970s-PHOTO-©-Jim-Forest-698x1024.jpg.webp",
+    "width": 698,
+    "height": 1024,
+    "hash": "b4348e3c6c8f"
+  },
+  {
+    "file": "media/art-gallery/a-series-of-unfortunate-events-1-the-bad-beginning.jpg",
+    "thumb": "media/art-gallery-thumbs/a-series-of-unfortunate-events-1-the-bad-beginning.jpg.webp",
+    "large": "media/art-gallery-large/a-series-of-unfortunate-events-1-the-bad-beginning.jpg.webp",
+    "width": 1200,
+    "height": 1698,
+    "hash": "02d846e188d5"
+  },
+  {
+    "file": "media/art-gallery/ai-movie.jpg",
+    "thumb": "media/art-gallery-thumbs/ai-movie.jpg.webp",
+    "large": "media/art-gallery-large/ai-movie.jpg.webp",
+    "width": 1024,
+    "height": 1536,
+    "hash": "008dbd33f3a4"
+  },
+  {
+    "file": "media/art-gallery/Alan-Watts.jpg",
+    "thumb": "media/art-gallery-thumbs/Alan-Watts.jpg.webp",
+    "large": "media/art-gallery-large/Alan-Watts.jpg.webp",
+    "width": 1377,
+    "height": 1600,
+    "hash": "e8bda1851552"
+  },
+  {
+    "file": "media/art-gallery/amelie.webp",
+    "thumb": "media/art-gallery-thumbs/amelie.webp.webp",
+    "large": "media/art-gallery-large/amelie.webp.webp",
+    "width": 1334,
+    "height": 2000,
+    "hash": "707ae68ee485"
+  },
+  {
+    "file": "media/art-gallery/Bertrand_Russell_1957.jpg",
+    "thumb": "media/art-gallery-thumbs/Bertrand_Russell_1957.jpg.webp",
+    "large": "media/art-gallery-large/Bertrand_Russell_1957.jpg.webp",
+    "width": 1268,
+    "height": 1600,
+    "hash": "1c2f9a66b5c6"
+  },
+  {
+    "file": "media/art-gallery/brothers-karamazov.webp",
+    "thumb": "media/art-gallery-thumbs/brothers-karamazov.webp.webp",
+    "large": "media/art-gallery-large/brothers-karamazov.webp.webp",
+    "width": 1306,
+    "height": 2000,
+    "hash": "46d73efa69a9"
+  },
+  {
+    "file": "media/art-gallery/burning-monk.jpg",
+    "thumb": "media/art-gallery-thumbs/burning-monk.jpg.webp",
+    "large": "media/art-gallery-large/burning-monk.jpg.webp",
+    "width": 1500,
+    "height": 1000,
+    "hash": "e9393ef09c4e"
+  },
+  {
+    "file": "media/art-gallery/chalice_to_eleusis_burning_man_15 copy.png",
+    "thumb": "media/art-gallery-thumbs/chalice_to_eleusis_burning_man_15 copy.png.webp",
+    "large": "media/art-gallery-large/chalice_to_eleusis_burning_man_15 copy.png.webp",
+    "width": 2000,
+    "height": 1333,
+    "hash": "67e101e95351"
+  },
+  {
+    "file": "media/art-gallery/City-of-God.png",
+    "thumb": "media/art-gallery-thumbs/City-of-God.png.webp",
+    "large": "media/art-gallery-large/City-of-God.png.webp",
+    "width": 500,
+    "height": 733,
+    "hash": "829974c5ae0d"
+  },
+  {
+    "file": "media/art-gallery/cloud-atlas.jpg",
+    "thumb": "media/art-gallery-thumbs/cloud-atlas.jpg.webp",
+    "large": "media/art-gallery-large/cloud-atlas.jpg.webp",
+    "width": 647,
+    "height": 1000,
+    "hash": "b7149a55b8fc"
+  },
+  {
+    "file": "media/art-gallery/daft-punk.jpg",
+    "thumb": "media/art-gallery-thumbs/daft-punk.jpg.webp",
+    "large": "media/art-gallery-large/daft-punk.jpg.webp",
+    "width": 1000,
+    "height": 994,
+    "hash": "7b1f5908436e"
+  },
+  {
+    "file": "media/art-gallery/darkness-workshop.png",
+    "thumb": "media/art-gallery-thumbs/darkness-workshop.png.webp",
+    "large": "media/art-gallery-large/darkness-workshop.png.webp",
+    "width": 1086,
+    "height": 1448,
+    "hash": "857598ad5b34"
+  },
+  {
+    "file": "media/art-gallery/drawing-hands.jpg",
+    "thumb": "media/art-gallery-thumbs/drawing-hands.jpg.webp",
+    "large": "media/art-gallery-large/drawing-hands.jpg.webp",
+    "width": 800,
+    "height": 696,
+    "hash": "4f7cc1b4fd05"
+  },
+  {
+    "file": "media/art-gallery/dye-fantasy.png",
+    "thumb": "media/art-gallery-thumbs/dye-fantasy.png.webp",
+    "large": "media/art-gallery-large/dye-fantasy.png.webp",
+    "width": 1023,
+    "height": 1537,
+    "hash": "4825746effb0"
+  },
+  {
+    "file": "media/art-gallery/easy_french_dancing.jpg",
+    "thumb": "media/art-gallery-thumbs/easy_french_dancing.jpg.webp",
+    "large": "media/art-gallery-large/easy_french_dancing.jpg.webp",
+    "width": 2000,
+    "height": 900,
+    "hash": "a81acbaf1535"
+  },
+  {
+    "file": "media/art-gallery/el-aguila-descalza.png",
+    "thumb": "media/art-gallery-thumbs/el-aguila-descalza.png.webp",
+    "large": "media/art-gallery-large/el-aguila-descalza.png.webp",
+    "width": 1214,
+    "height": 1296,
+    "hash": "1ad386cbacb2"
+  },
+  {
+    "file": "media/art-gallery/envigado.png",
+    "thumb": "media/art-gallery-thumbs/envigado.png.webp",
+    "large": "media/art-gallery-large/envigado.png.webp",
+    "width": 1332,
+    "height": 2000,
+    "hash": "cf460296dcbb"
+  },
+  {
+    "file": "media/art-gallery/Evelyn_McHale.jpg",
+    "thumb": "media/art-gallery-thumbs/Evelyn_McHale.jpg.webp",
+    "large": "media/art-gallery-large/Evelyn_McHale.jpg.webp",
+    "width": 775,
+    "height": 1080,
+    "hash": "93452ec70347"
+  },
+  {
+    "file": "media/art-gallery/fight-club.jpg",
+    "thumb": "media/art-gallery-thumbs/fight-club.jpg.webp",
+    "large": "media/art-gallery-large/fight-club.jpg.webp",
+    "width": 500,
+    "height": 671,
+    "hash": "0d04a971d93d"
+  },
+  {
+    "file": "media/art-gallery/geb-cover.jpg",
+    "thumb": "media/art-gallery-thumbs/geb-cover.jpg.webp",
+    "large": "media/art-gallery-large/geb-cover.jpg.webp",
+    "width": 658,
+    "height": 1000,
+    "hash": "a4736bba18dd"
+  },
+  {
+    "file": "media/art-gallery/great-dome.png",
+    "thumb": "media/art-gallery-thumbs/great-dome.png.webp",
+    "large": "media/art-gallery-large/great-dome.png.webp",
+    "width": 1375,
+    "height": 1144,
+    "hash": "e5827cb21173"
+  },
+  {
+    "file": "media/art-gallery/headache.avif",
+    "thumb": "media/art-gallery-thumbs/headache.avif.webp",
+    "large": "media/art-gallery-large/headache.avif.webp",
+    "width": 700,
+    "height": 700,
+    "hash": "a4111ab34c32"
+  },
+  {
+    "file": "media/art-gallery/her.jpg",
+    "thumb": "media/art-gallery-thumbs/her.jpg.webp",
+    "large": "media/art-gallery-large/her.jpg.webp",
+    "width": 1500,
+    "height": 2000,
+    "hash": "305b6cf1a0b1"
+  },
+  {
+    "file": "media/art-gallery/j-cole.jpeg",
+    "thumb": "media/art-gallery-thumbs/j-cole.jpeg.webp",
+    "large": "media/art-gallery-large/j-cole.jpeg.webp",
+    "width": 640,
+    "height": 640,
+    "hash": "ecec677db70a"
+  },
+  {
+    "file": "media/art-gallery/jr_nightcall.jpeg",
+    "thumb": "media/art-gallery-thumbs/jr_nightcall.jpeg.webp",
+    "large": "media/art-gallery-large/jr_nightcall.jpeg.webp",
+    "width": 1616,
+    "height": 1080,
+    "hash": "5b60f8c93e78"
+  },
+  {
+    "file": "media/art-gallery/le-petit-prince.webp",
+    "thumb": "media/art-gallery-thumbs/le-petit-prince.webp.webp",
+    "large": "media/art-gallery-large/le-petit-prince.webp.webp",
+    "width": 668,
+    "height": 1000,
+    "hash": "211c65adf7a1"
+  },
+  {
+    "file": "media/art-gallery/lee-sedol-Alpha-Go-2.webp",
+    "thumb": "media/art-gallery-thumbs/lee-sedol-Alpha-Go-2.webp.webp",
+    "large": "media/art-gallery-large/lee-sedol-Alpha-Go-2.webp.webp",
+    "width": 2000,
+    "height": 1295,
+    "hash": "4f3dd24cd97f"
+  },
+  {
+    "file": "media/art-gallery/making-progress.png",
+    "thumb": "media/art-gallery-thumbs/making-progress.png.webp",
+    "large": "media/art-gallery-large/making-progress.png.webp",
+    "width": 1023,
+    "height": 1537,
+    "hash": "06ae4d5120e4"
+  },
+  {
+    "file": "media/art-gallery/Malcolm-X-1965.webp",
+    "thumb": "media/art-gallery-thumbs/Malcolm-X-1965.webp.webp",
+    "large": "media/art-gallery-large/Malcolm-X-1965.webp.webp",
+    "width": 1600,
+    "height": 1045,
+    "hash": "fcbc614437e7"
+  },
+  {
+    "file": "media/art-gallery/maps-of-meaning.png",
+    "thumb": "media/art-gallery-thumbs/maps-of-meaning.png.webp",
+    "large": "media/art-gallery-large/maps-of-meaning.png.webp",
+    "width": 938,
+    "height": 1677,
+    "hash": "3641df2d87c4"
+  },
+  {
+    "file": "media/art-gallery/medellin-agreement.png",
+    "thumb": "media/art-gallery-thumbs/medellin-agreement.png.webp",
+    "large": "media/art-gallery-large/medellin-agreement.png.webp",
+    "width": 1536,
+    "height": 1024,
+    "hash": "4b0ea521d3e1"
+  },
+  {
+    "file": "media/art-gallery/mozart-in-the-jungle.jpg",
+    "thumb": "media/art-gallery-thumbs/mozart-in-the-jungle.jpg.webp",
+    "large": "media/art-gallery-large/mozart-in-the-jungle.jpg.webp",
+    "width": 1013,
+    "height": 1500,
+    "hash": "3e98a8f90d92"
+  },
+  {
+    "file": "media/art-gallery/mr-nobody.jpg",
+    "thumb": "media/art-gallery-thumbs/mr-nobody.jpg.webp",
+    "large": "media/art-gallery-large/mr-nobody.jpg.webp",
+    "width": 708,
+    "height": 1000,
+    "hash": "8e2a83fde86b"
+  },
+  {
+    "file": "media/art-gallery/neon-genesis-evangelion.png",
+    "thumb": "media/art-gallery-thumbs/neon-genesis-evangelion.png.webp",
+    "large": "media/art-gallery-large/neon-genesis-evangelion.png.webp",
+    "width": 1416,
+    "height": 1978,
+    "hash": "3848d689789b"
+  },
+  {
+    "file": "media/art-gallery/on-the-road.png",
+    "thumb": "media/art-gallery-thumbs/on-the-road.png.webp",
+    "large": "media/art-gallery-large/on-the-road.png.webp",
+    "width": 841,
+    "height": 1758,
+    "hash": "626169594026"
+  },
+  {
+    "file": "media/art-gallery/paradis-recto-verso.jpg",
+    "thumb": "media/art-gallery-thumbs/paradis-recto-verso.jpg.webp",
+    "large": "media/art-gallery-large/paradis-recto-verso.jpg.webp",
+    "width": 581,
+    "height": 600,
+    "hash": "2033a3e9ebff"
+  },
+  {
+    "file": "media/art-gallery/pursuit-of-happyness.jpg",
+    "thumb": "media/art-gallery-thumbs/pursuit-of-happyness.jpg.webp",
+    "large": "media/art-gallery-large/pursuit-of-happyness.jpg.webp",
+    "width": 1000,
+    "height": 1500,
+    "hash": "503346bb9f08"
+  },
+  {
+    "file": "media/art-gallery/ra-mour-sun.jpeg",
+    "thumb": "media/art-gallery-thumbs/ra-mour-sun.jpeg.webp",
+    "large": "media/art-gallery-large/ra-mour-sun.jpeg.webp",
+    "width": 1232,
+    "height": 1600,
+    "hash": "26b2c8b66c37"
+  },
+  {
+    "file": "media/art-gallery/ram-dass.jpeg",
+    "thumb": "media/art-gallery-thumbs/ram-dass.jpeg.webp",
+    "large": "media/art-gallery-large/ram-dass.jpeg.webp",
+    "width": 1855,
+    "height": 1998,
+    "hash": "f28911de4d60"
+  },
+  {
+    "file": "media/art-gallery/requiem-for-a-dream.jpg",
+    "thumb": "media/art-gallery-thumbs/requiem-for-a-dream.jpg.webp",
+    "large": "media/art-gallery-large/requiem-for-a-dream.jpg.webp",
+    "width": 1000,
+    "height": 1500,
+    "hash": "b51d2a31240a"
+  },
+  {
+    "file": "media/art-gallery/salvador_dali-archeological_reminiscence_of_millets_angelus-1935-trivium-art-history.jpg",
+    "thumb": "media/art-gallery-thumbs/salvador_dali-archeological_reminiscence_of_millets_angelus-1935-trivium-art-history.jpg.webp",
+    "large": "media/art-gallery-large/salvador_dali-archeological_reminiscence_of_millets_angelus-1935-trivium-art-history.jpg.webp",
+    "width": 2000,
+    "height": 1591,
+    "hash": "75c81b00ac85"
+  },
+  {
+    "file": "media/art-gallery/saving-private-ryan.jpg",
+    "thumb": "media/art-gallery-thumbs/saving-private-ryan.jpg.webp",
+    "large": "media/art-gallery-large/saving-private-ryan.jpg.webp",
+    "width": 800,
+    "height": 1177,
+    "hash": "f8d4d011033d"
+  },
+  {
+    "file": "media/art-gallery/sega-sunset.png",
+    "thumb": "media/art-gallery-thumbs/sega-sunset.png.webp",
+    "large": "media/art-gallery-large/sega-sunset.png.webp",
+    "width": 1650,
+    "height": 953,
+    "hash": "346ba57bb6f0"
+  },
+  {
+    "file": "media/art-gallery/siddhartha.jpg",
+    "thumb": "media/art-gallery-thumbs/siddhartha.jpg.webp",
+    "large": "media/art-gallery-large/siddhartha.jpg.webp",
+    "width": 1120,
+    "height": 1120,
+    "hash": "8ed30bb0ccd0"
+  },
+  {
+    "file": "media/art-gallery/slum-dog-millionaire.webp",
+    "thumb": "media/art-gallery-thumbs/slum-dog-millionaire.webp.webp",
+    "large": "media/art-gallery-large/slum-dog-millionaire.webp.webp",
+    "width": 1280,
+    "height": 1920,
+    "hash": "ed71a8b8cfee"
+  },
+  {
+    "file": "media/art-gallery/socrates.jpg",
+    "thumb": "media/art-gallery-thumbs/socrates.jpg.webp",
+    "large": "media/art-gallery-large/socrates.jpg.webp",
+    "width": 900,
+    "height": 900,
+    "hash": "07cf0fb0da9b"
+  },
+  {
+    "file": "media/art-gallery/soul-city-art.png",
+    "thumb": "media/art-gallery-thumbs/soul-city-art.png.webp",
+    "large": "media/art-gallery-large/soul-city-art.png.webp",
+    "width": 1086,
+    "height": 1448,
+    "hash": "bc1d46213860"
+  },
+  {
+    "file": "media/art-gallery/stony-brook-math-wall.jpg",
+    "thumb": "media/art-gallery-thumbs/stony-brook-math-wall.jpg.webp",
+    "large": "media/art-gallery-large/stony-brook-math-wall.jpg.webp",
+    "width": 911,
+    "height": 1085,
+    "hash": "4944019643f7"
+  },
+  {
+    "file": "media/art-gallery/ternura.png",
+    "thumb": "media/art-gallery-thumbs/ternura.png.webp",
+    "large": "media/art-gallery-large/ternura.png.webp",
+    "width": 1178,
+    "height": 1606,
+    "hash": "91817a0cdb3c"
+  },
+  {
+    "file": "media/art-gallery/the-fountainhead.jpg",
+    "thumb": "media/art-gallery-thumbs/the-fountainhead.jpg.webp",
+    "large": "media/art-gallery-large/the-fountainhead.jpg.webp",
+    "width": 681,
+    "height": 1000,
+    "hash": "174cdeb66d89"
+  },
+  {
+    "file": "media/art-gallery/the-host.png",
+    "thumb": "media/art-gallery-thumbs/the-host.png.webp",
+    "large": "media/art-gallery-large/the-host.png.webp",
+    "width": 1122,
+    "height": 1402,
+    "hash": "3e501a505c57"
+  },
+  {
+    "file": "media/art-gallery/the-infinity-machine.jpg",
+    "thumb": "media/art-gallery-thumbs/the-infinity-machine.jpg.webp",
+    "large": "media/art-gallery-large/the-infinity-machine.jpg.webp",
+    "width": 298,
+    "height": 450,
+    "hash": "062c8e5226d3"
+  },
+  {
+    "file": "media/art-gallery/the-republic.jpg",
+    "thumb": "media/art-gallery-thumbs/the-republic.jpg.webp",
+    "large": "media/art-gallery-large/the-republic.jpg.webp",
+    "width": 648,
+    "height": 1000,
+    "hash": "2ac141130ff6"
+  },
+  {
+    "file": "media/art-gallery/the-turing-test.png",
+    "thumb": "media/art-gallery-thumbs/the-turing-test.png.webp",
+    "large": "media/art-gallery-large/the-turing-test.png.webp",
+    "width": 797,
+    "height": 1229,
+    "hash": "0f6fe7f6b525"
+  },
+  {
+    "file": "media/art-gallery/the-whirlwind-of-lovers-blake.jpg",
+    "thumb": "media/art-gallery-thumbs/the-whirlwind-of-lovers-blake.jpg.webp",
+    "large": "media/art-gallery-large/the-whirlwind-of-lovers-blake.jpg.webp",
+    "width": 1232,
+    "height": 910,
+    "hash": "166d5b51a675"
+  },
+  {
+    "file": "media/art-gallery/the-wolf-of-wallstreet.jpg",
+    "thumb": "media/art-gallery-thumbs/the-wolf-of-wallstreet.jpg.webp",
+    "large": "media/art-gallery-large/the-wolf-of-wallstreet.jpg.webp",
+    "width": 1350,
+    "height": 2000,
+    "hash": "a9314b0661fb"
+  },
+  {
+    "file": "media/art-gallery/tower-of-babel.png",
+    "thumb": "media/art-gallery-thumbs/tower-of-babel.png.webp",
+    "large": "media/art-gallery-large/tower-of-babel.png.webp",
+    "width": 1536,
+    "height": 1024,
+    "hash": "0c4eeffa0b52"
+  },
+  {
+    "file": "media/art-gallery/trapped-in-time.png",
+    "thumb": "media/art-gallery-thumbs/trapped-in-time.png.webp",
+    "large": "media/art-gallery-large/trapped-in-time.png.webp",
+    "width": 1448,
+    "height": 1086,
+    "hash": "58c81231a24e"
+  },
+  {
+    "file": "media/art-gallery/vertigo.jpeg",
+    "thumb": "media/art-gallery-thumbs/vertigo.jpeg.webp",
+    "large": "media/art-gallery-large/vertigo.jpeg.webp",
+    "width": 686,
+    "height": 800,
+    "hash": "ee9eae67891c"
+  },
+  {
+    "file": "media/art-gallery/waking-up-book.jpg",
+    "thumb": "media/art-gallery-thumbs/waking-up-book.jpg.webp",
+    "large": "media/art-gallery-large/waking-up-book.jpg.webp",
+    "width": 656,
+    "height": 1000,
+    "hash": "5afe06f9e295"
+  },
+  {
+    "file": "media/art-gallery/we_the_unbound.jpeg",
+    "thumb": "media/art-gallery-thumbs/we_the_unbound.jpeg.webp",
+    "large": "media/art-gallery-large/we_the_unbound.jpeg.webp",
+    "width": 853,
+    "height": 1280,
+    "hash": "ad749d6ac372"
+  },
+  {
+    "file": "media/art-gallery/welcome-home.png",
+    "thumb": "media/art-gallery-thumbs/welcome-home.png.webp",
+    "large": "media/art-gallery-large/welcome-home.png.webp",
+    "width": 941,
+    "height": 1672,
+    "hash": "ab7d8dac421d"
+  },
+  {
+    "file": "media/art-gallery/Zdzisław-Beksiński-cathedral.jpg",
+    "thumb": "media/art-gallery-thumbs/Zdzisław-Beksiński-cathedral.jpg.webp",
+    "large": "media/art-gallery-large/Zdzisław-Beksiński-cathedral.jpg.webp",
+    "width": 860,
+    "height": 1024,
+    "hash": "c06226cfbd06"
+  },
+  {
+    "file": "media/art-gallery/Zdzisław-Beksiński.jpg",
+    "thumb": "media/art-gallery-thumbs/Zdzisław-Beksiński.jpg.webp",
+    "large": "media/art-gallery-large/Zdzisław-Beksiński.jpg.webp",
+    "width": 858,
+    "height": 1088,
+    "hash": "0ce02212f872"
+  },
+  {
+    "file": "media/art-gallery/zima-blue-disintegration.png",
+    "thumb": "media/art-gallery-thumbs/zima-blue-disintegration.png.webp",
+    "large": "media/art-gallery-large/zima-blue-disintegration.png.webp",
+    "width": 2000,
+    "height": 985,
+    "hash": "4d1a34013fca"
+  },
+  {
+    "file": "media/art-gallery/zima-blue-pool.png",
+    "thumb": "media/art-gallery-thumbs/zima-blue-pool.png.webp",
+    "large": "media/art-gallery-large/zima-blue-pool.png.webp",
+    "width": 2000,
+    "height": 988,
+    "hash": "dcb1efc31e67"
+  },
+  {
+    "file": "media/art-gallery/zima-blue-spotlight.png",
+    "thumb": "media/art-gallery-thumbs/zima-blue-spotlight.png.webp",
+    "large": "media/art-gallery-large/zima-blue-spotlight.png.webp",
+    "width": 2000,
+    "height": 989,
+    "hash": "d45f986c7dc2"
+  }
+]

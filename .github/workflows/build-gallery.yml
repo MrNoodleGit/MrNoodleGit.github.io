@@ -1,0 +1,45 @@
+name: Build altar gallery
+
+# Rebuilds media/art-gallery.json and the resized copies whenever images
+# are added, replaced, or removed in media/art-gallery/.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "media/art-gallery/**"
+      - "scripts/build-gallery.mjs"
+      - ".github/workflows/build-gallery.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-gallery
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm install --no-save --no-package-lock sharp@0.35.5
+
+      - run: node scripts/build-gallery.mjs
+
+      - name: Commit if the gallery changed
+        run: |
+          git add media/art-gallery.json media/art-gallery-thumbs media/art-gallery-large
+          if git diff --cached --quiet; then
+            echo "Gallery already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "build altar gallery"
+          git push

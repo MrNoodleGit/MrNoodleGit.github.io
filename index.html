@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css?v=29" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -132,7 +132,7 @@
 
         <div class="about reveal">
           <div class="about__portrait">
-            <img src="soul-city-art.png" alt="Ra Mour" />
+            <img src="media/soul-city-art-portrait.webp" width="640" height="853" alt="Ra Mour" />
           </div>
           <!-- Experience patches: tap or hover one to show its caption.
              Each patch is drawn inline; add one by copying a <li>. -->
@@ -189,43 +189,6 @@
             <p class="patches__caption" aria-live="polite"></p>
           </div>
 
-          <!-- Bio text — hidden for now. To bring it back, delete `hidden` below;
-             the layout switches to portrait-left, patches-above-bio on its own. -->
-          <div class="about__text" hidden>
-            <p>
-              I'm a performer, mystic, AI consultant, and experience
-              architect. I studied Computation and Cognition as well as Theater
-              Arts at MIT and Harvard University, where I learned to discover and
-              define the frontiers of our technology and culture.
-            </p>
-
-            <p>
-              My mission is to investigate the material and subjective
-              foundations of our world, and to apply that knowledge in the
-              service of compassionate intelligence, more joyful human-computer
-              interactions, and more effective psychiatry. I'm open for
-              professional collaborations, artistic projects, and fun
-              adventures.
-            </p>
-            <p>
-              I design bridges between the profound ideas of art, science,
-              philosophy, and spirituality and the intimate, tangible wisdom of
-              our daily lives. I tell beautiful and compelling stories to help
-              guide us across.
-            </p>
-            <p>
-              I speak English, Spanish, French, and Portuguese. I get along very
-              well with old people and babies. I'm obsessed with mangos, spicy
-              food, and guacamole.
-            </p>
-
-            <!-- <p class="about__note">
-              Scroll below to see what I love doing with my time — and watch the
-              episode <em>Zima Blue</em> of
-              <em>Love, Death &amp; Robots</em> for a beautiful depiction of
-              several ideas that fascinate me.
-            </p> -->
-          </div>
         </div>
       </section>
 
@@ -235,7 +198,7 @@
 
         <!-- Filled by js/writing-home.js from writing.md (template inside) —
            add an essay there and the most recent ones appear here. -->
-        <ul class="essays" id="essays-teaser" aria-live="polite"></ul>
+        <ul class="essays" id="essays-teaser"></ul>
 
         <p class="essays__more reveal">
           <a class="textlink" href="writing.html">Read more &rarr;</a>
@@ -265,7 +228,8 @@
           <p class="section__label reveal">Life</p>
         </div>
 
-        <!-- Drop video files into media/ — see media/README.txt for expected names -->
+        <!-- Drop video files into media/ — see media/README.txt for expected
+           names. Phones get the smaller 720p copy (*-720.mp4). -->
         <div
           class="lifeframe"
           id="lifeframe"
@@ -288,20 +252,14 @@
               preload="metadata"
               poster="media/dancing.jpg"
             >
-              <source src="media/dancing.mp4?v=2" type="video/mp4" />
+              <source
+                src="media/dancing-720.mp4"
+                type="video/mp4"
+                media="(max-width: 40rem)"
+              />
+              <source src="media/dancing.mp4" type="video/mp4" />
             </video>
             <div class="lifeframe__scrim" aria-hidden="true"></div>
-            <div class="lifeframe__caption">
-              <p class="lifeframe__index" hidden>01 / 03</p>
-              <h2 class="lifeframe__title" hidden>Dancing</h2>
-              <p class="lifeframe__text" hidden>
-                Skilled movement became an essential part of my life during the
-                pandemic. I've since participated in a variety of workshops and
-                dance studios around the world. I'm especially interested in
-                improvisational genres, such as freestyle hiphop, breaking,
-                house, and contemporary.
-              </p>
-            </div>
           </div>
 
           <div
@@ -320,20 +278,14 @@
               preload="metadata"
               poster="media/martial-arts.jpg"
             >
-              <source src="media/martial-arts.mp4?v=2" type="video/mp4" />
+              <source
+                src="media/martial-arts-720.mp4"
+                type="video/mp4"
+                media="(max-width: 40rem)"
+              />
+              <source src="media/martial-arts.mp4" type="video/mp4" />
             </video>
             <div class="lifeframe__scrim" aria-hidden="true"></div>
-            <div class="lifeframe__caption">
-              <p class="lifeframe__index" hidden>02 / 03</p>
-              <h2 class="lifeframe__title" hidden>Martial arts</h2>
-              <p class="lifeframe__text" hidden>
-                For me, martial arts represents respect for one's opponents,
-                humility, fortitude, and elegance. They have taught me how to
-                remain calm under severe physical pressure, how to learn with
-                and teach people of every skill level, and how to handle
-                distress by challenging one's body and embracing discomfort.
-              </p>
-            </div>
           </div>
 
           <div
@@ -352,19 +304,14 @@
               preload="metadata"
               poster="media/meditation.jpg"
             >
-              <source src="media/meditation.mp4?v=2" type="video/mp4" />
+              <source
+                src="media/meditation-720.mp4"
+                type="video/mp4"
+                media="(max-width: 40rem)"
+              />
+              <source src="media/meditation.mp4" type="video/mp4" />
             </video>
             <div class="lifeframe__scrim" aria-hidden="true"></div>
-            <div class="lifeframe__caption">
-              <p class="lifeframe__index" hidden>03 / 03</p>
-              <h2 class="lifeframe__title" hidden>Meditation</h2>
-              <p class="lifeframe__text" hidden>
-                Mediation is an enormous aspect of my life. It has shown me that
-                we can cultivate a way of relating to our subjective experience
-                that promotes peace and mitigates suffering. I’ve had the
-                privilege of attending several silent 10-day retreats.
-              </p>
-            </div>
           </div>
 
           <div class="lifeframe__play" aria-hidden="true">
@@ -436,7 +383,7 @@
         <p class="section__label reveal">Altar</p>
 
         <!-- Filled by js/gallery-preview.js with a random pick from
-           media/art-gallery/ on every visit. -->
+           media/art-gallery/ (via media/art-gallery.json) on every visit. -->
         <div
           class="gallery-preview__collage reveal"
           id="gallery-preview-collage"
@@ -445,247 +392,6 @@
         <p class="gallery-preview__cta reveal">
           <a class="textlink" href="gallery.html">View the full altar &rarr;</a>
         </p>
-      </section>
-
-      <!-- ============ 04 — WORK (hidden) ============ -->
-      <section class="section section--abyss" id="work" hidden>
-        <p class="section__label reveal">Work</p>
-
-        <div class="work__group">
-          <h3 class="work__subhead reveal">Experience</h3>
-          <ul class="work">
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img
-                  class="work__logo"
-                  src="media/logos/morgridge.png"
-                  alt=""
-                />
-                <h4 class="work__title">Morgridge Institute for Research</h4>
-                <div class="work__meta">
-                  <span class="work__year">May 2026 — Present</span>
-                </div>
-                <div class="work__desc">
-                  <p class="work__role">
-                    Researcher — AI in Education and Science
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <span class="work__logo work__logo--mono" aria-hidden="true"
-                  >R</span
-                >
-                <h4 class="work__title">RARE.</h4>
-                <div class="work__meta">
-                  <span class="work__year">Mar 2025 — Present</span>
-                  <span class="work__place">United States</span>
-                </div>
-                <div class="work__desc">
-                  <p class="work__role">Founder</p>
-                  <p>
-                    Designing experiences and technology that honor what it
-                    means to be human.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/wakingup.png" alt="" />
-                <h4 class="work__title">Waking Up</h4>
-                <div class="work__meta">
-                  <span class="work__year">Apr 2025 — Oct 2025</span>
-                  <span class="work__place">Denver, CO</span>
-                </div>
-                <div class="work__desc">
-                  <p class="work__role">
-                    AI Strategy &amp; Translation Consultant
-                  </p>
-                  <p>
-                    Helped make wisdom and peace more accessible to one of the
-                    largest language markets in the world.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/mit.png" alt="" />
-                <h4 class="work__title">
-                  Massachusetts Institute of Technology
-                </h4>
-                <div class="work__meta">
-                  <span class="work__year">May 2019 — Jun 2024</span>
-                  <span class="work__place">Cambridge, MA</span>
-                </div>
-                <div class="work__desc">
-                  <p class="work__role">Research Associate</p>
-                  <p>
-                    Replicated Monte Carlo Tree Search, the algorithm behind the
-                    AlphaGo win against Lee Sedol. Made fun videos for monkeys
-                    to help study the part of their brains that recognizes
-                    living things. Organized dancing, biking, and food parties
-                    to bring together brilliant scientists, artists, and
-                    entrepreneurs across Cambridge.
-                  </p>
-                  <p class="work__role">
-                    Community Lead — MIT Summer Research Program
-                  </p>
-                  <p>
-                    Gave 40 brilliant researchers an outstanding time for a
-                    memorable summer in our modern-day Athens.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/tremau.png" alt="" />
-                <h4 class="work__title">Tremau</h4>
-                <div class="work__meta">
-                  <span class="work__year">May 2022 — Sep 2022</span>
-                  <span class="work__place">Paris, France</span>
-                </div>
-                <div class="work__desc">
-                  <p class="work__role">ML Research Team Lead</p>
-                  <p>
-                    Led an international team of data scientists during my first
-                    summer in the capital of love.
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="work__group">
-          <h3 class="work__subhead reveal">Education</h3>
-          <ul class="work">
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/mit.png" alt="" />
-                <h4 class="work__title">
-                  Massachusetts Institute of Technology
-                </h4>
-                <div class="work__desc">
-                  <p class="work__role">
-                    Bachelor of Science — Computation and Cognition
-                  </p>
-                  <p>Concentration in Theater Arts.</p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/harvard.png" alt="" />
-                <h4 class="work__title">Harvard University</h4>
-                <div class="work__desc">
-                  <p>
-                    Cross-registered for the course Decisions, Big &amp; Small
-                    with Professor Tomer Ullman in the Department of Psychology.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/mit.png" alt="" />
-                <h4 class="work__title">
-                  Massachusetts Institute of Technology
-                </h4>
-                <div class="work__desc">
-                  <p class="work__role">
-                    Master of Engineering — Computation and Cognition
-                  </p>
-                  <p>Currently deferred.</p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/jhu.png" alt="" />
-                <h4 class="work__title">The Johns Hopkins University</h4>
-                <div class="work__desc">
-                  <p class="work__role">Doctor of Philosophy — PhD</p>
-                  <p>
-                    Admitted to the Physics PhD program. I stepped away to play
-                    my part in the rising technological frontier.
-                  </p>
-                </div>
-              </div>
-            </li>
-
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/mercer.png" alt="" />
-                <h4 class="work__title">Mercer University</h4>
-                <div class="work__desc">
-                  <p class="work__role">
-                    Bachelor of Engineering — Electrical and Electronics
-                    Engineering
-                  </p>
-                  <p>
-                    I left after 2.5 years to pursue research and studies in AI
-                    and Cognitive Science.
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="work__group">
-          <h3 class="work__subhead reveal">Licenses &amp; Certifications</h3>
-          <ul class="work">
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/padi.png" alt="" />
-                <h4 class="work__title">Open Water Scuba Diver</h4>
-                <div class="work__meta">
-                  <span class="work__year">Issued Aug 2023</span>
-                </div>
-                <div class="work__desc">
-                  <p class="work__role">PADI</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="work__group">
-          <h3 class="work__subhead reveal">Volunteering</h3>
-          <ul class="work">
-            <li class="work__row reveal">
-              <div class="work__entry">
-                <img class="work__logo" src="media/logos/maps.png" alt="" />
-                <h4 class="work__title">Psychedelic Science 2025</h4>
-                <div class="work__meta">
-                  <span class="work__year">Jun 2025 — Present</span>
-                  <span class="work__place">Health</span>
-                </div>
-                <div class="work__desc">
-                  <p class="work__role">
-                    Talent / Speaker Coordinator — Multidisciplinary Association
-                    for Psychedelic Studies (MAPS)
-                  </p>
-                  <p>
-                    Hosted current leaders of the next revolution in mental and
-                    spiritual health.
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
       </section>
 
       <!-- ============ 05 — CONTACT ============ -->
@@ -749,12 +455,12 @@
       <p>&copy; 2026 Ra Mour</p>
     </footer>
 
-
-    <script src="js/main.js?v=15"></script>
-    <script src="js/lifeframe.js?v=1"></script>
-    <script src="js/gallery-discovery.js?v=1"></script>
-    <script src="js/gallery-preview.js?v=2"></script>
-    <script src="js/writing-data.js?v=1"></script>
-    <script src="js/writing-home.js?v=1"></script>
+    <script src="js/reveal.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/lifeframe.js"></script>
+    <script src="js/gallery-discovery.js"></script>
+    <script src="js/gallery-preview.js"></script>
+    <script src="js/writing-data.js"></script>
+    <script src="js/writing-home.js"></script>
   </body>
 </html>

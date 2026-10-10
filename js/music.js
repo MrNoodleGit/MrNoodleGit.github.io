@@ -1,8 +1,6 @@
 /* Ra Mour — music page: renders curated Spotify recommendations
    from music.md (template inside) as embedded players. */
 
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 /* ---------- music.md ---------- */
 
 // Blocks separated by "---" lines; the first line is "track:", "playlist:",
@@ -91,23 +89,7 @@ function musicCard(entry) {
 function render(entries) {
   const grid = document.getElementById("music-grid");
   entries.forEach((entry) => grid.appendChild(musicCard(entry)));
-
-  // same reveal-on-scroll pattern as js/main.js and js/gallery.js
-  if ("IntersectionObserver" in window && !reducedMotion) {
-    document.documentElement.classList.add("js");
-    const revealObserver = new IntersectionObserver(
-      (revealEntries) => {
-        for (const revealEntry of revealEntries) {
-          if (revealEntry.isIntersecting) {
-            revealEntry.target.classList.add("is-visible");
-            revealObserver.unobserve(revealEntry.target);
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-    grid.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
-  }
+  observeReveals(grid);
 }
 
 listMusic()

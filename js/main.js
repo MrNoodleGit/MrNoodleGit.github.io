@@ -1,26 +1,29 @@
 /* Ra Mour — portfolio interactions */
 
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+observeReveals();
 
-/* ---------- scroll reveals ---------- */
+/* ---------- hide nav while scrolling down ---------- */
 
-if ("IntersectionObserver" in window && !reducedMotion) {
-  // tagging <html> activates the hidden initial state in CSS
-  document.documentElement.classList.add("js");
+const nav = document.querySelector(".nav");
 
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      }
+if (nav) {
+  let lastY = window.scrollY;
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (Math.abs(delta) < 8) return; // ignore tiny scroll jitter
+      // hidden only while moving down and past the top of the page
+      nav.classList.toggle("is-hidden", delta > 0 && y > nav.offsetHeight);
+      lastY = y;
     },
-    { threshold: 0.15 }
+    { passive: true }
   );
 
-  document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+  // tabbing into the nav brings it back
+  nav.addEventListener("focusin", () => nav.classList.remove("is-hidden"));
 }
 
 /* ---------- active nav link ---------- */
@@ -81,43 +84,11 @@ if ("IntersectionObserver" in window && navSections.length) {
   checkBottom();
 }
 
-/* ---------- glossary term modal ---------- */
-
-const glossaryModal = document.getElementById("glossary-modal");
-
-if (glossaryModal) {
-  const glossaryClose = document.getElementById("glossary-modal-close");
-  let glossaryOpener = null;
-
-  function openGlossary(opener) {
-    glossaryOpener = opener;
-    glossaryModal.hidden = false;
-    glossaryClose.focus();
-  }
-
-  function closeGlossary() {
-    glossaryModal.hidden = true;
-    if (glossaryOpener) glossaryOpener.focus();
-  }
-
-  document.querySelectorAll("[data-glossary-open]").forEach((trigger) => {
-    trigger.addEventListener("click", () => openGlossary(trigger));
-  });
-
-  glossaryClose.addEventListener("click", closeGlossary);
-  glossaryModal.addEventListener("click", (e) => {
-    if (!e.target.closest(".glossary-modal__panel")) closeGlossary();
-  });
-  document.addEventListener("keydown", (e) => {
-    if (!glossaryModal.hidden && e.key === "Escape") closeGlossary();
-  });
-}
-
 /* ---------- rising bubbles in the hero ---------- */
 
 const bubbleHost = document.querySelector(".hero__bubbles");
 
-if (bubbleHost && !reducedMotion) {
+if (bubbleHost && !prefersReducedMotion) {
   const BUBBLE_COUNT = 15;
 
   for (let i = 0; i < BUBBLE_COUNT; i++) {

@@ -25,3 +25,22 @@ Notes
     ffmpeg -i input.mp4 -an -vf "scale=-2:1080" -c:v libx264 -crf 27 -preset slow -movflags +faststart dancing.mp4
 
   Ask Claude to run this for you once the originals are in the folder.
+
+- Phones load a smaller 720p copy of each video (e.g. dancing-720.mp4).
+  After replacing a video, remake its copy too:
+
+    ffmpeg -i dancing.mp4 -an -vf "scale=-2:720" -c:v libx264 -crf 28 -preset slow -movflags +faststart dancing-720.mp4
+
+
+Altar images (media/art-gallery/)
+=================================
+
+Drop images into media/art-gallery/ and push. The "Build altar gallery"
+GitHub Action (scripts/build-gallery.mjs) then makes resized WebP copies in
+media/art-gallery-thumbs/ and media/art-gallery-large/ and updates the list
+in media/art-gallery.json — the site reads only that list, so a new image
+appears about a minute after the push. Don't edit those generated files by
+hand. To see a new image locally before pushing, run:
+
+    npm install --no-save --no-package-lock sharp@0.35.5
+    node scripts/build-gallery.mjs
