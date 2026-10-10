@@ -28,20 +28,48 @@ async function loadGallery() {
   }));
 }
 
+// Images get their src only as they near the screen. Native
+// loading="lazy" left the tiles blank on iPhone (WebKit), so this uses
+// the same IntersectionObserver approach as js/reveal.js, which works there.
+const pendingImages = new WeakMap();
+const imageObserver =
+  "IntersectionObserver" in window
+    ? new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            imageObserver.unobserve(entry.target);
+            pendingImages.get(entry.target)();
+            pendingImages.delete(entry.target);
+          }
+        },
+        { rootMargin: "800px 0px" }
+      )
+    : null;
+
 // one <img> showing the 800px copy, with the large one offered to wide or
 // high-density screens; width/height reserve its space before it loads
 function galleryImg({ thumb, large, width, height }, sizes) {
   const img = document.createElement("img");
-  img.src = thumb;
-  // images narrower than 800px have no bigger copy to offer
-  if (width > 800) {
-    img.srcset = `${thumb} 800w, ${large} ${width}w`;
-    img.sizes = sizes;
-  }
+  img.decoding = "async";
   img.width = width;
   img.height = height;
   img.alt = "";
-  img.loading = "lazy";
-  img.decoding = "async";
+
+  const load = () => {
+    // images narrower than 800px have no bigger copy to offer
+    if (width > 800) {
+      img.sizes = sizes;
+      img.srcset = `${thumb} 800w, ${large} ${width}w`;
+    }
+    img.src = thumb;
+  };
+
+  if (imageObserver) {
+    pendingImages.set(img, load);
+    imageObserver.observe(img);
+  } else {
+    load();
+  }
   return img;
 }
