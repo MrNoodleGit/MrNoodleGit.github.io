@@ -47,19 +47,25 @@ access.
 
 ## 3. Deploy the Worker
 
+> **Always add `--config wrangler.toml`.** The repo root has its own
+> `wrangler.jsonc` (for the Cloudflare version of the website), and Wrangler
+> picks that one even when you run it from `worker/`. Without the flag,
+> `wrangler deploy` publishes a copy of the whole website as `ramour-site`
+> and leaves the radio untouched.
+
 ```sh
 cd worker
 npx wrangler login
-npx wrangler secret put SPOTIFY_CLIENT_ID
-npx wrangler secret put SPOTIFY_CLIENT_SECRET
-npx wrangler secret put SPOTIFY_REFRESH_TOKEN
+npx wrangler secret put SPOTIFY_CLIENT_ID --config wrangler.toml
+npx wrangler secret put SPOTIFY_CLIENT_SECRET --config wrangler.toml
+npx wrangler secret put SPOTIFY_REFRESH_TOKEN --config wrangler.toml
 
 # Private listen-history log — create the KV namespace, paste the id it
 # prints into wrangler.toml, then pick any random string as your token:
-npx wrangler kv namespace create HISTORY
-npx wrangler secret put HISTORY_TOKEN
+npx wrangler kv namespace create HISTORY --config wrangler.toml
+npx wrangler secret put HISTORY_TOKEN --config wrangler.toml
 
-npx wrangler deploy
+npx wrangler deploy --config wrangler.toml
 ```
 
 Wrangler prints the deployed URL, something like
