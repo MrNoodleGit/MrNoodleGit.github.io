@@ -150,7 +150,7 @@ worker/                Cloudflare Worker for the radio (+ README with setup)
 ### Home — `index.html`
 CSS: `style.css`. JS: `reveal.js`, `main.js`, `lifeframe.js`, `gallery-discovery.js`, `gallery-preview.js`, `writing-data.js`, `writing-home.js`.
 
-- **Navigation (fixed top bar):** About, Mind, Life, Altar, Contact; a "Rare Retreats" button; icons for Substack, Instagram, LinkedIn, YouTube and X. On phones it wraps to three rows.
+- **Navigation (fixed top bar):** About, Mind, Life, Altar, Music; a "Rare Retreats" button; icons for Substack, Instagram, LinkedIn, YouTube and X. On phones it wraps to three rows.
   - *Scroll spy:* the link for the section in view is highlighted (IntersectionObserver band in the middle of the screen; the last link is forced active at the bottom of the page). The Altar link is tied to the homepage preview section.
   - *Hide on scroll:* the bar slides away on steady downward scrolling (24 px) and returns on upward scrolling (12 px), is always shown near the top, ignores iOS rubber-band overscroll, and returns when a link inside it gets keyboard focus.
   - One shared, passive scroll listener runs at most once per frame (`onScrollFrame` in `main.js`).
