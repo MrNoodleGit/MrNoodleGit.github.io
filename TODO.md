@@ -21,6 +21,11 @@ Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but 
 - [ ] Add ramour.org as the custom domain. Only after that, turn off GitHub Pages and delete `CNAME`, so the domain never points at GitHub while Pages is off.
 - [ ] Optional: Cloudflare Web Analytics (cookie-free). Needs a CSP update on every page and in `_headers`.
 - [ ] Optional: serve the radio API from `ramour.org/api/…` and update `js/radio.js` and the CSP.
+- [ ] Restrict the Music page to approved people with Cloudflare Access (after the move; the page is public until then). Check Access's current free-tier limits first. Plan:
+  - In Zero Trust, add a self-hosted application for `ramour.org/music*`, with an Allow policy listing the approved email addresses (visitors sign in with a one-time code sent by email).
+  - Cover everything the page uses, not just `music.html`: `music.md`, `media/waking-up/*`, and the radio API. That means serving the radio from `ramour.org/api/…` (item above) and putting it behind the same policy.
+  - Add `noindex` to `music.html`, and test with an approved and a non-approved email, including the Spotify embeds and radio.
+  - The page would also need a way back home for people who aren't approved; decide what they see.
 
 ## Next up
 
