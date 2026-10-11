@@ -4,6 +4,8 @@ Keep this site at top performance, code quality, and security. Do reviews after 
 
 Open work is in `TODO.md`. Keep it current: tick items off when done and add new ones as they come up.
 
+The software architecture, technology and feature outline is in `ARCHITECTURE.md`, starting with a summary a product manager can read. Update it in the same commit as any change it describes (the rules are at the end of that file).
+
 ## What a review means here
 
 "Major" = a new page or feature, a change to scripts, the CSP, workflows, the radio Worker or hosting, or a dependency update. After one:

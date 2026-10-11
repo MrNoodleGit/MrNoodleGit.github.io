@@ -17,7 +17,7 @@ Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but 
 - [ ] Decide whether to move.
 - [ ] Add ramour.org to Cloudflare (this means changing the nameservers at the domain registrar).
 - [ ] Connect this repo under Workers & Pages. No build command; deploy command `npx wrangler deploy`.
-- [ ] Test on the temporary `*.workers.dev` address: headers, every page, radio, Spotify embeds.
+- [ ] Test on the temporary `*.workers.dev` address: headers, every page, Spotify embeds. The radio will be blocked there until that address is added to `ALLOWED_ORIGINS` in `worker/now-playing.js` (redeploy the Worker) and to `connect-src` in the page policy; skip it or add both.
 - [ ] Add ramour.org as the custom domain. Only after that, turn off GitHub Pages and delete `CNAME`, so the domain never points at GitHub while Pages is off.
 - [ ] Optional: Cloudflare Web Analytics (cookie-free). Needs a CSP update on every page and in `_headers`.
 - [ ] Optional: serve the radio API from `ramour.org/api/…` and update `js/radio.js` and the CSP.
@@ -28,7 +28,8 @@ Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but 
 - [ ] Turn the Substack sync back on: its schedule is commented out in `.github/workflows/sync-substack.yml`, so new essays only appear when it's run by hand.
 - [ ] Link previews: add Open Graph tags (`og:title`, `og:description`, `og:image`) to every page except `hello_world.html`, which has them.
 - [ ] Shorten the Altar's 0.8 s image fade-in; it delays the first image to about 3.2 s in Lighthouse.
-- [ ] Remove root files no page uses: `ra-mour-sun.jpeg` (identical copy in `media/art-gallery/`), `ramour_soul_pictures.jpg`, and the `eudaimonia-machine/` folder. Keep `soul-city-art.png`; it's the source for the portrait WebPs.
+- [ ] Remove files no page uses: in the repo root `ra-mour-sun.jpeg` (identical copy in `media/art-gallery/`), `ramour_soul_pictures.jpg` and the `eudaimonia-machine/` folder; in `media/` the `gallery-archive/` folder (16 MB), `the-whirlwind-of-lovers-blake.jpg`, `hello/qr.png` (the page uses `qr.svg`) and the eight organization logos other than `logos/wakingup.png` (they belonged to the removed Work section; keep them if it's coming back). Keep `soul-city-art.png` (source for the portrait WebPs) and the three `media/*.jpg` video posters if you want sources for the WebP posters.
+- [ ] Rare Retreats loads the original 3 MB `tower-of-babel.png`; use the 2000 px WebP in `media/art-gallery-large/` instead.
 
 ## Later
 
