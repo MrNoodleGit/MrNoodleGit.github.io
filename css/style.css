@@ -616,7 +616,7 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
 .about__portrait {
   position: relative;
-  width: min(16rem, 70vw);
+  width: min(24rem, 100%);
   aspect-ratio: 4 / 5;
   overflow: hidden; /* Safari can size the photo past the frame and hide the border */
   border: 1px solid var(--teal);
@@ -792,8 +792,6 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   }
 
   .essays__row { flex-direction: column; gap: 0.3rem; align-items: flex-start; }
-
-  .about__portrait { max-width: 14rem; }
 
   .gallery-preview__collage { grid-template-columns: repeat(2, 1fr); }
 

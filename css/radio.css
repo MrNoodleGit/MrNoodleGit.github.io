@@ -62,8 +62,8 @@
 
 .radio__art {
   display: block;
-  width: clamp(120px, 20vw, 240px);
-  height: clamp(120px, 20vw, 240px);
+  width: clamp(11rem, 26vw, 17rem);
+  aspect-ratio: 1;
   object-fit: cover;
   background: var(--ink);
   border: 1px solid rgba(91, 194, 231, 0.3);
@@ -202,7 +202,10 @@
     text-align: center;
   }
 
-  .radio__cover { padding: 2rem 1.5rem 0.5rem; }
+  .radio__cover { padding: 2rem 1.5rem 0.5rem; width: 100%; }
+
+  /* the cover is the star on a phone: as wide as the card allows */
+  .radio__art { width: min(100%, 16rem); }
 
   .radio__body {
     padding: 1rem 1.5rem 2rem;

@@ -76,8 +76,9 @@ function api(path, token) {
 // Spotify's track object -> the only fields the page actually draws.
 function shapeTrack(track) {
   const covers = track.album?.images ?? [];
-  // images come widest-first; the second is ~300px, plenty for a 212px block
-  const image = covers[1]?.url ?? covers[0]?.url ?? null;
+  // images come widest-first: the first is 640px, which stays sharp when the
+  // cover is drawn up to ~17rem wide on a high-density screen
+  const image = covers[0]?.url ?? null;
 
   return {
     title: track.name,
