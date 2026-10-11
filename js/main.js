@@ -2,28 +2,72 @@
 
 observeReveals();
 
+/* ---------- scroll work, once per frame ---------- */
+
+// Everything that reads the scroll position hangs off one passive listener
+// that runs at most once per frame, so a fast flick never queues up
+// layout reads or class changes faster than the screen can draw them.
+const onScrollFrame = [];
+let scrollQueued = false;
+
+window.addEventListener(
+  "scroll",
+  () => {
+    if (scrollQueued) return;
+    scrollQueued = true;
+    requestAnimationFrame(() => {
+      scrollQueued = false;
+      onScrollFrame.forEach((fn) => fn());
+    });
+  },
+  { passive: true }
+);
+
 /* ---------- hide nav while scrolling down ---------- */
 
 const nav = document.querySelector(".nav");
 
 if (nav) {
+  const HIDE_AFTER = 24; // px of steady downward travel before the nav slides away
+  const SHOW_AFTER = 12; // px of upward travel before it comes back
   let lastY = window.scrollY;
+  let travel = 0; // signed px scrolled in the current direction
+  let hidden = false;
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      const y = window.scrollY;
-      const delta = y - lastY;
-      if (Math.abs(delta) < 8) return; // ignore tiny scroll jitter
-      // hidden only while moving down and past the top of the page
-      nav.classList.toggle("is-hidden", delta > 0 && y > nav.offsetHeight);
-      lastY = y;
-    },
-    { passive: true }
-  );
+  // only touch the DOM when the state really changes, not on every frame
+  const setHidden = (value) => {
+    if (value === hidden) return;
+    hidden = value;
+    nav.classList.toggle("is-hidden", value);
+  };
+
+  onScrollFrame.push(() => {
+    const y = window.scrollY;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+
+    // iOS rubber-bands past both ends of the page; those positions bounce
+    // back the other way, which would flick the nav in and out
+    if (y < 0 || y > maxY) {
+      lastY = Math.min(Math.max(y, 0), maxY);
+      travel = 0;
+      return;
+    }
+
+    const delta = y - lastY;
+    lastY = y;
+    if (delta === 0) return;
+
+    // the count restarts whenever the direction flips, so a finger's
+    // small wobble can't toggle the nav; only a real change of direction does
+    travel = Math.sign(delta) === Math.sign(travel) ? travel + delta : delta;
+
+    if (y <= nav.offsetHeight) setHidden(false); // near the top: always shown
+    else if (travel > HIDE_AFTER) setHidden(true);
+    else if (travel < -SHOW_AFTER) setHidden(false);
+  });
 
   // tabbing into the nav brings it back
-  nav.addEventListener("focusin", () => nav.classList.remove("is-hidden"));
+  nav.addEventListener("focusin", () => setHidden(false));
 }
 
 /* ---------- active nav link ---------- */
@@ -79,7 +123,7 @@ if ("IntersectionObserver" in window && navSections.length) {
   const checkBottom = () => {
     if (atBottom()) setActiveLink(last.link);
   };
-  window.addEventListener("scroll", checkBottom, { passive: true });
+  onScrollFrame.push(checkBottom);
   window.addEventListener("resize", checkBottom);
   checkBottom();
 }
@@ -104,6 +148,18 @@ if (bubbleHost && !prefersReducedMotion) {
 
     bubbleHost.appendChild(bubble);
   }
+}
+
+/* ---------- pause the hero's animations once it's off screen ---------- */
+
+const hero = document.querySelector(".hero");
+
+if (hero && "IntersectionObserver" in window) {
+  // the rays and bubbles never stop drifting; once the hero has scrolled
+  // away there's nothing to see, so stop paying for them (see .is-offscreen)
+  new IntersectionObserver(([entry]) => {
+    hero.classList.toggle("is-offscreen", !entry.isIntersecting);
+  }).observe(hero);
 }
 
 /* ---------- experience patches ---------- */

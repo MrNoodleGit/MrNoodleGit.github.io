@@ -28,7 +28,8 @@ jobs:
 
       - run: npm ci --prefix scripts
 
-      - run: npx --prefix scripts lhci autorun --config=scripts/lighthouserc.json
+      # --no-install: use only the locked copy, never download a package by name
+      - run: npx --no-install --prefix scripts lhci autorun --config=scripts/lighthouserc.json
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
