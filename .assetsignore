@@ -10,3 +10,4 @@ scripts/
 worker/
 wrangler.jsonc
 CNAME
+CLAUDE.md
