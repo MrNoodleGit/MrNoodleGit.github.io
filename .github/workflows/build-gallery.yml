@@ -8,6 +8,7 @@ on:
     paths:
       - "media/art-gallery/**"
       - "scripts/build-gallery.mjs"
+      - "scripts/package-lock.json"
       - ".github/workflows/build-gallery.yml"
   workflow_dispatch:
 
@@ -22,13 +23,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # actions are pinned to exact commits (tags can be moved); Dependabot
+      # proposes updates, see .github/dependabot.yml
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+          # no shared dependency cache in a workflow that can push to main
+          package-manager-cache: false
 
-      - run: npm install --no-save --no-package-lock sharp@0.35.5
+      # exact versions from scripts/package-lock.json, checked against their hashes
+      - run: npm ci --prefix scripts --omit=dev
 
       - run: node scripts/build-gallery.mjs
 

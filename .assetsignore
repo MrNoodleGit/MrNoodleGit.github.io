@@ -1,0 +1,12 @@
+# Repo files that aren't part of the website; Cloudflare skips these when
+# uploading (same syntax as .gitignore).
+.git/
+.github/
+.gitignore
+.lighthouseci/
+.wrangler/
+node_modules/
+scripts/
+worker/
+wrangler.jsonc
+CNAME

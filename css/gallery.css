@@ -68,6 +68,9 @@
   column-gap: 1.25rem;
 }
 
+/* until the images arrive, keep the footer below the fold so it doesn't jump */
+.wall:empty { min-height: 100vh; }
+
 @media (max-width: 64rem) { .wall { columns: 2; } }
 @media (max-width: 40rem) { .wall { columns: 1; } }
 

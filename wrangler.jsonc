@@ -1,0 +1,13 @@
+// Cloudflare hosting for ramour.org (not used yet: the live site is still
+// on GitHub Pages). The whole repo folder is served as static files, with
+// no server code; headers come from _headers, and .assetsignore keeps the
+// tooling below out of the upload.
+{
+  "name": "ramour-site",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

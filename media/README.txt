@@ -42,5 +42,5 @@ in media/art-gallery.json — the site reads only that list, so a new image
 appears about a minute after the push. Don't edit those generated files by
 hand. To see a new image locally before pushing, run:
 
-    npm install --no-save --no-package-lock sharp@0.35.5
+    npm ci --prefix scripts --omit=dev
     node scripts/build-gallery.mjs

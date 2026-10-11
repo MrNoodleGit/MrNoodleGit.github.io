@@ -3,18 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Content Security Policy: which sites this page may load things
+         from. Keep identical on every page (and in _headers). -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https://i.scdn.co; media-src 'self' blob:; connect-src 'self' https://ra-mour-radio.ronald1andres2.workers.dev; frame-src https://open.spotify.com https://ramour.substack.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+    />
     <title>Ra Mour — Alchemist</title>
     <meta
       name="description"
       content="Ra Mour — performer, researcher, mystic, and experience architect."
     />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="fonts/marcellus-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+    <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -132,7 +140,18 @@
 
         <div class="about reveal">
           <div class="about__portrait">
-            <img src="media/soul-city-art-portrait.webp" width="640" height="853" alt="Ra Mour" />
+            <img
+              src="media/soul-city-art-portrait.webp"
+              srcset="
+                media/soul-city-art-portrait-320.webp 320w,
+                media/soul-city-art-portrait-480.webp 480w,
+                media/soul-city-art-portrait.webp     640w
+              "
+              sizes="(max-width: 640px) 252px, 288px"
+              width="640"
+              height="853"
+              alt="Ra Mour"
+            />
           </div>
           <!-- Experience patches: tap or hover one to show its caption.
              Each patch is drawn inline; add one by copying a <li>. -->
@@ -207,12 +226,14 @@
         <a class="wu-feature reveal" href="waking-up.html">
           <img
             class="wu-feature__cover"
-            src="media/waking-up/lessons-cover.jpg"
+            src="media/waking-up/lessons-cover-288.webp"
+            width="288"
+            height="288"
             alt=""
           />
           <div class="wu-feature__body">
             <p class="wu-feature__kicker">Translation · Voice</p>
-            <h3 class="wu-feature__title">Waking Up · en español</h3>
+            <h2 class="wu-feature__title">Waking Up · en español</h2>
             <p class="wu-feature__desc">
               Spanish translations of the Waking Up app's Introductory Course
               and theory lessons — 28 guided sessions.
@@ -249,8 +270,8 @@
               muted
               loop
               playsinline
-              preload="metadata"
-              poster="media/dancing.jpg"
+              preload="none"
+              poster="media/dancing.webp"
             >
               <source
                 src="media/dancing-720.mp4"
@@ -275,8 +296,8 @@
               muted
               loop
               playsinline
-              preload="metadata"
-              poster="media/martial-arts.jpg"
+              preload="none"
+              poster="media/martial-arts.webp"
             >
               <source
                 src="media/martial-arts-720.mp4"
@@ -301,8 +322,8 @@
               muted
               loop
               playsinline
-              preload="metadata"
-              poster="media/meditation.jpg"
+              preload="none"
+              poster="media/meditation.webp"
             >
               <source
                 src="media/meditation-720.mp4"

@@ -7,7 +7,7 @@
 //
 // Run on every push that touches media/art-gallery/ by
 // .github/workflows/build-gallery.yml, or locally after adding images:
-//   npm install --no-save --no-package-lock sharp@0.35.5
+//   npm ci --prefix scripts --omit=dev
 //   node scripts/build-gallery.mjs
 //
 // Only new or changed images are re-encoded (tracked by content hash), and

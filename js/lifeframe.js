@@ -70,6 +70,19 @@
   if (reducedMotion) return;
 
   if ("IntersectionObserver" in window) {
+    // the videos ship with preload="none" so the homepage doesn't download
+    // them on arrival; start buffering the current one about a screen early
+    const warmObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          activeVideo().preload = "auto";
+          warmObserver.disconnect();
+        }
+      },
+      { rootMargin: "100% 0px" }
+    );
+    warmObserver.observe(frame);
+
     const frameObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

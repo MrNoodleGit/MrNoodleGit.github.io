@@ -3,18 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Content Security Policy: which sites this page may load things
+         from. Keep identical on every page (and in _headers). -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https://i.scdn.co; media-src 'self' blob:; connect-src 'self' https://ra-mour-radio.ronald1andres2.workers.dev; frame-src https://open.spotify.com https://ramour.substack.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+    />
     <title>Ra Mour — Writing</title>
     <meta
       name="description"
       content="Essays by Ra Mour on art, science, philosophy, and spirituality."
     />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/writing.css" />
   </head>
@@ -44,14 +45,7 @@
     </div>
 
     <noscript>
-      <p
-        class="essays-note"
-        style="
-          max-width: var(--measure);
-          margin: 0 auto;
-          padding: 0 var(--pad) 3rem;
-        "
-      >
+      <p class="noscript-note">
         Enable JavaScript to view the archive.
       </p>
     </noscript>

@@ -1,0 +1,19 @@
+# Weekly pull requests that update the pinned GitHub Actions and the
+# script dependencies in scripts/package.json, each group as one PR.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /scripts
+    schedule:
+      interval: weekly
+    groups:
+      scripts:
+        patterns: ["*"]

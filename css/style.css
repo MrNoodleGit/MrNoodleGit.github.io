@@ -398,21 +398,32 @@ a { color: inherit; text-decoration: none; }
 .lifeframe__dots {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
 }
 
+/* the button is a 24px tap target; the visible dot is drawn inside it */
 .lifeframe__dot {
-  width: 0.55rem;
-  height: 0.55rem;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0;
+  background: none;
+}
+
+/* whole-pixel size so the circle doesn't render slightly oval */
+.lifeframe__dot::before {
+  content: "";
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 1px solid var(--muted);
-  background: transparent;
   transition: background 0.3s, border-color 0.3s, transform 0.3s;
 }
 
-.lifeframe__dot:hover { border-color: var(--zima); }
+.lifeframe__dot:hover::before { border-color: var(--zima); }
 
-.lifeframe__dot.is-active {
+.lifeframe__dot.is-active::before {
   background: var(--zima);
   border-color: var(--zima);
   transform: scale(1.2);
@@ -509,6 +520,14 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 .essays__more { margin-top: 3rem; }
 
 .essays-note { color: var(--muted); }
+
+/* "Enable JavaScript" message on pages that build their content in JS */
+.noscript-note {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--pad) 3rem;
+  color: var(--muted);
+}
 .essays-note a { color: var(--zima); }
 
 /* ---------- waking-up feature card (homepage) ---------- */
@@ -705,6 +724,17 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   list-style: none;
   font-size: 0.9rem;
   letter-spacing: 0.1em;
+}
+
+/* ---------- 404 page ---------- */
+
+.not-found { min-height: 100vh; }
+
+.not-found__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4vw, 2.75rem);
+  margin-bottom: 2rem;
 }
 
 /* ---------- footer ---------- */

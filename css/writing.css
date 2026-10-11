@@ -57,6 +57,10 @@
   padding: 0 var(--pad) clamp(4rem, 10vh, 7rem);
 }
 
+/* about one essay's height, held while writing.md loads, so the link
+   below doesn't jump when the list fills in */
+.writing-list .essays:empty { min-height: 8rem; }
+
 /* ---------- footer ---------- */
 
 .writing-footer {

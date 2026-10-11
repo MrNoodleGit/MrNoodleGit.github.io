@@ -1,0 +1,24 @@
+# HTTP headers for ramour.org on Cloudflare (GitHub Pages ignores this file).
+# Every page also carries the same Content-Security-Policy in a <meta> tag,
+# which keeps working on GitHub Pages; the header version below adds
+# frame-ancestors, which only works as a header. Keep the two in sync.
+
+/*
+  Content-Security-Policy: default-src 'self'; img-src 'self' https://i.scdn.co; media-src 'self' blob:; connect-src 'self' https://ra-mour-radio.ronald1andres2.workers.dev; frame-src https://open.spotify.com https://ramour.substack.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Caching. Pages, scripts, styles and data keep the default (browsers
+# re-check with the server on every visit, which costs a tiny request but
+# never shows stale content). Fonts never change, so browsers keep them for
+# a year. Media can change under the same name, so it's kept a day, then
+# reused for up to a week while a fresh copy is fetched in the background.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/media/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
