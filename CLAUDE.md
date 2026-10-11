@@ -21,7 +21,7 @@ The software architecture, technology and feature outline is in `ARCHITECTURE.md
 - Plain HTML, CSS and JS. There is no build step for the site itself. Hosted on GitHub Pages at ramour.org; `wrangler.jsonc`, `_headers` and `.assetsignore` are prepared for a move to Cloudflare but are not in use yet.
 - Content comes from `writing.md`, `music.md` and `quotes.md`, which the pages read in the browser.
 - `media/art-gallery/` holds the Altar images. The "Build altar gallery" Action makes `media/art-gallery.json` and the resized copies in `media/art-gallery-thumbs/` and `media/art-gallery-large/`. Never edit those by hand.
-- `scripts/` holds tools (gallery build, Substack sync, card render, Spotify auth) and their locked dependencies. `worker/` is the radio Cloudflare Worker; it is deployed by hand with `cd worker && npx wrangler deploy`, so a change there needs the owner to redeploy.
+- `scripts/` holds tools (gallery build, Substack sync, card render, Spotify auth) and their locked dependencies. `worker/` is the radio Cloudflare Worker; it is deployed by hand with `cd worker && npx wrangler deploy --config wrangler.toml` (without `--config`, Wrangler uses the root `wrangler.jsonc` and deploys the website instead), so a change there needs the owner to redeploy.
 
 ## Rules that keep it fast, clean and safe
 

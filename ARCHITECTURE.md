@@ -234,7 +234,7 @@ All scripts are plain files that share the global scope, so **load order matters
 
 ## 8. The radio Worker — `worker/`
 
-- **Runtime:** Cloudflare Worker (`now-playing.js`), config in `wrangler.toml`; deployed by hand with `cd worker && npx wrangler deploy` (a change there is not live until redeployed).
+- **Runtime:** Cloudflare Worker (`now-playing.js`), config in `wrangler.toml`; deployed by hand with `cd worker && npx wrangler deploy --config wrangler.toml` (a change there is not live until redeployed). The `--config` flag is required: Wrangler otherwise uses the repo root's `wrangler.jsonc` and deploys the website as `ramour-site` instead.
 - **Secrets (names only; set with `wrangler secret put`):** `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`, `HISTORY_TOKEN`. One-time token minting: `scripts/spotify-auth.mjs`. Spotify scopes are read-only (currently playing, recently played).
 - **Storage:** one KV namespace (`HISTORY`) holding the daily history and `last-live`.
 - **Access control:** answers only GET/OPTIONS; CORS allowlist `ALLOWED_ORIGINS` (ramour.org, www, the GitHub Pages address, and two localhost ports). **Any new site address, including a Cloudflare test address, must be added there and redeployed, and added to `connect-src` in the page CSP, or the radio will be blocked.** `/history` returns a plain 404 without the token (constant-time comparison).
@@ -328,6 +328,7 @@ All scripts are plain files that share the global scope, so **load order matters
 | 2026-10 | Altar images loaded by IntersectionObserver, not `loading="lazy"` | Blank tiles in WebKit browsers |
 | 2026-10 | Patch outlines kept inline per patch | White patches on Safari with a shared `<use>` |
 | 2026-10 | Hero rays: removed blend mode, keep blur | Visually identical, cheaper to composite |
+| 2026-10 | Worker commands always use `--config wrangler.toml` | The root `wrangler.jsonc` (site) is picked up even from `worker/`, so a plain `wrangler deploy` published the website instead of the radio |
 | 2026-10 | Prepared, but did not start, a Cloudflare move | Real headers and caching; waits on an owner decision |
 | 2026-10 | Radio sends Spotify's 640 px cover; the saved "last played" entry is rewritten when its cover changes | Larger cover art stays sharp. The first version kept serving the old 300 px cover for a saved song until a different song played (needs a Worker redeploy) |
 

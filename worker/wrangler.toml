@@ -2,6 +2,9 @@ name = "ra-mour-radio"
 main = "now-playing.js"
 compatibility_date = "2026-09-01"
 
+# ALWAYS pass `--config wrangler.toml` to wrangler commands run for this Worker
+# (see worker/README.md): the repo root's wrangler.jsonc would be used otherwise.
+#
 # Secrets are NOT set here — they would end up in git. Set them with:
 #   npx wrangler secret put SPOTIFY_CLIENT_ID
 #   npx wrangler secret put SPOTIFY_CLIENT_SECRET
