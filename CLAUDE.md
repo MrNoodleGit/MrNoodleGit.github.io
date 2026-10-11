@@ -2,6 +2,8 @@
 
 Keep this site at top performance, code quality, and security. Do reviews after major changes.
 
+Open work is in `TODO.md`. Keep it current: tick items off when done and add new ones as they come up.
+
 ## What a review means here
 
 "Major" = a new page or feature, a change to scripts, the CSP, workflows, the radio Worker or hosting, or a dependency update. After one:
