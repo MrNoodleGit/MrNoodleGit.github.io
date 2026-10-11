@@ -104,14 +104,16 @@ async function readLastLive(env) {
   }
 }
 
-// Only writes when the track changed: KV writes are limited (~1,000/day on
-// the free plan), and every poll from every open tab, plus the cron, lands
-// here while a song plays.
+// Only writes when the track (or its cover) changed: KV writes are limited
+// (~1,000/day on the free plan), and every poll from every open tab, plus the
+// cron, lands here while a song plays. The cover is compared too, so a saved
+// entry with an old, smaller cover URL gets replaced the next time the same
+// song is seen playing, instead of being served until a different song plays.
 async function saveLastLive(env, track) {
   if (!env.HISTORY) return;
 
   const last = await readLastLive(env);
-  if (last && trackSignature(last) === trackSignature(track)) return;
+  if (last && trackSignature(last) === trackSignature(track) && last.image === track.image) return;
 
   const { title, artist, album, url, image, durationMs } = track;
   await env.HISTORY.put(LAST_LIVE_KEY, JSON.stringify({ title, artist, album, url, image, durationMs }));

@@ -329,7 +329,7 @@ All scripts are plain files that share the global scope, so **load order matters
 | 2026-10 | Patch outlines kept inline per patch | White patches on Safari with a shared `<use>` |
 | 2026-10 | Hero rays: removed blend mode, keep blur | Visually identical, cheaper to composite |
 | 2026-10 | Prepared, but did not start, a Cloudflare move | Real headers and caching; waits on an owner decision |
-| 2026-10 | Radio sends Spotify's 640 px cover | Larger cover art stays sharp (needs a Worker redeploy) |
+| 2026-10 | Radio sends Spotify's 640 px cover; the saved "last played" entry is rewritten when its cover changes | Larger cover art stays sharp. The first version kept serving the old 300 px cover for a saved song until a different song played (needs a Worker redeploy) |
 
 ---
 

@@ -4,7 +4,7 @@ Open work for ramour.org. Tick items off (or delete them) when done, and add new
 
 ## Needs the site owner
 
-- [ ] Redeploy the radio Worker so the larger album art is sharp: `cd worker && npx wrangler deploy`. (The Worker now sends Spotify's 640px cover.)
+- [ ] Redeploy the radio Worker so the larger album art is sharp: pull the latest `main`, then `cd worker && npx wrangler deploy`. (The Worker sends Spotify's 640px cover. A first redeploy still showed the old 300px cover for songs saved as "last played" before it; the fix is in `saveLastLive`.) After redeploying, play any song for a minute so the once-a-minute job refreshes the saved cover, then check the Music page.
 - [ ] Open the Music page with the browser console open and check for any "Content Security Policy" error (Spotify embeds, album art, radio). Report what it says so the policy can be fixed.
 - [ ] Try the homepage on a phone and say whether scrolling is still jumpy. If it is: which phone and browser, and what you see (nav bar appearing and disappearing, content shifting, or choppy scrolling).
 - [ ] After the first image is added to `media/art-gallery/`, check that its "Build altar gallery" run succeeds. If it can't push, set Settings → Actions → General → Workflow permissions to "Read and write".
