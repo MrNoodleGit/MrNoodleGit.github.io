@@ -200,6 +200,14 @@
     "hash": "305b6cf1a0b1"
   },
   {
+    "file": "media/art-gallery/hunter-x-hunter.jpg",
+    "thumb": "media/art-gallery-thumbs/hunter-x-hunter.jpg.webp",
+    "large": "media/art-gallery-large/hunter-x-hunter.jpg.webp",
+    "width": 667,
+    "height": 1000,
+    "hash": "2788ddec50b7"
+  },
+  {
     "file": "media/art-gallery/j-cole.jpeg",
     "thumb": "media/art-gallery-thumbs/j-cole.jpeg.webp",
     "large": "media/art-gallery-large/j-cole.jpeg.webp",
@@ -214,6 +222,14 @@
     "width": 1616,
     "height": 1080,
     "hash": "5b60f8c93e78"
+  },
+  {
+    "file": "media/art-gallery/la-la-land.jpeg",
+    "thumb": "media/art-gallery-thumbs/la-la-land.jpeg.webp",
+    "large": "media/art-gallery-large/la-la-land.jpeg.webp",
+    "width": 1200,
+    "height": 1800,
+    "hash": "5d5d0f971748"
   },
   {
     "file": "media/art-gallery/le-petit-prince.webp",
@@ -392,6 +408,22 @@
     "hash": "bc1d46213860"
   },
   {
+    "file": "media/art-gallery/spindrift.webp",
+    "thumb": "media/art-gallery-thumbs/spindrift.webp.webp",
+    "large": "media/art-gallery-large/spindrift.webp.webp",
+    "width": 1588,
+    "height": 1994,
+    "hash": "ffb035687f1c"
+  },
+  {
+    "file": "media/art-gallery/spongebob.jpg",
+    "thumb": "media/art-gallery-thumbs/spongebob.jpg.webp",
+    "large": "media/art-gallery-large/spongebob.jpg.webp",
+    "width": 736,
+    "height": 981,
+    "hash": "1d618edda48f"
+  },
+  {
     "file": "media/art-gallery/stony-brook-math-wall.jpg",
     "thumb": "media/art-gallery-thumbs/stony-brook-math-wall.jpg.webp",
     "large": "media/art-gallery-large/stony-brook-math-wall.jpg.webp",
@@ -547,8 +579,8 @@
     "file": "media/art-gallery/zima-blue-spotlight.png",
     "thumb": "media/art-gallery-thumbs/zima-blue-spotlight.png.webp",
     "large": "media/art-gallery-large/zima-blue-spotlight.png.webp",
-    "width": 2000,
-    "height": 989,
-    "hash": "d45f986c7dc2"
+    "width": 1784,
+    "height": 882,
+    "hash": "69fb09a7f7e3"
   }
 ]
