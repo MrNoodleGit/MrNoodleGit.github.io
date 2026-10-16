@@ -8,5 +8,9 @@
   },
   "devDependencies": {
     "@lhci/cli": "0.15.1"
+  },
+  "overrides": {
+    "tmp": "0.2.7",
+    "uuid": "11.1.1"
   }
 }

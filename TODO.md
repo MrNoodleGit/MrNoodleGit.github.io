@@ -10,6 +10,14 @@ Open work for ramour.org. Tick items off (or delete them) when done, and add new
 - [ ] After the first image is added to `media/art-gallery/`, check that its "Build altar gallery" run succeeds. If it can't push, set Settings → Actions → General → Workflow permissions to "Read and write".
 - [ ] Review the first Dependabot pull requests when they appear (weekly).
 
+## Security patches
+
+Dependabot alerts #1–#5 and #7 (Oct 2026) all come from the dev-only Lighthouse CI tool (`@lhci/cli` in `scripts/`). None reaches the live site, and the gallery build skips dev packages. Nothing is urgent.
+
+- [x] Force patched `tmp` (0.2.7) and `uuid` (11.1.1) through `overrides` in `scripts/package.json`; clears #1, #2 and #3, and Lighthouse CI still passes. Once pushed, those alerts close on their own. Drop the overrides when `@lhci/cli` ships with patched versions.
+- [ ] Dismiss #4, #5 (`extract-zip`) and #7 (`sprintf-js`) in GitHub as "no fix available / not used", since neither has a patched release. Re-check when `@lhci/cli` or `lighthouse` publishes an update that drops them.
+- Don't run `npm audit fix --force`: it would downgrade `@lhci/cli` to 0.1.0.
+
 ## Move hosting to Cloudflare (decision first)
 
 Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but not in use; the site is still on GitHub Pages. Benefits: real security headers (frame blocking, HSTS), longer caching, and a preview link for every branch.

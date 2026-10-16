@@ -331,6 +331,7 @@ All scripts are plain files that share the global scope, so **load order matters
 | 2026-10 | Worker commands always use `--config wrangler.toml` | The root `wrangler.jsonc` (site) is picked up even from `worker/`, so a plain `wrangler deploy` published the website instead of the radio |
 | 2026-10 | Prepared, but did not start, a Cloudflare move | Real headers and caching; waits on an owner decision |
 | 2026-10 | Radio sends Spotify's 640 px cover; the saved "last played" entry is rewritten when its cover changes | Larger cover art stays sharp. The first version kept serving the old 300 px cover for a saved song until a different song played (needs a Worker redeploy) |
+| 2026-10 | `scripts/package.json` `overrides` pin `tmp` 0.2.7 and `uuid` 11.1.1 | Clears Dependabot alerts in the dev-only Lighthouse CI tool (`@lhci/cli` 0.15.1 is the latest and still ships old versions). Remove when it updates. `extract-zip` and `sprintf-js` have no patched release; alerts dismissed as unused |
 
 ---
 
