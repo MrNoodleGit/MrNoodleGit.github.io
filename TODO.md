@@ -37,6 +37,7 @@ Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but 
 
 ## Next up
 
+- [ ] The homepage's latest-essays list is hidden at the owner's request (commented out in the Mind section of `index.html`; `writing-data.js` and `writing-home.js` are no longer loaded there). Decide whether to bring it back or delete `js/writing-home.js`, and whether the homepage should link to the Writing page some other way.
 - [ ] Altar on iPhones: all 69 images are decoded at once (about 100 million pixels at 3× density), which risks blank images or tab reloads. Load images only near the screen and release them when far away.
 - [ ] Turn the Substack sync back on: its schedule is commented out in `.github/workflows/sync-substack.yml`, so new essays only appear when it's run by hand.
 - [ ] Link previews: add Open Graph tags (`og:title`, `og:description`, `og:image`) to every page except `hello_world.html`, which has them.
