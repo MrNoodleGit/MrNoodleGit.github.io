@@ -65,14 +65,19 @@ function toRows(images, targets, minPerRow, maxPerRow) {
 function collageItem(image, share) {
   const a = document.createElement("a");
   a.className = "gallery-preview__item";
-  a.style.setProperty("--r", ratioOf(image).toFixed(4));
+  a.style.setProperty("--grow", Math.round(ratioOf(image) * 1000)); // see the CSS
   a.href = "gallery.html";
-  a.setAttribute("aria-label", "View the full altar");
+  // every tile goes to the same place, so only the text link below the
+  // collage is a keyboard stop; the images' titles name the tiles for
+  // screen readers and pointer users
+  a.tabIndex = -1;
   // the share of the collage this image fills, so the right copy is loaded;
   // the content column is at most 64rem (1024px) wide
   const pct = Math.round(share * 100);
   const sizes = `(max-width: 40rem) ${pct}vw, ${Math.round(share * 1024)}px`;
-  a.appendChild(galleryImg(image, sizes));
+  const img = galleryImg(image, sizes);
+  img.alt = image.alt;
+  a.appendChild(img);
   return a;
 }
 
@@ -89,6 +94,7 @@ function render(collage, images) {
     for (const image of images) row.appendChild(collageItem(image, ratioOf(image) / total));
     frag.appendChild(row);
   }
+  forgetGalleryImgs(collage);
   collage.replaceChildren(frag);
 }
 
@@ -104,7 +110,9 @@ loadGallery()
     const chosen = pick(images);
     render(collage, chosen);
     // re-pack the same images if the screen crosses the phone breakpoint
-    phone.addEventListener("change", () => render(collage, chosen));
+    const repack = () => render(collage, chosen);
+    if (phone.addEventListener) phone.addEventListener("change", repack);
+    else phone.addListener(repack); // Safari before 14
   })
   .catch(() => {
     galleryPreview.hidden = true;

@@ -73,3 +73,12 @@ function galleryImg({ thumb, large, width, height }, sizes) {
   }
   return img;
 }
+
+// stop watching the images under `root` (before they are removed from the
+// page), so the observer doesn't hold on to them or fetch them later
+function forgetGalleryImgs(root) {
+  for (const img of root.querySelectorAll("img")) {
+    if (imageObserver) imageObserver.unobserve(img);
+    pendingImages.delete(img);
+  }
+}

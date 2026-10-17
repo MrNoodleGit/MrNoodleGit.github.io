@@ -447,9 +447,11 @@ a { color: inherit; text-decoration: none; }
 /* ---------- gallery preview (homepage) ---------- */
 
 /* a justified-row collage: js/gallery-preview.js groups the images into rows
-   and sets each one's shape (--r = width / height). Within a row every image
-   gets a width in proportion to its shape, so they share one height and
-   nothing is cropped; rows differ in height, which gives the varied sizes. */
+   and sets each one's shape as --grow (1000 × width / height). Within a row
+   every image gets a width in proportion to its shape, so they share one
+   height and nothing is cropped; rows differ in height, which gives the
+   varied sizes. (The factor of 1000 keeps flex-grow above 1, because below 1
+   a row would not fill its width.) */
 .gallery-preview__collage {
   display: flex;
   flex-direction: column;
@@ -463,7 +465,7 @@ a { color: inherit; text-decoration: none; }
 
 .gallery-preview__item {
   display: block;
-  flex: var(--r) 1 0%;
+  flex: var(--grow) 1 0%;
   min-width: 0;
   overflow: hidden;
   /* an inset outline, so the frame takes no space and rows stay flush */
