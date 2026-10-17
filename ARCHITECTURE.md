@@ -158,7 +158,7 @@ CSS: `style.css`. JS: `reveal.js`, `main.js`, `lifeframe.js`, `gallery-discovery
 - **About:** portrait (WebP in 480/640/960 px) and four experience patches drawn as inline SVG. Hover or tap a patch to show role and organization in a live region; tapping pins it. The patch shield outlines are deliberately repeated inline (a shared `<use>` showed white patches on Safari).
 - **Mind:** the three latest essays (from `writing.md`), a link to Writing, and a feature card for the Waking Up translations.
 - **Life:** a full-screen carousel of three muted, looping videos (arrows, dots, tap to play or pause). Phones get 720p files via a `media` query on the `<source>`. Videos use `preload="none"`, begin buffering about a screen before the section, play only while at least 35% is visible, and pause when you switch scenes. A play hint shows if autoplay is blocked. Slide titles and text exist in the markup but are hidden.
-- **Altar preview:** five random images from the gallery on every visit, the first shown large, linking to the Altar.
+- **Altar preview:** a collage of twelve random images from the gallery on every visit (at least four are landscape), linking to the Altar. It is a justified-row layout: `gallery-preview.js` groups the images into rows (2–4 a row on desktop, 1–3 on phones) and gives each its true shape, so every image is shown whole and uncropped, images in a row share a height, and rows differ in height. Re-packs if the screen crosses the phone breakpoint.
 - **Contact:** text links to the Altar, Substack, YouTube, Instagram, LinkedIn and X.
 - **Fade-in on scroll:** elements with class `reveal` fade in shortly before reaching the screen (`reveal.js`, loaded in `<head>` so the hidden state exists before the first paint).
 

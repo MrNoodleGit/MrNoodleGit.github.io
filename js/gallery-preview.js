@@ -1,11 +1,17 @@
-/* Ra Mour — homepage gallery preview: a random collage from
+/* Ra Mour — homepage gallery preview: a random justified-row collage from
    media/art-gallery/ on every visit (list in js/gallery-discovery.js) */
 
-// rendered widths of the collage tiles, for picking which copy to load
-const COLLAGE_SIZES = {
-  featured: "(max-width: 40rem) 100vw, min(50vw, 576px)",
-  regular: "(max-width: 40rem) 50vw, min(25vw, 288px)",
+const COUNT = 12;
+const WIDE = 4; // of those, how many to take from the landscape images, so rows aren't all portraits
+
+// Row targets: the sum of the images' width/height ratios in a row. A row's
+// height is (width of the collage) / (that sum), so a low target makes a tall
+// row and a high one a short row. The targets repeat down the page.
+const ROW_TARGETS = {
+  wide: [2.0, 2.9, 2.4, 3.3], // 2–4 images a row
+  narrow: [1.6, 2.3, 1.5, 2.1], // 1–3 images a row, for phones
 };
+const phone = window.matchMedia("(max-width: 40rem)");
 
 function shuffle(arr) {
   const a = [...arr];
@@ -16,15 +22,71 @@ function shuffle(arr) {
   return a;
 }
 
-function collageItem(image, featured) {
+const ratioOf = (image) => image.width / image.height;
+
+// random pick of COUNT images, including some landscape ones
+function pick(images) {
+  const shuffled = shuffle(images);
+  const wide = shuffled.filter((i) => ratioOf(i) > 1.1).slice(0, WIDE);
+  const rest = shuffled.filter((i) => !wide.includes(i)).slice(0, COUNT - wide.length);
+  return shuffle([...wide, ...rest]);
+}
+
+// split into rows: each image joins the row if that brings the row's ratio
+// sum closer to its target; a short last row is folded into the one above
+// (or dropped, so a lone straggler never becomes a huge or tiny tile)
+function toRows(images, targets, minPerRow, maxPerRow) {
+  const rows = [];
+  let row = [];
+  let sum = 0;
+  for (const image of images) {
+    const target = targets[rows.length % targets.length];
+    const r = ratioOf(image);
+    const closer = Math.abs(sum + r - target) < Math.abs(sum - target);
+    if (row.length >= maxPerRow || (row.length >= minPerRow && !closer)) {
+      rows.push(row);
+      row = [];
+      sum = 0;
+    }
+    row.push(image);
+    sum += r;
+  }
+  const lastTarget = targets[rows.length % targets.length];
+  if (rows.length && sum < lastTarget * 0.6) {
+    const prev = rows[rows.length - 1];
+    if (prev.length + row.length <= maxPerRow) prev.push(...row); // else drop the stragglers
+  } else if (row.length) rows.push(row);
+  return rows;
+}
+
+function collageItem(image, share) {
   const a = document.createElement("a");
-  a.className = featured
-    ? "gallery-preview__item gallery-preview__item--featured"
-    : "gallery-preview__item";
+  a.className = "gallery-preview__item";
+  a.style.setProperty("--r", ratioOf(image).toFixed(4));
   a.href = "gallery.html";
   a.setAttribute("aria-label", "View the full altar");
-  a.appendChild(galleryImg(image, featured ? COLLAGE_SIZES.featured : COLLAGE_SIZES.regular));
+  // the share of the collage this image fills, so the right copy is loaded;
+  // the content column is at most 64rem (1024px) wide
+  const pct = Math.round(share * 100);
+  const sizes = `(max-width: 40rem) ${pct}vw, ${Math.round(share * 1024)}px`;
+  a.appendChild(galleryImg(image, sizes));
   return a;
+}
+
+function render(collage, images) {
+  const narrow = phone.matches;
+  const rows = narrow
+    ? toRows(images, ROW_TARGETS.narrow, 1, 3)
+    : toRows(images, ROW_TARGETS.wide, 2, 4);
+  const frag = document.createDocumentFragment();
+  for (const images of rows) {
+    const row = document.createElement("div");
+    row.className = "gallery-preview__row";
+    const total = images.reduce((n, image) => n + ratioOf(image), 0);
+    for (const image of images) row.appendChild(collageItem(image, ratioOf(image) / total));
+    frag.appendChild(row);
+  }
+  collage.replaceChildren(frag);
 }
 
 const galleryPreview = document.getElementById("gallery-preview");
@@ -36,9 +98,10 @@ loadGallery()
       return;
     }
     const collage = document.getElementById("gallery-preview-collage");
-    shuffle(images)
-      .slice(0, 5)
-      .forEach((image, i) => collage.appendChild(collageItem(image, i === 0)));
+    const chosen = pick(images);
+    render(collage, chosen);
+    // re-pack the same images if the screen crosses the phone breakpoint
+    phone.addEventListener("change", () => render(collage, chosen));
   })
   .catch(() => {
     galleryPreview.hidden = true;
