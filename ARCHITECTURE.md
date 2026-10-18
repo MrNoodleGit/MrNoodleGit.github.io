@@ -1,6 +1,6 @@
 # ramour.org — architecture, technology and features
 
-**Last updated:** 2026-10-11 · **Status:** live on GitHub Pages; Cloudflare move prepared but not started
+**Last updated:** 2026-10-18 · **Status:** live on GitHub Pages; Cloudflare move prepared but not started
 
 > Keep this file current. Change it in the same commit as the change it describes (rules at the end). Open work lives in `TODO.md`; standards and the review checklist live in `CLAUDE.md`.
 
@@ -24,6 +24,7 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 | **Music** | A live "On air / Last played" band showing what Ra is listening to on Spotify, a 1:45 preview of a Waking Up piece, and a curated list of recommended tracks and playlists with built-in players |
 | **Waking Up · en español** | 14 days of Spanish guided meditations and lessons (28 audio sessions) with a built-in player |
 | **Rare Retreats** | A "coming soon" page with an email sign-up (a Substack form) |
+| **RARE. Writers' Room** (unlisted) | A simple, text-only fundraising page for PAUSE, RARE's first play: the pitch, the Medellín room's key facts, what gifts cover, ways to give, and the Substack sign-up. Nothing links to it and search engines are asked not to index it until launch |
 | **Hello** | A one-screen contact card with social links and a QR code, the page the business card points to |
 
 ### How the owner updates it without a developer
@@ -102,9 +103,10 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 
 ```
 /                      HTML pages (index, gallery, writing, music, waking-up,
-                       rare-retreats, hello_world, 404)
+                       rare-retreats, rare-writers-room, hello_world, 404)
 CLAUDE.md              standards and review checklist for AI-assisted work
 TODO.md                open work
+docs/                  plans and specs (rare-writers-room-plan.md)
 ARCHITECTURE.md        this file
 writing.md             essays list (auto-generated from Substack)
 music.md               Spotify recommendations (hand-edited)
@@ -188,6 +190,14 @@ Builds 14 "days" in the browser, each with a meditation and a lesson (28 MP3s: 1
 
 ### Rare Retreats — `rare-retreats.html`
 CSS: `style.css`, `rare-retreats.css`. A framed painting with a glowing halo and a "Coming soon" label, and Substack's embedded sign-up form. No JavaScript.
+
+### RARE. Writers' Room — `rare-writers-room.html` (unlisted)
+CSS: `style.css`, `rare-writers-room.css`. No JavaScript and, for now, no images. Spec: `docs/rare-writers-room-plan.md` (the owner asked for a simpler page than the spec's full version; the dropped sections are listed in `TODO.md`).
+
+- `<meta name="robots" content="noindex, nofollow">` and no links from any other page. It is not in `robots.txt`, which would advertise the path. The repo is public, so the file itself is visible on GitHub.
+- Sections: pitch with a "Fund the room" button, the room (facts card), what gifts cover (second button), ways to give (`#give`), Substack sign-up embed, footer.
+- Donations are plain outbound links only (the CSP blocks payment scripts). Until a donation link exists, both buttons jump to `#give`. Every value the owner will change has an `<!-- EDIT: … -->` comment above it; values still unknown read `[TBD]`.
+- Lighthouse SEO scores 60 on this page because of `noindex`, which is intended until launch; it is left out of `scripts/lighthouserc.json` for that reason.
 
 ### Hello — `hello_world.html`
 CSS: `hello.css`. A single card: portrait, name, title, five social links, and a QR code that points back to the page. The physical business card is designed in `media/hello/print/card.html` and rendered to PDF/PNG by `scripts/render-card.mjs` (Playwright, run by hand).
@@ -319,6 +329,7 @@ All scripts are plain files that share the global scope, so **load order matters
 
 | Date | Decision | Why |
 | --- | --- | --- |
+| 2026-10 | RARE. Writers' Room page is unlisted (noindex, no links) rather than kept off `main` | It must be shareable privately before launch; GitHub Pages has no private pages |
 | 2026-10 | Altar reads a generated `art-gallery.json` instead of calling the GitHub API | The API allows only 60 requests an hour per visitor address, so the Altar failed for some visitors |
 | 2026-10 | Resized WebP copies built by an Action, originals kept untouched | Phones were downloading 66 MB for the Altar |
 | 2026-10 | Nav hides on scroll, with travel thresholds and overscroll guard | Free up phone screen space; first version flickered on jittery scrolling |

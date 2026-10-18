@@ -198,3 +198,7 @@ Small: *Names are listed only with permission. Prefer to stay anonymous? Just sa
 
 ## Build assumptions
 *(The builder appends entries here.)*
+- 2026-10-18: Ra asked for a simple, straightforward page with only the most important details and no images for now. Built a shorter version: pitch, the room, what gifts cover, ways to give, follow along. Left out: why this play, timeline (one line kept under "The room"), budget bars, stretch goal, people, supporters, FAQ (the tax and anonymity notes moved under "Ways to give"). These are listed in TODO.md's launch checklist.
+- `[CONFIRM]` claims in the dropped sections are no longer on the page. `[TBD]` values show as "[TBD]" on the page and every changeable value has an `EDIT:` comment.
+- Until DONATE_URL exists, "Card or bank" is plain text (not a link), and Venmo and email are plain text too, so no broken links ship.
+- Lighthouse: SEO is 60 because of noindex (intended); the page is not added to `scripts/lighthouserc.json`, whose SEO limit would fail on it.
