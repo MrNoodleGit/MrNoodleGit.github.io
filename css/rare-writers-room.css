@@ -1,0 +1,384 @@
+/* ============================================================
+   RARE. Writers' Room — fundraising page for PAUSE
+   Relies on :root variables + base styles from style.css.
+   Scrolls normally: don't reuse the .rr / .rr-scene rules from
+   rare-retreats.css, which lock the page to one screen.
+   ============================================================ */
+
+/* ---------- back link (sits over the hero, scrolls away with it) ---------- */
+
+.rwr-back {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  padding: 1.25rem var(--pad);
+}
+
+.rwr-back a {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--zima);
+  font-size: 0.95rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.rwr-back a::before { content: "← "; }
+
+.rwr-back a:hover {
+  color: #d6f7ff;
+  text-shadow: 0 0 18px rgba(91, 194, 231, 0.6);
+}
+
+/* ---------- hero ---------- */
+
+.rwr-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 34rem;
+  padding: 5rem var(--pad) clamp(2.5rem, 8vh, 5rem);
+  overflow: hidden;
+  /* if the painting fails to load, the ink background keeps text legible */
+  background: var(--ink);
+}
+
+.rwr-hero__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.55;
+}
+
+/* darkens the painting toward the text so it passes WCAG AA contrast */
+.rwr-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--ink) 15%, rgba(2, 2, 2, 0.55) 60%, rgba(2, 2, 2, 0.8));
+}
+
+.rwr-hero__copy {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.rwr-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--zima);
+  margin-bottom: 1rem;
+}
+
+.rwr-hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 12vw, 6.5rem);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.rwr-hero__wt {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.rwr-hero__lede {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-style: italic;
+  max-width: 34rem;
+  margin-bottom: 0.75rem;
+}
+
+.rwr-hero__line {
+  max-width: 34rem;
+  margin-bottom: 1.75rem;
+}
+
+.rwr-hero__how { margin-top: 1rem; }
+
+/* ---------- donate button (from .nav__cta, enlarged) ---------- */
+
+.rwr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem; /* ≥ 48px tap target */
+  padding: 0.75em 1.75em;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--zima);
+  border: 1px solid var(--zima);
+  border-radius: 2px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.rwr-btn:hover {
+  background: #8ad6f0;
+  box-shadow: 0 0 24px rgba(91, 194, 231, 0.45);
+}
+
+.rwr-btn:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+/* the card/bank link before DONATE_URL exists: shown, not clickable */
+.rwr-btn--pending,
+.rwr-btn--pending:hover {
+  color: var(--muted);
+  background: transparent;
+  border-color: rgba(127, 168, 173, 0.5);
+  box-shadow: none;
+  cursor: default;
+}
+
+.rwr-note {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.rwr-small {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- prose ---------- */
+
+.rwr-prose__body p,
+.rwr-prose p { max-width: 40rem; }
+
+.rwr-prose p + p,
+.rwr-prose__body p + p { margin-top: 1.1rem; }
+
+.rwr-h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ---------- the room: facts card (.wu-feature look) + text ---------- */
+
+.rwr-room {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (min-width: 52rem) {
+  .rwr-room { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); }
+}
+
+.rwr-facts {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(20, 99, 111, 0.55);
+  background: rgba(2, 2, 2, 0.25);
+}
+
+.rwr-facts dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--zima);
+}
+
+.rwr-facts dd { font-size: 1.1rem; }
+
+/* ---------- timeline ---------- */
+
+.rwr-timeline {
+  list-style: none;
+  border-left: 1px solid var(--teal);
+}
+
+.rwr-timeline li {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0 0 2rem 1.5rem;
+}
+
+.rwr-timeline li:last-child { padding-bottom: 0; }
+
+.rwr-timeline li::before {
+  content: "";
+  position: absolute;
+  left: -0.3rem;
+  top: 0.45rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--zima);
+}
+
+.rwr-timeline__when {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--zima);
+}
+
+/* ---------- budget bars (plain <progress>, no chart library) ---------- */
+
+.rwr-bars {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+  margin: 2.5rem auto;
+}
+
+.rwr-bars li {
+  display: grid;
+  grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) 3rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rwr-bars__pct {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.rwr-bars__bar {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 0.6rem;
+  border: 0;
+  border-radius: 1px;
+  background: rgba(20, 99, 111, 0.35);
+  color: var(--zima);
+}
+
+.rwr-bars__bar::-webkit-progress-bar { background: rgba(20, 99, 111, 0.35); }
+.rwr-bars__bar::-webkit-progress-value { background: var(--zima); }
+.rwr-bars__bar::-moz-progress-bar { background: var(--zima); }
+
+@media (max-width: 40rem) {
+  .rwr-bars li {
+    grid-template-columns: minmax(0, 1fr) 3rem;
+    row-gap: 0.35rem;
+  }
+  .rwr-bars__bar { grid-column: 1 / -1; grid-row: 2; }
+}
+
+.rwr-gifts {
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+}
+
+.rwr-gifts strong {
+  font-weight: 600;
+  color: var(--zima);
+}
+
+.rwr-raised {
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- people ---------- */
+
+.rwr-people {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 52rem) {
+  .rwr-people { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- supporters ---------- */
+
+/* wraps into columns; long names break instead of overflowing */
+.rwr-supporters {
+  list-style: none;
+  columns: 14rem;
+  column-gap: 2rem;
+  margin-top: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.rwr-supporters li {
+  break-inside: avoid;
+  padding: 0.15rem 0;
+}
+
+.rwr-empty {
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+/* ---------- ways to give ---------- */
+
+.rwr-ways {
+  list-style: none;
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.rwr-ways .rwr-small { display: block; margin-top: 0.5rem; }
+
+/* ---------- FAQ ---------- */
+
+.rwr-faq dt {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+.rwr-faq dt:first-child { margin-top: 0; }
+
+.rwr-faq dd {
+  margin-top: 0.4rem;
+  max-width: 40rem;
+  color: var(--text);
+}
+
+/* ---------- follow along ---------- */
+
+.rwr-subscribe {
+  display: block;
+  max-width: 100%;
+  margin-top: 1.5rem;
+  border: 0;
+  background: transparent;
+}
+
+/* ---------- phones ---------- */
+
+@media (max-width: 40rem) {
+  .rwr-hero { min-height: 0; padding-top: 4.5rem; }
+  .rwr-btn { display: flex; width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rwr-btn, .rwr-back a { transition: none; }
+}

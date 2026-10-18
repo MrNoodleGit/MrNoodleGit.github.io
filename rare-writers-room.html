@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Content Security Policy: which sites this page may load things
+         from. Keep identical on every page (and in _headers). -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https://i.scdn.co; media-src 'self' blob:; connect-src 'self' https://ra-mour-radio.ronald1andres2.workers.dev; frame-src https://open.spotify.com https://ramour.substack.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+    />
+    <!-- Unlisted until launch: nothing on the site links here, and search
+         engines are asked not to index it. Remove this line at launch. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>PAUSE · RARE. Writers' Room — Ra Mour</title>
+    <meta
+      name="description"
+      content="A play for the people building artificial intelligence. This December, a writers' room meets in Medellín to write it. Help bring the writers there."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PAUSE · RARE. Writers' Room" />
+    <meta
+      property="og:description"
+      content="A play for the people building artificial intelligence. Help bring the writers to Medellín this December."
+    />
+    <meta property="og:image" content="https://ramour.org/media/art-gallery-large/tower-of-babel.png.webp" />
+    <meta property="og:image:width" content="1536" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:url" content="https://ramour.org/rare-writers-room.html" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="preload"
+      href="fonts/marcellus-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/rare-writers-room.css" />
+  </head>
+  <body>
+    <header class="rwr-back">
+      <a href="index.html">Ra Mour</a>
+    </header>
+
+    <main>
+      <!-- 1. Hero -->
+      <section class="rwr-hero">
+        <!-- ASSUMPTION (open question 6): Tower of Babel as the hero image. -->
+        <img
+          class="rwr-hero__art"
+          src="media/art-gallery-large/tower-of-babel.png.webp"
+          width="1536"
+          height="1024"
+          alt=""
+          fetchpriority="high"
+        />
+        <div class="rwr-hero__copy">
+          <p class="rwr-label">RARE. · First project</p>
+          <h1 class="rwr-hero__title">
+            PAUSE <span class="rwr-hero__wt">working title</span>
+          </h1>
+          <p class="rwr-hero__lede">A play for the people building artificial intelligence.</p>
+          <p class="rwr-hero__line">
+            This December, a writers' room meets in Medellín to write it. Help
+            bring the writers there.
+          </p>
+          <!-- EDIT: DONATE_URL. Until it's set, every "Fund the room" button
+               jumps to #give. Replace href="#give" on all three. -->
+          <a class="rwr-btn" href="#give">Fund the room &rarr;</a>
+          <p class="rwr-note">Gifts are not tax-deductible.</p>
+          <p class="rwr-hero__how">
+            <a class="textlink" href="#budget">How the money is used &darr;</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. Why this play -->
+      <section class="section rwr-prose">
+        <p class="section__label">Why this play</p>
+        <div>
+          <p>
+            A relatively small number of researchers and engineers are
+            building the most powerful AI systems in the world. Their choices
+            will reach everyone, and the work moves faster than anyone can
+            comfortably think it through.
+          </p>
+          <p>
+            PAUSE is theater made for them. It isn't a lecture or a warning.
+            It's a chance to stop, look at the work from the outside, and talk
+            about it together.
+          </p>
+          <!-- CONFIRM: are researcher conversations and advisors under way? -->
+          <p>
+            We're building it from conversations with AI researchers, and
+            researcher advisors will check that the science holds up.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. The room -->
+      <section class="section section--abyss">
+        <p class="section__label">The room</p>
+        <div class="rwr-room">
+          <dl class="rwr-facts">
+            <div><dt>Where</dt><dd>Medellín, Colombia</dd></div>
+            <div><dt>When</dt><dd>December 1–15, 2026</dd></div>
+            <!-- EDIT: number of writers -->
+            <div><dt>Who</dt><dd>Ra Mour and four writers</dd></div>
+            <div><dt>Goal</dt><dd>A complete first draft</dd></div>
+          </dl>
+          <div class="rwr-prose__body">
+            <p>
+              The first week (Dec 1–8), everyone is in the room working out
+              the story together. In the second, writers draft scenes, in
+              Medellín or from home. Every week, actors in Denver read the new
+              pages aloud over video. It's a working room: mornings writing
+              together, afternoons drafting, homes chosen to keep costs down.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. What's next -->
+      <section class="section">
+        <p class="section__label">What's next</p>
+        <ol class="rwr-timeline">
+          <li>
+            <span class="rwr-timeline__when">December 2026</span>
+            <span>Writers' room, Medellín</span>
+          </li>
+          <li>
+            <span class="rwr-timeline__when">Early 2027</span>
+            <span>Staged reading in Denver, recorded</span>
+          </li>
+          <!-- CONFIRM: live performances starting with San Francisco -->
+          <li>
+            <span class="rwr-timeline__when">2027</span>
+            <span>Live performances in cities where AI is built, starting with San Francisco</span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 5. Where your gift goes -->
+      <section class="section section--abyss" id="budget">
+        <p class="section__label">Where your gift goes</p>
+        <div class="rwr-prose__body">
+          <p>
+            Gifts pay for the writers' flights, housing and food, plus writing
+            tools and a small reserve for surprises.
+          </p>
+        </div>
+
+        <!-- EDIT: budget percentages. Change each value="" and the % text
+             beside it. Medium estimates, three funded writers (case a). -->
+        <ul class="rwr-bars">
+          <li>
+            <span class="rwr-bars__name">Travel</span>
+            <progress class="rwr-bars__bar" value="34" max="100" aria-hidden="true"></progress>
+            <span class="rwr-bars__pct">34%</span>
+          </li>
+          <li>
+            <span class="rwr-bars__name">Housing</span>
+            <progress class="rwr-bars__bar" value="37" max="100" aria-hidden="true"></progress>
+            <span class="rwr-bars__pct">37%</span>
+          </li>
+          <li>
+            <span class="rwr-bars__name">Food &amp; local travel</span>
+            <progress class="rwr-bars__bar" value="17" max="100" aria-hidden="true"></progress>
+            <span class="rwr-bars__pct">17%</span>
+          </li>
+          <li>
+            <span class="rwr-bars__name">Tools &amp; workspace</span>
+            <progress class="rwr-bars__bar" value="1" max="100" aria-hidden="true"></progress>
+            <span class="rwr-bars__pct">1%</span>
+          </li>
+          <li>
+            <span class="rwr-bars__name">Reserve</span>
+            <progress class="rwr-bars__bar" value="11" max="100" aria-hidden="true"></progress>
+            <span class="rwr-bars__pct">11%</span>
+          </li>
+        </ul>
+
+        <!-- EDIT: gift amounts -->
+        <ul class="rwr-gifts">
+          <li><strong>$750</strong> flies one writer to Medellín and back</li>
+          <li><strong>$1,600</strong> brings one writer for the shared week</li>
+          <li><strong>$2,400</strong> brings one writer for both weeks</li>
+          <li><strong>Stretch goal: $2,100</strong> adds a fifth writer</li>
+        </ul>
+
+        <!-- EDIT: raised / goal. Un-comment once there's a first gift.
+        <p class="rwr-raised">$[TBD] raised of $[TBD]</p>
+        -->
+
+        <div class="rwr-cta">
+          <!-- EDIT: DONATE_URL (see the hero button) -->
+          <a class="rwr-btn" href="#give">Fund the room &rarr;</a>
+          <p class="rwr-note">Gifts are not tax-deductible.</p>
+          <!-- EDIT: contact email (make it a mailto: link once set) -->
+          <p class="rwr-note">Want the full budget? Email [TBD].</p>
+        </div>
+
+        <!-- CONFIRM: overfunding goes to the Denver staged reading -->
+        <p class="rwr-small">
+          If we raise more than the room needs, the rest goes to the Denver
+          staged reading.
+        </p>
+      </section>
+
+      <!-- 6. People -->
+      <section class="section">
+        <p class="section__label">People</p>
+        <div class="rwr-people">
+          <div>
+            <h2 class="rwr-h2">Ra Mour</h2>
+            <!-- CONFIRM: bio wording for this audience -->
+            <p>
+              Performer, researcher and experience designer. Ra runs the room
+              and leads the story; the writers own the craft.
+            </p>
+          </div>
+          <div>
+            <h2 class="rwr-h2">Writers</h2>
+            <!-- EDIT: writer names. Replace this line with the names as
+                 they confirm. -->
+            <p>Four writers, named here as they confirm.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Supporters -->
+      <section class="section section--abyss">
+        <p class="section__label">Supporters</p>
+        <!-- EDIT: supporter names, only with permission. While the list is
+             empty, keep the "Be the first" line; once there are names,
+             delete it and un-comment the list.
+        <p>With thanks to:</p>
+        <ul class="rwr-supporters">
+          <li>Name</li>
+        </ul>
+        -->
+        <p class="rwr-empty">Be the first to back the room.</p>
+        <p class="rwr-small">
+          Names are listed only with permission. Prefer to stay anonymous?
+          Just say so.
+        </p>
+      </section>
+
+      <!-- 8. Ways to give -->
+      <section class="section" id="give">
+        <p class="section__label">Ways to give</p>
+        <ul class="rwr-ways">
+          <li>
+            <!-- EDIT: DONATE_URL. Stripe Payment Link (a plain link, never
+                 Stripe's script), or GoFundMe as fallback. Until it's set,
+                 this stays plain text. -->
+            <span class="rwr-btn rwr-btn--pending">Give by card or bank &rarr;</span>
+            <span class="rwr-small">[TBD] Link coming soon.</span>
+          </li>
+          <li>
+            <!-- EDIT: Venmo handle. CONFIRM the link format, then wrap the
+                 handle in <a class="textlink" href="https://venmo.com/u/HANDLE">
+                 and add the QR image from media/ beside it. -->
+            Venmo: @[TBD]
+          </li>
+          <li>
+            <!-- EDIT: contact email. Once set, make this
+                 <a class="textlink" href="mailto:EMAIL">Email EMAIL for bank or Zelle details.</a>
+                 Never publish account or routing numbers. -->
+            Bank transfer: Email [TBD] for details.
+          </li>
+        </ul>
+        <p class="rwr-note">
+          RARE isn't a nonprofit yet, so gifts go to Ra Mour directly and
+          aren't tax-deductible.
+        </p>
+      </section>
+
+      <!-- 9. FAQ -->
+      <section class="section section--abyss">
+        <p class="section__label">FAQ</p>
+        <dl class="rwr-faq">
+          <dt>Is my gift tax-deductible?</dt>
+          <dd>
+            Not yet. RARE isn't a nonprofit, so gifts go to Ra directly. We
+            plan to work with a fiscal sponsor for larger fundraising in 2027.
+          </dd>
+          <dt>Is this a vacation?</dt>
+          <dd>
+            No. It's a working room with daily writing hours and shared homes
+            chosen to keep costs down. Ra will be in Medellín this winter, and
+            lodging and food there cost less than in most US cities.
+          </dd>
+          <dt>What if you don't reach the goal?</dt>
+          <!-- CONFIRM: the room goes ahead either way -->
+          <dd>
+            The room goes ahead either way; funding decides how many writers
+            can come.
+          </dd>
+          <dt>Can I give anonymously?</dt>
+          <dd>Yes. Just say so when you give.</dd>
+          <dt>Can I help another way?</dt>
+          <!-- CONFIRM: introductions to AI researchers wanted -->
+          <dd>
+            Yes. Introductions to AI researchers who'd talk with us are just
+            as valuable.
+          </dd>
+        </dl>
+      </section>
+
+      <!-- 10. Follow along -->
+      <section class="section rwr-follow">
+        <p class="section__label">Follow along</p>
+        <p>Follow the room as it happens.</p>
+        <iframe
+          class="rwr-subscribe"
+          src="https://ramour.substack.com/embed?transparent=1&amp;light=1"
+          title="Subscribe to Ra Mour on Substack"
+          width="480"
+          height="150"
+          loading="lazy"
+        ></iframe>
+      </section>
+    </main>
+
+    <!-- 11. Footer -->
+    <footer class="footer">
+      <a class="textlink" href="index.html">&larr; Ra Mour</a>
+      <p>&copy; 2026 Ra Mour</p>
+    </footer>
+  </body>
+</html>
