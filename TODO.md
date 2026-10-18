@@ -35,6 +35,20 @@ Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but 
   - Add `noindex` to `music.html`, and test with an approved and a non-approved email, including the Spotify embeds and radio.
   - The page would also need a way back home for people who aren't approved; decide what they see.
 
+## RARE. Writers' Room launch checklist
+
+The page `rare-writers-room.html` is unlisted (noindex, nothing links to it). Spec and open questions: `docs/rare-writers-room-plan.md`. Search the page for `EDIT:` and `[TBD]`.
+
+- [ ] Donation link (Stripe Payment Link recommended, GoFundMe fallback): put it on both "Fund the room" buttons and the "Card or bank" line.
+- [ ] Venmo handle (confirm the `venmo.com/u/…` link format) and, optionally, a local QR image in `media/`.
+- [ ] Contact email for bank or Zelle details.
+- [ ] Fundraising goal; un-comment the "raised of" line after the first gift.
+- [ ] Final URL: keep this page, or move it into `rare-retreats.html` at launch.
+- [ ] Rename "Retreats" and reword the homepage badge "AI Strategist and Consultant" before linking the page from the site.
+- [ ] Images: add them later (the owner wants none for now), sized WebP with `width`/`height`, plus an `og:image` for link previews. Check rights first.
+- [ ] Sections from the spec left out of the simple version, to add back if wanted: why this play, timeline, budget breakdown bars, stretch goal, people, supporters, FAQ.
+- [ ] At launch: remove the `robots` noindex line and link the page from the site.
+
 ## Next up
 
 - [ ] The homepage's latest-essays list is hidden at the owner's request (commented out in the Mind section of `index.html`; `writing-data.js` and `writing-home.js` are no longer loaded there). Decide whether to bring it back or delete `js/writing-home.js`, and whether the homepage should link to the Writing page some other way.

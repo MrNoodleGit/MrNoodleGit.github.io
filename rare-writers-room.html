@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Content Security Policy: which sites this page may load things
+         from. Keep identical on every page (and in _headers). -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https://i.scdn.co; media-src 'self' blob:; connect-src 'self' https://ra-mour-radio.ronald1andres2.workers.dev; frame-src https://open.spotify.com https://ramour.substack.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+    />
+    <!-- Unlisted until launch: nothing on the site links here, and search
+         engines are asked not to index it. Remove this line at launch. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>PAUSE · RARE. Writers' Room — Ra Mour</title>
+    <meta
+      name="description"
+      content="A play for the people building artificial intelligence. This December, a writers' room meets in Medellín to write it. Help bring the writers there."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PAUSE · RARE. Writers' Room" />
+    <meta
+      property="og:description"
+      content="A play for the people building artificial intelligence. Help bring the writers to Medellín this December."
+    />
+    <meta property="og:url" content="https://ramour.org/rare-writers-room.html" />
+    <!-- og:image: add one here when the page gets images -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="preload"
+      href="fonts/marcellus-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/rare-writers-room.css" />
+  </head>
+  <body>
+    <header class="rwr-back">
+      <a href="index.html">Ra Mour</a>
+    </header>
+
+    <main>
+      <!-- Pitch -->
+      <section class="rwr-hero">
+        <p class="rwr-label">RARE. · First project</p>
+        <h1 class="rwr-hero__title">
+          PAUSE <span class="rwr-hero__wt">working title</span>
+        </h1>
+        <p class="rwr-hero__lede">A play for the people building artificial intelligence.</p>
+        <p class="rwr-hero__line">
+          This December, a writers' room meets in Medellín to write it. Help
+          bring the writers there.
+        </p>
+        <!-- EDIT: DONATE_URL. Until it's set, the button jumps to #give.
+             Replace href="#give" on both "Fund the room" buttons. -->
+        <a class="rwr-btn" href="#give">Fund the room &rarr;</a>
+        <p class="rwr-note">Gifts are not tax-deductible.</p>
+      </section>
+
+      <!-- The room -->
+      <section class="section section--abyss">
+        <p class="section__label">The room</p>
+        <dl class="rwr-facts">
+          <div><dt>Where</dt><dd>Medellín, Colombia</dd></div>
+          <div><dt>When</dt><dd>December 1–15, 2026</dd></div>
+          <!-- EDIT: number of writers -->
+          <div><dt>Who</dt><dd>Ra Mour and four writers</dd></div>
+          <div><dt>Goal</dt><dd>A complete first draft</dd></div>
+        </dl>
+        <p class="rwr-text">
+          A working room, not a vacation: mornings writing together, afternoons
+          drafting, homes chosen to keep costs down. After Medellín comes a
+          staged reading in Denver in early 2027.
+        </p>
+      </section>
+
+      <!-- What gifts cover -->
+      <section class="section">
+        <p class="section__label">What your gift covers</p>
+        <p class="rwr-text">
+          Gifts pay for the writers' flights, housing and food.
+        </p>
+        <!-- EDIT: gift amounts -->
+        <ul class="rwr-gifts">
+          <li><strong>$750</strong> flies one writer to Medellín and back</li>
+          <li><strong>$1,600</strong> brings one writer for the shared week</li>
+          <li><strong>$2,400</strong> brings one writer for both weeks</li>
+        </ul>
+        <!-- EDIT: raised / goal. Un-comment once there's a first gift.
+        <p class="rwr-raised">$[TBD] raised of $[TBD]</p>
+        -->
+        <a class="rwr-btn" href="#give">Fund the room &rarr;</a>
+        <p class="rwr-note">Gifts are not tax-deductible.</p>
+      </section>
+
+      <!-- Ways to give -->
+      <section class="section section--abyss" id="give">
+        <p class="section__label">Ways to give</p>
+        <ul class="rwr-ways">
+          <!-- EDIT: DONATE_URL. Stripe Payment Link (a plain link, never
+               Stripe's script), or GoFundMe as fallback. Once set, make this
+               <a class="textlink" href="DONATE_URL">Give by card or bank &rarr;</a> -->
+          <li>Card or bank: link coming soon [TBD]</li>
+          <!-- EDIT: Venmo handle. CONFIRM the link format, then wrap the
+               handle in <a class="textlink" href="https://venmo.com/u/HANDLE"> -->
+          <li>Venmo: @[TBD]</li>
+          <!-- EDIT: contact email. Once set, make this
+               <a class="textlink" href="mailto:EMAIL">Email EMAIL for bank or Zelle details.</a>
+               Never publish account or routing numbers. -->
+          <li>Bank transfer or Zelle: email [TBD] for details</li>
+        </ul>
+        <p class="rwr-note">
+          RARE isn't a nonprofit yet, so gifts go to Ra Mour directly and
+          aren't tax-deductible. Prefer to give anonymously? Just say so.
+        </p>
+      </section>
+
+      <!-- Follow along -->
+      <section class="section">
+        <p class="section__label">Follow along</p>
+        <p class="rwr-text">Follow the room as it happens.</p>
+        <iframe
+          class="rwr-subscribe"
+          src="https://ramour.substack.com/embed?transparent=1&amp;light=1"
+          title="Subscribe to Ra Mour on Substack"
+          width="480"
+          height="150"
+          loading="lazy"
+        ></iframe>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a class="textlink" href="index.html">&larr; Ra Mour</a>
+      <p>&copy; 2026 Ra Mour</p>
+    </footer>
+  </body>
+</html>

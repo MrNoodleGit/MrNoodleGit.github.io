@@ -1,0 +1,199 @@
+/* ============================================================
+   RARE. Writers' Room — fundraising page for PAUSE
+   Simple, text-only for now. Relies on :root variables + base
+   styles from style.css. Scrolls normally: don't reuse the .rr /
+   .rr-scene rules from rare-retreats.css, which lock the page to
+   one screen.
+   ============================================================ */
+
+/* ---------- back link ---------- */
+
+.rwr-back { padding: 1.25rem var(--pad); }
+
+.rwr-back a {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--zima);
+  font-size: 0.95rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.rwr-back a::before { content: "← "; }
+
+.rwr-back a:hover {
+  color: #d6f7ff;
+  text-shadow: 0 0 18px rgba(91, 194, 231, 0.6);
+}
+
+/* ---------- pitch ---------- */
+
+.rwr-hero {
+  padding: clamp(2rem, 8vh, 6rem) var(--pad) clamp(3rem, 10vh, 7rem);
+}
+
+.rwr-hero > * {
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rwr-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--zima);
+  margin-bottom: 1rem;
+}
+
+.rwr-hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 12vw, 6.5rem);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.rwr-hero__wt {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.rwr-hero__lede {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.rwr-hero__line { margin-bottom: 1.75rem; }
+
+.rwr-hero__lede,
+.rwr-hero__line,
+.rwr-text { max-width: 36rem; }
+
+/* a narrower line inside a centred column: keep it on the column's left
+   edge instead of letting the auto margins centre it */
+.rwr-hero > .rwr-hero__lede,
+.rwr-hero > .rwr-hero__line,
+.section > .rwr-text,
+.rwr-hero > .rwr-btn,
+.section > .rwr-btn {
+  margin-left: max(0px, calc((100% - var(--measure)) / 2));
+}
+
+/* ---------- donate button (from .nav__cta, enlarged) ---------- */
+
+.rwr-btn {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem; /* ≥ 48px tap target */
+  padding: 0.75em 1.75em;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--zima);
+  border: 1px solid var(--zima);
+  border-radius: 2px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.rwr-btn:hover {
+  background: #8ad6f0;
+  box-shadow: 0 0 24px rgba(91, 194, 231, 0.45);
+}
+
+.rwr-btn:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+.rwr-note {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- the room: facts card (.wu-feature look) ---------- */
+
+.rwr-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.25rem 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(20, 99, 111, 0.55);
+  background: rgba(2, 2, 2, 0.25);
+}
+
+.rwr-facts dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--zima);
+}
+
+.rwr-facts dd { font-size: 1.1rem; }
+
+/* ---------- gifts ---------- */
+
+.rwr-gifts {
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+  margin: 1.5rem auto 2.5rem;
+}
+
+.rwr-gifts strong {
+  font-weight: 600;
+  color: var(--zima);
+}
+
+.rwr-raised {
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- ways to give ---------- */
+
+.rwr-ways {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* ---------- follow along ---------- */
+
+.rwr-subscribe {
+  display: block;
+  max-width: 100%;
+  margin-top: 1.5rem;
+  border: 0;
+  background: transparent;
+}
+
+/* ---------- section spacing: tighter than the homepage ---------- */
+
+.rwr-hero ~ .section { padding-block: clamp(3rem, 8vh, 5rem); }
+.rwr-hero ~ .section .section__label { margin-bottom: 1.75rem; }
+
+/* ---------- phones ---------- */
+
+@media (max-width: 40rem) {
+  .rwr-btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rwr-btn, .rwr-back a { transition: none; }
+}
