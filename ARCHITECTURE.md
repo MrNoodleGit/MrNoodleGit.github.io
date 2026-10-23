@@ -18,8 +18,8 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 
 | Page | What it offers |
 | --- | --- |
-| **Home** | A full-screen intro, a portrait and four experience "patches" (tap one to see the role and organization), a feature card for the Spanish Waking Up translations, a three-scene video reel (dancing, martial arts, meditation), a random preview of the Altar, and contact/social links |
-| **Altar** | A gallery wall of 69 pieces of art, film posters, book covers and photos, mixed with 20 quotes. Tap a piece to enlarge it and step through with buttons, arrow keys or swipes |
+| **Home** | A full-screen intro, a portrait and four experience "patches" (tap one to see the role and organization), a random preview of the Altar, a feature card for the Spanish Waking Up translations, a three-scene video reel (dancing, martial arts, meditation), and contact/social links |
+| **Altar** | A gallery wall of 73 pieces of art, film posters, book covers and photos, mixed with 20 quotes. Tap a piece to enlarge it and step through with buttons, arrow keys or swipes |
 | **Writing** | The full list of essays, which link out to Substack |
 | **Music** | A live "On air / Last played" band showing what Ra is listening to on Spotify, a 1:45 preview of a Waking Up piece, and a curated list of recommended tracks and playlists with built-in players |
 | **Waking Up · en español** | 14 days of Spanish guided meditations and lessons (28 audio sessions) with a built-in player |
@@ -150,15 +150,15 @@ worker/                Cloudflare Worker for the radio (+ README with setup)
 ### Home — `index.html`
 CSS: `style.css`. JS: `reveal.js`, `main.js`, `lifeframe.js`, `gallery-discovery.js`, `gallery-preview.js`. (`writing-data.js` and `writing-home.js` are not loaded on the home page while its essay list is hidden.)
 
-- **Navigation (fixed top bar):** About, Mind, Life, Altar, Music; a "Rare Retreats" button; icons for Substack, Instagram, LinkedIn, YouTube and X. On phones it wraps to three rows.
+- **Navigation (fixed top bar):** About, Altar, Mind, Life, Music; a "Rare Retreats" button; icons for Substack, Instagram, LinkedIn, YouTube and X. On phones it wraps to three rows.
   - *Scroll spy:* the link for the section in view is highlighted (IntersectionObserver band in the middle of the screen; the last link is forced active at the bottom of the page). The Altar link is tied to the homepage preview section.
   - *Hide on scroll:* the bar slides away on steady downward scrolling (24 px) and returns on upward scrolling (12 px), is always shown near the top, ignores iOS rubber-band overscroll, and returns when a link inside it gets keyboard focus.
   - One shared, passive scroll listener runs at most once per frame (`onScrollFrame` in `main.js`).
 - **Hero:** name and tagline over five blurred light rays and 15 randomly generated bubbles. The animations pause once the hero scrolls out of view.
 - **About:** portrait (WebP in 480/640/960 px) and four experience patches drawn as inline SVG. Hover or tap a patch to show role and organization in a live region; tapping pins it. The patch shield outlines are deliberately repeated inline (a shared `<use>` showed white patches on Safari).
+- **Altar preview:** a collage of random images from the gallery on every visit (up to 18 drawn, at least six of them landscape), linking to the Altar. It is a justified-row layout: `gallery-preview.js` packs them into three rows (about 4–6 images a row on desktop, 3–4 on phones, so the collage stays short) and gives each its true shape, so every image is shown whole and uncropped, images in a row share a height, and rows differ in height. Re-packs if the screen crosses the phone breakpoint.
 - **Mind:** a feature card for the Waking Up translations. The list of the three latest essays and its "Read more" link to Writing are hidden (commented out in `index.html`, with `writing-home.js` no longer loaded).
 - **Life:** a full-screen carousel of three muted, looping videos (arrows, dots, tap to play or pause). Phones get 720p files via a `media` query on the `<source>`. Videos use `preload="none"`, begin buffering about a screen before the section, play only while at least 35% is visible, and pause when you switch scenes. A play hint shows if autoplay is blocked. Slide titles and text exist in the markup but are hidden.
-- **Altar preview:** a collage of random images from the gallery on every visit (up to 18 drawn, at least six of them landscape), linking to the Altar. It is a justified-row layout: `gallery-preview.js` packs them into three rows (about 4–6 images a row on desktop, 3–4 on phones, so the collage stays short) and gives each its true shape, so every image is shown whole and uncropped, images in a row share a height, and rows differ in height. Re-packs if the screen crosses the phone breakpoint.
 - **Contact:** text links to the Altar, Substack, YouTube, Instagram, LinkedIn and X.
 - **Fade-in on scroll:** elements with class `reveal` fade in shortly before reaching the screen (`reveal.js`, loaded in `<head>` so the hidden state exists before the first paint).
 
