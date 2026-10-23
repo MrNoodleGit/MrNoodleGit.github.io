@@ -2,9 +2,16 @@
 // on GitHub Pages). The whole repo folder is served as static files, with
 // no server code; headers come from _headers, and .assetsignore keeps the
 // tooling below out of the upload.
+//
+// Until then it doubles as the test copy: connected to this repo in
+// Cloudflare (Workers Builds), every branch gets its own preview link,
+// <branch>-ramour-site.<account>.workers.dev, while ramour.org stays on
+// GitHub Pages. Setup steps: ARCHITECTURE.md §9.
 {
   "name": "ramour-site",
   "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": ".",
     "html_handling": "auto-trailing-slash",

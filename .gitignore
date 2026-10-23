@@ -23,7 +23,9 @@ linkedin-Profile-06-23-2026.pdf
 
 # instagram auto-post
 meta-developer-token.txt
-# installed tools (npm ci --prefix scripts) and Lighthouse reports
+# installed tools (npm ci --prefix scripts), Lighthouse reports and
+# site-check screenshots
 node_modules/
 .lighthouseci/
+site-check/
 .wrangler/

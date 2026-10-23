@@ -33,6 +33,13 @@ const ALLOWED_ORIGINS = new Set([
   "http://localhost:8123",
 ]);
 
+// The site's Cloudflare test copies: the main one and the preview link that
+// Workers Builds makes for every branch ("<branch>-ramour-site.…"). Only
+// this Cloudflare account can publish under its workers.dev subdomain.
+const PREVIEW_ORIGIN = /^https:\/\/([a-z0-9-]+-)?ramour-site\.ronald1andres2\.workers\.dev$/;
+
+const isAllowedOrigin = (origin) => ALLOWED_ORIGINS.has(origin) || PREVIEW_ORIGIN.test(origin);
+
 // How long the edge holds an answer. The page polls every 25s; this keeps a
 // burst of visitors from turning into a burst of Spotify calls.
 const EDGE_TTL = 20;
@@ -267,7 +274,7 @@ async function handleHistory(request, env) {
 
 function corsHeaders(origin) {
   const headers = { Vary: "Origin" };
-  if (origin && ALLOWED_ORIGINS.has(origin)) {
+  if (origin && isAllowedOrigin(origin)) {
     headers["Access-Control-Allow-Origin"] = origin;
   }
   return headers;

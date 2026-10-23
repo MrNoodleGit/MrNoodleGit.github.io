@@ -4,6 +4,7 @@
 .github/
 .gitignore
 .lighthouseci/
+site-check/
 .wrangler/
 node_modules/
 scripts/
@@ -13,3 +14,16 @@ CNAME
 CLAUDE.md
 TODO.md
 ARCHITECTURE.md
+
+# private files that .gitignore keeps out of git, in case someone deploys
+# from a working copy instead of a clean clone
+.env
+.env.*
+.claude/
+meta-developer-token.txt
+linkedin-Profile-06-23-2026.pdf
+Longboard.jpeg
+media/bjj_rolling.mp4
+media/red_twist_short.mp4
+media/meditation_original.mp4
+media/waking-up-portfolio-media/

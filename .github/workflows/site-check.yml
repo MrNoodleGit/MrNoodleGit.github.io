@@ -1,0 +1,42 @@
+name: Site check
+
+# Opens every page at phone and desktop width and fails on script errors,
+# Content Security Policy violations, missing files, sideways scrolling or
+# the placeholder email address (scripts/check-site.mjs). Screenshots of
+# every page are attached to each run under "Artifacts", so a pull request
+# can be looked at before it goes live.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - run: npm ci --prefix scripts
+
+      # the browser build that matches the locked Playwright version
+      - run: npx --no-install --prefix scripts playwright install --with-deps chromium
+
+      - run: node scripts/check-site.mjs
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: site-screenshots
+          path: site-check/
