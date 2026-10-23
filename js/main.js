@@ -56,3 +56,31 @@ if (copyButton && navigator.clipboard && window.isSecureContext) {
     reset = setTimeout(() => (copyButton.textContent = label), 2000);
   });
 }
+
+/* ---------- pictures that load as they near the screen ---------- */
+
+// Native loading="lazy" left images blank on iPhone (see js/gallery-discovery.js),
+// so these carry data-src / data-srcset and get their real source here.
+const lazyImages = document.querySelectorAll("img[data-src]");
+
+const loadImage = (img) => {
+  if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+  img.src = img.dataset.src;
+  img.removeAttribute("data-src");
+};
+
+if ("IntersectionObserver" in window) {
+  const imageWatcher = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        imageWatcher.unobserve(entry.target);
+        loadImage(entry.target);
+      }
+    },
+    { rootMargin: "400px 0px" }
+  );
+  lazyImages.forEach((img) => imageWatcher.observe(img));
+} else {
+  lazyImages.forEach(loadImage);
+}

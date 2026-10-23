@@ -46,12 +46,12 @@
             <li><a href="waking-up.html">Waking Up</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary btn--sm site-header__cta" href="rare-retreats.html">Rare Retreats</a>
+        <a class="btn btn--ghost btn--sm site-header__cta" href="rare-retreats.html">Rare Retreats</a>
       </div>
     </header>
 
     <main id="main">
-      <!-- ============ INTRO: who, what, where to go ============ -->
+      <!-- ============ INTRO ============ -->
       <section class="intro" id="top" aria-labelledby="intro-name">
         <div class="intro__rays" aria-hidden="true">
           <span class="ray ray--1"></span>
@@ -62,23 +62,64 @@
         <div class="intro__bubbles" aria-hidden="true"></div>
 
         <div class="intro__inner">
-          <div class="intro__text">
+          <div>
             <p class="eyebrow intro__tagline">Alchemist<span class="intro__period">.</span></p>
             <h1 class="intro__name" id="intro-name">Ra&nbsp;Mour</h1>
-            <p class="intro__lead">
-              Performer, researcher, mystic and experience architect.
-            </p>
-            <p class="intro__sub">
-              Here you'll find the art that shaped me, what I'm listening to,
-              my Spanish translations of Waking Up, and the first news of
-              Rare Retreats.
-            </p>
-            <div class="intro__actions">
+
+            <!-- Each patch is drawn inline (a shared <use> showed white patches
+                 on Safari); add one by copying an <li>. The id "about" keeps
+                 old links to ramour.org/#about landing here. -->
+            <ul class="patches" id="about" aria-label="Experience">
+            <li class="patch" title="Security Product and Agent Manager, Apollo Information Systems">
+              <svg viewBox="0 0 120 112" aria-hidden="true">
+              <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+              <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
+              <g transform="translate(26 22) scale(.68)" class="patch__thread">
+              <path class="patch__s" stroke-width="6" d="M50 7 L93 50 L50 93 L7 50Z" />
+              <path class="patch__f" d="M27 50 L37 38 L63 38 L73 50 L63 62 L37 62Z" />
+              </g>
+              </svg>
+              <span class="patch__org">Apollo</span>
+            </li>
+            <li class="patch" title="AI Strategist and Consultant, RARE.">
+              <svg viewBox="0 0 120 112" aria-hidden="true">
+              <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+              <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
+              <g transform="translate(26 22) scale(.68)" class="patch__thread">
+              <path class="patch__s" stroke-width="7" d="M41 8 H59 L70 19 V35 L59 46 H41 L30 35 V19Z" />
+              <path class="patch__s" stroke-width="8" d="M50 46 V93 M50 68 H65 M50 82 H65" />
+              </g>
+              </svg>
+              <span class="patch__org">RARE.</span>
+            </li>
+            <li class="patch" title="Computation and Cognition / Theater Arts, Massachusetts Institute of Technology">
+              <svg viewBox="0 0 120 112" aria-hidden="true">
+              <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+              <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
+              <g transform="translate(26 22) scale(.68)" class="patch__thread">
+              <path class="patch__f" d="M14 22h9v56h-9z M28 22h9v34h-9z M42 22h9v56h-9z M56 22h9v10h-9z M56 38h9v40h-9z M70 22h20v9h-20z M70 38h9v40h-9z" />
+              </g>
+              </svg>
+              <span class="patch__org">MIT</span>
+            </li>
+            <li class="patch" title="Psychology, Harvard University">
+              <svg viewBox="0 0 120 112" aria-hidden="true">
+              <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
+              <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
+              <g transform="translate(26 22) scale(.68)" class="patch__thread">
+              <path class="patch__s" stroke-width="6" d="M16 12 H84 V48 C84 72 68 86 50 94 C32 86 16 72 16 48Z" />
+              <path class="patch__f" d="M28 24 L37 26 V40 L28 38Z M48 24 L39 26 V40 L48 38Z M52 24 L61 26 V40 L52 38Z M72 24 L63 26 V40 L72 38Z M40 50 L49 52 V66 L40 64Z M60 50 L51 52 V66 L60 64Z" />
+              </g>
+              </svg>
+              <span class="patch__org">Harvard</span>
+            </li>
+            </ul>
+
+            <p class="intro__actions">
               <a class="btn btn--primary" href="rare-retreats.html"
-                >Join the Rare Retreats list <span class="arrow" aria-hidden="true">&rarr;</span></a
+                >Rare Retreats <span class="arrow" aria-hidden="true">&rarr;</span></a
               >
-              <a class="btn btn--ghost" href="#explore">Explore</a>
-            </div>
+            </p>
           </div>
 
           <figure class="intro__portrait">
@@ -89,7 +130,7 @@
                 media/soul-city-art-portrait.webp     640w,
                 media/soul-city-art-portrait-960.webp 960w
               "
-              sizes="(max-width: 40rem) calc(100vw - 2.5rem), 26rem"
+              sizes="(max-width: 40rem) calc(100vw - 2.5rem), 28rem"
               width="640"
               height="853"
               fetchpriority="high"
@@ -99,167 +140,85 @@
         </div>
       </section>
 
-      <!-- ============ EXPERIENCE ============ -->
-      <!-- Each patch is drawn inline (a shared <use> showed white patches on
-           Safari); add one by copying an <li>. -->
-      <!-- the ids "about", "mind" and "gallery-preview" keep old links to
-           this page (ramour.org/#about…) landing on the matching part -->
-      <section class="section section--tight" id="about" aria-labelledby="experience-title">
-        <h2 class="eyebrow section__kicker" id="experience-title">Experience</h2>
-        <ul class="creds">
-          <li class="cred reveal">
-            <svg viewBox="0 0 120 112" aria-hidden="true">
-            <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
-            <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
-            <g transform="translate(26 22) scale(.68)" class="patch__thread">
-            <path class="patch__s" stroke-width="6" d="M50 7 L93 50 L50 93 L7 50Z" />
-            <path class="patch__f" d="M27 50 L37 38 L63 38 L73 50 L63 62 L37 62Z" />
-            </g>
-            </svg>
-            <div>
-              <p class="cred__role">Security Product and Agent Manager</p>
-              <p class="cred__org">Apollo Information Systems</p>
-            </div>
+      <!-- ============ ALTAR ============ -->
+      <!-- The ids "gallery-preview" and "mind" keep old links to this page
+           (ramour.org/#gallery-preview, /#mind) landing on the matching part. -->
+      <section class="section" id="explore" aria-label="Explore">
+        <a class="link-card link-card--wide reveal" id="gallery-preview" href="gallery.html">
+          <!-- Filled by js/gallery-preview.js with a random pick from
+               media/art-gallery/ (via media/art-gallery.json) on every visit. -->
+          <div class="link-card__media collage" id="altar-collage" aria-hidden="true"></div>
+          <h2 class="link-card__name">Altar <span class="arrow" aria-hidden="true">&rarr;</span></h2>
+        </a>
+      </section>
+
+      <!-- ============ THE OTHER DOORS ============ -->
+      <section class="section" aria-label="More">
+        <ul class="doors" role="list">
+          <li class="reveal">
+            <a class="link-card" href="rare-retreats.html">
+              <div class="link-card__media">
+                <img
+                  data-src="media/art-gallery-thumbs/tower-of-babel.png.webp"
+                  data-srcset="
+                    media/art-gallery-thumbs/tower-of-babel.png.webp  800w,
+                    media/art-gallery-large/tower-of-babel.png.webp  1536w
+                  "
+                  sizes="(max-width: 56rem) 45vw, 16rem"
+                  width="800"
+                  height="533"
+                  decoding="async"
+                  alt=""
+                />
+              </div>
+              <h2 class="link-card__name">Rare Retreats <span class="arrow" aria-hidden="true">&rarr;</span></h2>
+              <p class="eyebrow link-card__note">Coming soon</p>
+            </a>
           </li>
-          <li class="cred reveal">
-            <svg viewBox="0 0 120 112" aria-hidden="true">
-            <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
-            <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
-            <g transform="translate(26 22) scale(.68)" class="patch__thread">
-            <path class="patch__s" stroke-width="7" d="M41 8 H59 L70 19 V35 L59 46 H41 L30 35 V19Z" />
-            <path class="patch__s" stroke-width="8" d="M50 46 V93 M50 68 H65 M50 82 H65" />
-            </g>
-            </svg>
-            <div>
-              <p class="cred__role">AI Strategist and Consultant</p>
-              <p class="cred__org">RARE.</p>
-            </div>
+          <li class="reveal">
+            <a class="link-card" href="music.html">
+              <div class="link-card__media">
+                <img
+                  data-src="media/waking-up/atmosphere-4-cover-640.webp"
+                  width="640"
+                  height="640"
+                  decoding="async"
+                  alt=""
+                />
+              </div>
+              <h2 class="link-card__name">Music <span class="arrow" aria-hidden="true">&rarr;</span></h2>
+            </a>
           </li>
-          <li class="cred reveal">
-            <svg viewBox="0 0 120 112" aria-hidden="true">
-            <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
-            <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
-            <g transform="translate(26 22) scale(.68)" class="patch__thread">
-            <path class="patch__f" d="M14 22h9v56h-9z M28 22h9v34h-9z M42 22h9v56h-9z M56 22h9v10h-9z M56 38h9v40h-9z M70 22h20v9h-20z M70 38h9v40h-9z" />
-            </g>
-            </svg>
-            <div>
-              <p class="cred__role">Computation and Cognition / Theater Arts</p>
-              <p class="cred__org">Massachusetts Institute of Technology</p>
-            </div>
+          <li class="reveal">
+            <a class="link-card" id="mind" href="waking-up.html">
+              <div class="link-card__media">
+                <img
+                  data-src="media/waking-up/lessons-cover-720.webp"
+                  width="720"
+                  height="720"
+                  decoding="async"
+                  alt=""
+                />
+              </div>
+              <h2 class="link-card__name">Waking Up <span class="arrow" aria-hidden="true">&rarr;</span></h2>
+              <p class="eyebrow link-card__note link-card__note--plain" lang="es">En español</p>
+            </a>
           </li>
-          <li class="cred reveal">
-            <svg viewBox="0 0 120 112" aria-hidden="true">
-            <path d="M8 18 Q60 0 112 18 V70 Q112 92 60 106 Q8 92 8 70Z" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="5" stroke-dasharray=".9 .9" />
-            <path d="M15 23 Q60 8 105 23 V69 Q105 87 60 99 Q15 87 15 69Z" fill="none" stroke="#4a4a4a" stroke-opacity=".7" stroke-width=".8" stroke-dasharray="2 1.6" />
-            <g transform="translate(26 22) scale(.68)" class="patch__thread">
-            <path class="patch__s" stroke-width="6" d="M16 12 H84 V48 C84 72 68 86 50 94 C32 86 16 72 16 48Z" />
-            <path class="patch__f" d="M28 24 L37 26 V40 L28 38Z M48 24 L39 26 V40 L48 38Z M52 24 L61 26 V40 L52 38Z M72 24 L63 26 V40 L72 38Z M40 50 L49 52 V66 L40 64Z M60 50 L51 52 V66 L60 64Z" />
-            </g>
-            </svg>
-            <div>
-              <p class="cred__role">Psychology</p>
-              <p class="cred__org">Harvard University</p>
-            </div>
+          <li class="reveal">
+            <a class="link-card" href="writing.html">
+              <div class="link-card__media link-card__media--glyph" aria-hidden="true"><span>&ldquo;</span></div>
+              <h2 class="link-card__name">Writing <span class="arrow" aria-hidden="true">&rarr;</span></h2>
+            </a>
           </li>
         </ul>
       </section>
 
-      <!-- ============ EXPLORE: one tile per part of the site ============ -->
-      <section class="section" id="explore" aria-labelledby="explore-title">
-        <div class="section__head reveal">
-          <p class="eyebrow">Explore</p>
-          <h2 class="section__title" id="explore-title">Things I make and love</h2>
-        </div>
-
-        <div class="bento">
-          <a class="tile tile--wide reveal" id="gallery-preview" href="gallery.html">
-            <!-- Filled by js/gallery-preview.js with a random pick from
-                 media/art-gallery/ (via media/art-gallery.json) on every visit. -->
-            <div class="tile__media collage" id="altar-collage" aria-hidden="true"></div>
-            <p class="eyebrow">Altar</p>
-            <h3 class="tile__title">A wall of what shaped me</h3>
-            <p class="tile__desc">
-              Paintings, film posters, book covers and photos, with the quotes
-              I return to. Tap any piece to see it large.
-            </p>
-            <span class="tile__cta">Visit the Altar <span class="arrow" aria-hidden="true">&rarr;</span></span>
-          </a>
-
-          <a class="tile tile--retreats reveal" href="rare-retreats.html">
-            <img
-              class="tile__media tile__cover"
-              src="media/art-gallery-thumbs/tower-of-babel.png.webp"
-              width="800"
-              height="533"
-              loading="lazy"
-              decoding="async"
-              alt=""
-            />
-            <span class="tile__badge">Coming soon</span>
-            <h3 class="tile__title">RARE. Retreats</h3>
-            <p class="tile__desc">
-              For individuals and teams who want to be as fully alive as they
-              are productive.
-            </p>
-            <span class="tile__cta">Join the list <span class="arrow" aria-hidden="true">&rarr;</span></span>
-          </a>
-
-          <a class="tile reveal" href="music.html">
-            <div class="eq" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <p class="eyebrow">Music</p>
-            <h3 class="tile__title">On air</h3>
-            <p class="tile__desc">
-              What I'm listening to right now, live, and the tracks I keep
-              coming back to.
-            </p>
-            <span class="tile__cta">Listen <span class="arrow" aria-hidden="true">&rarr;</span></span>
-          </a>
-
-          <a class="tile reveal" id="mind" href="waking-up.html">
-            <img
-              class="tile__thumb"
-              src="media/waking-up/lessons-cover-288.webp"
-              width="288"
-              height="288"
-              loading="lazy"
-              decoding="async"
-              alt=""
-            />
-            <p class="eyebrow">Translation &middot; Voice</p>
-            <h3 class="tile__title" lang="es">Waking Up en español</h3>
-            <p class="tile__desc">
-              The Waking Up Introductory Course and lessons, translated and
-              narrated in Spanish. 28 guided sessions.
-            </p>
-            <span class="tile__cta" lang="es">Escuchar <span class="arrow" aria-hidden="true">&rarr;</span></span>
-          </a>
-
-          <a class="tile reveal" href="writing.html">
-            <p class="tile__glyph" aria-hidden="true">&ldquo;</p>
-            <p class="eyebrow">Writing</p>
-            <h3 class="tile__title">Essays</h3>
-            <p class="tile__desc">
-              On art, science, philosophy and spirituality.
-            </p>
-            <span class="tile__cta">Read <span class="arrow" aria-hidden="true">&rarr;</span></span>
-          </a>
-        </div>
-      </section>
-
       <!-- ============ LIFE: dancing, martial arts, meditation ============ -->
-      <section class="section section--abyss" id="life" aria-labelledby="life-title">
-        <div class="section__head reveal">
-          <p class="eyebrow">Life</p>
-          <h2 class="section__title" id="life-title">Dancing, martial arts, meditation</h2>
-        </div>
-
+      <section class="section" id="life" aria-label="Life">
         <!-- Drop video files into media/ — see media/README.txt for expected
              names. Phones get the smaller 720p copy (*-720.mp4). -->
         <div
-          class="lifeframe"
+          class="lifeframe reveal"
           id="lifeframe"
           role="region"
           aria-roledescription="carousel"
@@ -355,58 +314,37 @@
       </section>
 
       <!-- ============ CONTACT ============ -->
-      <section class="section" id="contact" aria-labelledby="contact-title">
-        <div class="contact">
-          <div class="reveal">
-            <p class="eyebrow">Contact</p>
-            <h2 class="section__title" id="contact-title">Say hello</h2>
-            <p class="lead">
-              For collaborations, retreats, or a conversation: write to me, or
-              find me where you already are.
-            </p>
-            <!-- EMAIL: the address shows here only. Put the real one in all
-                 three places on the next two lines (link, text, copy button)
-                 before this goes live; the site check fails until then. -->
-            <p class="contact__email">
-              <a class="contact__address" href="mailto:REPLACE-ME@ramour.org">REPLACE-ME@ramour.org</a>
-              <button class="btn btn--ghost btn--sm" type="button" data-copy="REPLACE-ME@ramour.org" aria-live="polite" hidden>Copy</button>
-            </p>
-          </div>
-
-          <ul class="socials reveal">
+      <section class="section" id="contact" aria-label="Contact">
+        <div class="contact reveal">
+          <!-- EMAIL: the address shows here only. Put the real one in all
+               three places on the next two lines (link, text, copy button)
+               before this goes live; the site check fails until then. -->
+          <a class="contact__address" href="mailto:REPLACE-ME@ramour.org">REPLACE-ME@ramour.org</a>
+          <button class="btn btn--ghost btn--sm" type="button" data-copy="REPLACE-ME@ramour.org" aria-live="polite" hidden>Copy</button>
+          <ul class="socials">
             <li>
-              <a class="social" href="https://substack.com/@ramour" target="_blank" rel="noopener">
+              <a href="https://substack.com/@ramour" target="_blank" rel="noopener" aria-label="Substack">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" /></svg>
-                <span class="social__name">Substack</span>
-                <span class="social__handle">@ramour</span>
               </a>
             </li>
             <li>
-              <a class="social" href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener">
+              <a href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener" aria-label="Instagram">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077" /></svg>
-                <span class="social__name">Instagram</span>
-                <span class="social__handle">@ramour42</span>
               </a>
             </li>
             <li>
-              <a class="social" href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener">
+              <a href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener" aria-label="YouTube">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
-                <span class="social__name">YouTube</span>
-                <span class="social__handle">@Ra_Mour</span>
               </a>
             </li>
             <li>
-              <a class="social" href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener">
+              <a href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener" aria-label="LinkedIn">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-                <span class="social__name">LinkedIn</span>
-                <span class="social__handle">in/ramour</span>
               </a>
             </li>
             <li>
-              <a class="social" href="https://x.com/ramour42" target="_blank" rel="noopener">
+              <a href="https://x.com/ramour42" target="_blank" rel="noopener" aria-label="X">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z" /></svg>
-                <span class="social__name">X</span>
-                <span class="social__handle">@ramour42</span>
               </a>
             </li>
           </ul>
@@ -416,34 +354,17 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <div class="site-footer__about">
-          <a class="site-footer__brand" href="index.html">Ra Mour</a>
-          <p class="site-footer__tag">Performer, researcher, mystic and experience architect.</p>
-        </div>
-        <nav aria-label="Site">
-          <h2>Site</h2>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="gallery.html">Altar</a></li>
-            <li><a href="music.html">Music</a></li>
-            <li><a href="writing.html">Writing</a></li>
-            <li><a href="waking-up.html">Waking Up en español</a></li>
-            <li><a href="rare-retreats.html">Rare Retreats</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
-          </ul>
-        </nav>
-        <div>
-          <h2>Follow</h2>
-          <ul>
-            <li><a href="https://substack.com/@ramour" target="_blank" rel="noopener">Substack</a></li>
-            <li><a href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener">YouTube</a></li>
-            <li><a href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><a href="https://x.com/ramour42" target="_blank" rel="noopener">X</a></li>
-          </ul>
-        </div>
+        <a class="site-footer__brand" href="index.html">Ra Mour</a>
+        <ul>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="https://substack.com/@ramour" target="_blank" rel="noopener">Substack</a></li>
+          <li><a href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://x.com/ramour42" target="_blank" rel="noopener">X</a></li>
+        </ul>
+        <p class="site-footer__legal">&copy; 2026</p>
       </div>
-      <p class="site-footer__legal">&copy; 2026 Ra Mour</p>
     </footer>
 
     <script src="js/site.js"></script>

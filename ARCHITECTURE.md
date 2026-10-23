@@ -18,7 +18,7 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 
 | Page | What it offers |
 | --- | --- |
-| **Home** | An intro that says who Ra is with two buttons (join the Rare Retreats list, explore), a portrait, four labelled experience "patches", one tile per part of the site (Altar with a random collage, Rare Retreats, Music, Waking Up, Writing), a video player with three labelled scenes (dancing, martial arts, meditation), and a contact section with an email address and social links |
+| **Home** | Almost no words: the name, a portrait, four experience "patches" with one-word labels (Apollo, RARE., MIT, Harvard), one button (Rare Retreats); then a random Altar collage, four picture links (Rare Retreats, Music, Waking Up, Writing), the Life videos with three named scenes, and the email address with social icons |
 | **Altar** | A gallery wall of 69 pieces of art, film posters, book covers and photos, mixed with 20 quotes. Tap a piece to enlarge it and step through with buttons, arrow keys or swipes |
 | **Writing** | The full list of essays, which link out to Substack |
 | **Music** | A live "On air / Last played" band showing what Ra is listening to on Spotify, a 1:45 preview of a Waking Up piece, and a curated list of recommended tracks and playlists with built-in players |
@@ -26,7 +26,7 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 | **Rare Retreats** | A "coming soon" page: what the retreats are for, an email sign-up (a Substack form) and the Tower of Babel painting |
 | **Hello** | A one-screen contact card with social links and a QR code, the page the business card points to |
 
-Every page except Hello shares one header (name, Altar, Music, Writing, Waking Up, and a "Rare Retreats" button) and one footer (site map and social links), so a visitor can reach any page from any page. The two things the site asks of a first-time visitor are to explore and to join the Rare Retreats list.
+Every page except Hello shares one header (name, Altar, Music, Writing, Waking Up, and a "Rare Retreats" button) and a one-line footer (contact and social links), so a visitor can reach any page from any page. The two things the site asks of a first-time visitor are to explore and to join the Rare Retreats list. The style is deliberately quiet: pictures carry the pages, labels are one or two words, and there is one filled button per screen.
 
 ### How the owner updates it without a developer
 
@@ -147,33 +147,34 @@ worker/                Cloudflare Worker for the radio (+ README with setup)
 
 ## 4. Design system
 
-Redesigned in October 2026 on product-interface principles: say who and what first, one consistent way around the site, labels instead of mystery icons, one primary action per screen, large tap targets, and type chosen for reading. Same brand colors as before.
+Redesigned in October 2026 on product-interface principles (one consistent way around the site, one primary action per screen, large tap targets, type chosen for reading), then pared back at the owner's request to very little text and a gallery-like elegance: images carry the page, labels are one or two words in small spaced capitals, hairlines instead of boxes. Same brand colors as before.
 
 - **Palette (CSS variables in `css/style.css`):** ink `#020202` (page), abyss `#061719` (cards, alternate sections), deep `#0a2328` (card hover), teal `#14636F` (borders), zima `#5BC2E7` (links, primary buttons, current page), crimson `#AE0E36` (small marks only: "coming soon", "on air", the period, patches), text `#E8F0F0`, soft `#B4C9CC` (secondary text), muted `#7FA8AD` (dates, counts). Every text color is at least 7:1 against the page.
 - **Type:** Inter (variable, one file for every weight) for reading and the interface; Marcellus for the name and headings; EB Garamond italic only for the Altar quotes. All self-hosted, split into Latin and Latin Extended so the second file only downloads when needed. Inter and Marcellus are preloaded. An "Inter Fallback" face (Arial resized to Inter's proportions) keeps text from reflowing when the font arrives. Root size is 112.5% (18 px), 17 px on phones; body line height 1.65; paragraphs capped at `--read` (38rem, about 70 characters).
 - **Layout:** content width `--measure` 64rem plus side padding `--pad` = `clamp(1.25rem, 5vw, 3rem)`. Breakpoints: 56rem (tablet: two-column grids) and 40rem (phone: one column, two-row header). The Altar wall steps 3 → 2 → 1 columns at 64rem and 40rem.
-- **Components:** sticky header (`.site-header`, hides while scrolling down), page title block (`.page-head`: optional eyebrow, `h1`, `.lead`), pill buttons (`.btn--primary` zima fill, `.btn--ghost` outline, 49 px tall), tiles (`.tile`, 14 px radius, one link each), eyebrow labels (`.eyebrow`), footer (`.site-footer`). The current page's nav item is a filled pill (`aria-current="page"`, set in the HTML).
+- **Components:** sticky header (`.site-header`, hides while scrolling down), page title block (`.page-head`: optional eyebrow, `h1`, optional `.lead`), pill buttons in small spaced capitals (`.btn--primary` zima fill, `.btn--ghost` outline, 52 px tall), picture links (`.link-card`: image, name in Marcellus, arrow; `.doors` lays out four), labels (`.eyebrow`: small spaced capitals in muted teal), one-line footer (`.site-footer`). Corners are 4 px. The current page's nav link is zima and underlined (`aria-current="page"`, set in the HTML).
 - **Altar theme:** the wall keeps its warmer "dim gallery" room (`--g-bg #151210`, amber `#d9a441`, `css/gallery.css`); the header and footer take a warm tint there but are otherwise the same.
-- **Motion:** drifting light rays and bubbles behind the home intro (paused off screen), fade-ins on scroll, a small arrow nudge on hover. Everything respects `prefers-reduced-motion`; on touch screens fade-ins don't slide.
+- **Motion:** drifting light rays and bubbles behind the home intro (paused off screen), slow fade-ins on scroll, a slow zoom on pictures and an arrow nudge on hover. Everything respects `prefers-reduced-motion`; on touch screens fade-ins don't slide.
 
 ---
 
 ## 5. Pages and features in detail
 
 ### Shared on every page (except Hello)
-- **Header** (`js/site.js`): name (home link), Altar, Music, Writing, Waking Up, and a "Rare Retreats" button. On phones the four links sit on a second row. It slides away on steady downward scrolling (24 px) and returns on upward scrolling (12 px), is always shown near the top, ignores iOS rubber-band overscroll, and returns when a link inside it gets keyboard focus. One shared, passive scroll listener runs at most once per frame (`onScrollFrame`); the page height is measured on resize and by a ResizeObserver, never inside the scroll handler.
+- **Header** (`js/site.js`): name (home link), Altar, Music, Writing, Waking Up, and an outlined "Rare Retreats" button (outlined so the homepage's filled one stays the only filled button on screen). On phones the four links sit on a second row. It slides away on steady downward scrolling (24 px) and returns on upward scrolling (12 px), is always shown near the top, ignores iOS rubber-band overscroll, and returns when a link inside it gets keyboard focus. One shared, passive scroll listener runs at most once per frame (`onScrollFrame`); the page height is measured on resize and by a ResizeObserver, never inside the scroll handler.
 - **Skip link** ("Skip to content") as the first focus stop, jumping to `<main id="main">`.
-- **Footer:** site map, social links, copyright.
+- **Footer:** one line: name, Contact (the homepage's email), the five social profiles, copyright.
 - The header and footer are plain HTML repeated in each page (there is no build step). Changing a link means changing it in every page; `404.html` uses links from the site root (`/gallery.html`) because it can be shown at any address.
 
 ### Home — `index.html`
 CSS: `style.css`. JS: `reveal.js`, `site.js`, `main.js`, `lifeframe.js`, `gallery-discovery.js`, `gallery-preview.js`. (`writing-data.js` and `writing-home.js` are not loaded on the home page.)
 
-- **Intro:** "Alchemist." eyebrow, the name, a one-line description, a sentence on what the site holds, and two buttons: "Join the Rare Retreats list" (primary) and "Explore" (jumps to the tiles). The portrait (WebP in 480/640/960 px, loaded first with `fetchpriority="high"`) sits to the right, or below on phones. Four light rays and 12 randomly generated bubbles drift behind it and pause once it scrolls out of view.
-- **Experience:** the four embroidered patches, each with its role and organization written beside it (no tapping needed). The patch shield outlines are deliberately repeated inline (a shared `<use>` showed white patches on Safari).
-- **Explore:** five tiles, each one link. Altar (two columns wide) holds a random justified-row collage: `gallery-preview.js` draws up to 14 images (at least four landscape) on every visit and packs them into two rows (about 4–6 images a row on desktop, 3–4 on phones), each image whole and uncropped; it re-packs if the screen crosses the phone breakpoint, and the collage hides itself if the image list can't load. Then Rare Retreats (warm crimson glow, "Coming soon"), Music, Waking Up en español and Writing.
-- **Life:** a 16:9 video player (4:5 on phones) with a labelled scene picker (Dancing / Martial arts / Meditation). Phones get 720p files via a `media` query on the `<source>`. Videos use `preload="none"`, begin buffering about a screen before the section, play only while at least 35% is visible, and pause when you switch scenes; tap the video to play or pause. A play hint shows when paused.
-- **Contact:** the email address (with a "Copy" button where the browser allows it) and the five social profiles with their handles. **The address is a placeholder (`REPLACE-ME@ramour.org`) until the owner chooses one; the site check fails while it is there.**
+- **Intro** (fills the first screen on desktop): "Alchemist." label, the name, the four embroidered patches with one-word labels (the full role and organization are in each patch's tooltip and read out by screen readers), and one button, "Rare Retreats". The portrait (WebP in 480/640/960 px, loaded first with `fetchpriority="high"`) sits to the right, or below on phones. Four light rays and 12 randomly generated bubbles drift behind it and pause once it scrolls out of view. The patch shield outlines are deliberately repeated inline (a shared `<use>` showed white patches on Safari).
+- **Altar:** a full-width random justified-row collage, then "Altar →"; the whole block is one link. `gallery-preview.js` waits for the page to finish loading (so on a phone its images don't compete with the portrait), then draws up to 14 images (at least four landscape) on every visit and packs them into two rows (about 4–6 images a row on desktop, 3–4 on phones), each image whole and uncropped; it re-packs if the screen crosses the phone breakpoint, and hides itself if the image list can't load. A placeholder of about the same shape holds the space while it loads.
+- **Four picture links** (four across on desktop, two on tablets and phones), each a 4:5 picture and a name: Rare Retreats (the Tower of Babel, with a small crimson "Coming soon"), Music (the Atmosphere 4 cover), Waking Up (the lessons cover, "En español") and Writing (a large quotation mark; there is no picture for it). The pictures carry `data-src` and are given their real source by `main.js` about 400 px before they reach the screen (native `loading="lazy"` isn't used, see the Safari note).
+- **Life:** a 16:9 video player (4:5 on phones) with three named scenes below it (Dancing / Martial arts / Meditation). Phones get 720p files via a `media` query on the `<source>`. Videos use `preload="none"`, begin buffering about a screen before the section, play only while at least 35% is visible, and pause when you switch scenes; tap the video to play or pause. A play hint shows when paused.
+- **Contact:** the email address set large (with a "Copy" button where the browser allows it) and five social icons. **The address is a placeholder (`REPLACE-ME@ramour.org`) until the owner chooses one; the site check fails while it is there.**
+- **Old links:** the ids `about` (the patches), `gallery-preview` (Altar) and `mind` (Waking Up) keep links to the previous homepage's sections working.
 - **Fade-in on scroll:** elements with class `reveal` fade in shortly before reaching the screen (`reveal.js`, loaded in `<head>` so the hidden state exists before the first paint).
 
 ### Altar — `gallery.html`
@@ -187,7 +188,7 @@ CSS: `style.css`, `gallery.css`. JS: `reveal.js`, `site.js`, `gallery-discovery.
 
 ### Writing — `writing.html`
 CSS: `style.css`, `writing.css`. JS: `reveal.js`, `site.js`, `writing-data.js`, `writing-archive.js`.
-A "Subscribe on Substack" button, then every essay from `writing.md` (title, date, excerpt, link to Substack). `writing-data.js` is shared with the homepage: it parses the file and builds each list item. Space is reserved while the file loads to avoid layout shift.
+The title, a "Subscribe" button (Substack), then every essay from `writing.md` (title, date, excerpt, link to Substack). `writing-data.js` is shared with the homepage: it parses the file and builds each list item. Space is reserved while the file loads to avoid layout shift.
 
 ### Music — `music.html`
 CSS: `style.css`, `music.css`, `radio.css`, `music-preview.css`. JS: `reveal.js`, `site.js`, `radio.js`, `music.js`, `music-preview.js`.
@@ -198,10 +199,10 @@ CSS: `style.css`, `music.css`, `radio.css`, `music-preview.css`. JS: `reveal.js`
 
 ### Waking Up · en español — `waking-up.html`
 CSS: `style.css`, `waking-up.css`. JS: `site.js`, `player.js`.
-Builds 14 "days" in the browser, each with a meditation and a lesson (28 MP3s: 109 MB + 70 MB). Track titles, English subtitles and durations are listed in `player.js`. A fixed bottom player appears on first play (the footer gains bottom space while it shows): play/pause, previous/next, seek, time, cover art; sessions play one after another. The page is the Spanish-language companion to the Waking Up app (links to the app).
+Builds 14 "days" in the browser, each with a meditation and a lesson (28 MP3s: 109 MB + 70 MB). Track titles, English subtitles and durations are listed in `player.js`. Space for the list is held while it builds, so the footer doesn't jump. A fixed bottom player appears on first play (the footer gains bottom space while it shows): play/pause, previous/next, seek, time, cover art; sessions play one after another. The page is the Spanish-language companion to the Waking Up app (links to the app).
 
 ### Rare Retreats — `rare-retreats.html`
-CSS: `style.css`, `rare-retreats.css`. JS: `site.js`. A "Coming soon" badge, the page's promise ("for individuals and teams who want to experience what it's like to be as fully alive as they are productive"), Substack's sign-up form in a card, and the Tower of Babel painting (the resized WebP copies from the Altar, not the 3 MB original) in a still warm glow.
+CSS: `style.css`, `rare-retreats.css`. JS: `site.js`. A "Coming soon" label, the page's promise ("for individuals and teams who want to experience what it's like to be as fully alive as they are productive"), Substack's sign-up form in a card, and the Tower of Babel painting (the resized WebP copies from the Altar, not the 3 MB original) in a still warm glow.
 
 ### Hello — `hello_world.html`
 CSS: `hello.css`. A single card: portrait, name, title, five social links, and a QR code that points back to the page. The physical business card is designed in `media/hello/print/card.html` and rendered to PDF/PNG by `scripts/render-card.mjs` (Playwright, run by hand).
@@ -219,10 +220,10 @@ All scripts are plain files that share the global scope, so **load order matters
 | --- | --- | --- |
 | `reveal.js` | Home, Altar, Writing, Music | In `<head>`. Adds the `js` class and exposes `observeReveals(root)` and `prefersReducedMotion` |
 | `site.js` | Every page but Hello | Shared once-per-frame scroll handler (`onScrollFrame`) and header hide/show. Load it before any script that uses `onScrollFrame` |
-| `main.js` | Home | Intro bubbles, intro pause, email copy button |
+| `main.js` | Home | Intro bubbles, intro pause, email copy button, loading the picture links near the screen |
 | `lifeframe.js` | Home | Video player and scene picker |
 | `gallery-discovery.js` | Home, Altar | Loads `art-gallery.json`; `galleryImg()` builds responsive, lazily loaded `<img>`s |
-| `gallery-preview.js` | Home | Random two-row collage in the Altar tile |
+| `gallery-preview.js` | Home | Random two-row Altar collage |
 | `gallery.js` | Altar | Wall, quotes, lightbox |
 | `writing-data.js` | Home, Writing | Parses `writing.md`; builds essay list items |
 | `writing-home.js` / `writing-archive.js` | Home / Writing | Fill the essay lists |
@@ -361,6 +362,7 @@ All scripts are plain files that share the global scope, so **load order matters
 | 2026-10 | Prepared, but did not start, a Cloudflare move | Real headers and caching; waits on an owner decision |
 | 2026-10 | Radio sends Spotify's 640 px cover; the saved "last played" entry is rewritten when its cover changes | Larger cover art stays sharp. The first version kept serving the old 300 px cover for a saved song until a different song played (needs a Worker redeploy) |
 | 2026-10 | Redesign (branch `redesign-2026`): shared header and footer on every page, informative intro instead of a full-screen title, labelled patches, tiles for each part of the site, labelled video scenes, contact with email, Inter for reading | Visitors couldn't tell who Ra is or what's here from the first screen, inner pages had no way to each other except "back", and roles were hidden behind taps. Same brand colors; Garamond was hard to read on screens at small sizes |
+| 2026-10 | Pared the redesign back: words cut to names and one-word labels, footer to one line, boxes replaced by pictures and hairlines | Owner asked for very little text and more elegance. Trade-off: the full roles behind the patches are now only in tooltips and screen-reader text |
 | 2026-10 | Pre-redesign site kept on branch `classic-2026-10`; changes go through pull requests; per-branch preview links via Cloudflare Workers Builds; a Playwright page check on every pull request | Easy to undo, and every change can be seen on a phone before it is live, without moving ramour.org off GitHub Pages |
 | 2026-10 | `scripts/package.json` `overrides` pin `tmp` 0.2.7 and `uuid` 11.1.1 | Clears Dependabot alerts in the dev-only Lighthouse CI tool (`@lhci/cli` 0.15.1 is the latest and still ships old versions). Remove when it updates. `extract-zip` and `sprintf-js` have no patched release; alerts dismissed as unused |
 

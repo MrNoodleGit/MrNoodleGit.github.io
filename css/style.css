@@ -1,21 +1,22 @@
 /* ============================================================
    Ra Mour — shared design system (every page but Hello) + home
    Palette from the "longboard" moodboard / Zima Blue stills.
-   Page-specific styles live in their own files and build on these
-   tokens and components.
+   Quiet by design: few words, images first, hairlines instead of
+   boxes, one filled button per screen. Page-specific styles live in
+   their own files and build on these tokens and components.
    ============================================================ */
 
 :root {
   /* brand palette */
   --ink: #020202;      /* page */
-  --abyss: #061719;    /* raised surfaces: cards, alternate sections */
-  --deep: #0a2328;     /* hover state of a surface */
+  --abyss: #061719;    /* raised surfaces (players, embeds) */
+  --deep: #0a2328;     /* image placeholders, hover */
   --teal: #14636F;     /* borders */
-  --zima: #5BC2E7;     /* accent, links, primary buttons */
-  --crimson: #AE0E36;  /* small marks only: "live", the period, patches */
+  --zima: #5BC2E7;     /* accent: links, the primary button, current page */
+  --crimson: #AE0E36;  /* small marks only: "coming soon", "on air", the period, patches */
   --text: #E8F0F0;     /* body text, 18:1 on ink */
   --soft: #B4C9CC;     /* secondary text, 11:1 on ink */
-  --muted: #7FA8AD;    /* meta text (dates, counts), 7.9:1 on ink */
+  --muted: #7FA8AD;    /* labels and meta text, 7.9:1 on ink */
   --line: rgba(20, 99, 111, 0.55);
   --line-soft: rgba(20, 99, 111, 0.3);
 
@@ -28,9 +29,10 @@
   --measure: 64rem;    /* content column */
   --read: 38rem;       /* comfortable line length for paragraphs */
   --pad: clamp(1.25rem, 5vw, 3rem);
-  --radius: 14px;
-  --radius-sm: 8px;
-  --header-h: 4rem;
+  --space: clamp(4.5rem, 12vw, 9rem); /* between home sections */
+  --radius: 4px;
+  --radius-sm: 3px;
+  --header-h: 4.25rem;
 
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -69,45 +71,54 @@ img, svg, video { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; }
 
 :focus-visible {
-  outline: 2px solid var(--zima);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: 1px solid var(--zima);
+  outline-offset: 4px;
 }
 
 h1, h2, h3 { font-weight: 400; text-wrap: balance; }
 
 p { text-wrap: pretty; }
 
+/* read by screen readers, not shown */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* ---------- small type helpers ---------- */
 
+/* small spaced capitals, the site's one label style */
 .eyebrow {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--zima);
+  color: var(--muted);
 }
 
 .lead {
-  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
-  line-height: 1.55;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  line-height: 1.6;
   color: var(--soft);
   max-width: var(--read);
 }
 
 .textlink {
   color: var(--zima);
-  font-weight: 500;
   text-decoration: underline;
-  text-decoration-color: rgba(91, 194, 231, 0.4);
+  text-decoration-color: rgba(91, 194, 231, 0.35);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.25em;
-  transition: text-decoration-color 0.2s;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.3s;
 }
 
 .textlink:hover { text-decoration-color: var(--zima); }
 
-.arrow { display: inline-block; transition: transform 0.25s var(--ease); }
+.arrow { display: inline-block; transition: transform 0.4s var(--ease); }
 
 /* ---------- skip link ---------- */
 
@@ -117,7 +128,6 @@ p { text-wrap: pretty; }
   top: -10rem;
   z-index: 100;
   padding: 0.6rem 1rem;
-  border-radius: var(--radius-sm);
   background: var(--zima);
   color: var(--ink);
   font-weight: 600;
@@ -131,17 +141,19 @@ p { text-wrap: pretty; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
-  min-height: 2.75rem; /* 49px: an easy thumb target */
-  padding: 0.6em 1.3em;
+  gap: 0.75em;
+  min-height: 2.9rem; /* 52px: an easy thumb target */
+  padding: 0.6em 1.6em;
   border: 1px solid transparent;
   border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   line-height: 1.2;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
 
 .btn--primary { background: var(--zima); color: var(--ink); }
@@ -150,11 +162,10 @@ p { text-wrap: pretty; }
 .btn--ghost { background: none; border-color: var(--line); color: var(--text); }
 .btn--ghost:hover { border-color: var(--zima); color: var(--zima); }
 
-.btn--sm { min-height: 2.25rem; padding: 0.45em 1em; font-size: 0.85rem; }
+.btn--sm { min-height: 2.2rem; padding: 0.45em 1.2em; font-size: 0.72rem; }
 
 .btn:hover .arrow,
-.tile:hover .arrow,
-.textlink:hover .arrow { transform: translateX(3px); }
+.link-card:hover .arrow { transform: translateX(4px); }
 
 /* ---------- site header (every page) ---------- */
 
@@ -162,9 +173,8 @@ p { text-wrap: pretty; }
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(2, 2, 2, 0.92);
-  border-bottom: 1px solid var(--line-soft);
-  transition: transform 0.3s var(--ease);
+  background: rgba(2, 2, 2, 0.9);
+  transition: transform 0.35s var(--ease);
 }
 
 /* slides away while scrolling down, back on scrolling up (js/site.js) */
@@ -182,64 +192,68 @@ p { text-wrap: pretty; }
 
 .site-header__brand {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  letter-spacing: 0.06em;
+  font-size: 0.95rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
   color: var(--text);
   white-space: nowrap;
+  margin-right: auto;
 }
-
-.site-header__brand:hover { color: var(--zima); }
 
 .site-nav ul {
   display: flex;
-  gap: 0.25rem;
+  gap: clamp(1rem, 2.5vw, 2rem);
   list-style: none;
 }
 
 .site-nav a {
   display: block;
-  padding: 0.45rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  font-size: 0.72rem;
   font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--soft);
   white-space: nowrap;
-  transition: color 0.2s, background 0.2s;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
 }
 
-.site-nav a:hover { color: var(--text); background: rgba(91, 194, 231, 0.08); }
+.site-nav a:hover { color: var(--text); }
 
 .site-nav a[aria-current="page"] {
-  color: var(--ink);
-  background: var(--zima);
+  color: var(--zima);
+  border-bottom-color: var(--zima);
 }
 
-.site-header__cta { margin-left: auto; }
+.site-header__cta { margin-left: clamp(0.25rem, 1.5vw, 1rem); }
+
+.site-header__cta[aria-current="page"] { background: none; border-color: var(--zima); color: var(--zima); }
 
 /* ---------- page head (top of every inner page) ---------- */
 
 .page-head {
   max-width: calc(var(--measure) + 2 * var(--pad));
   margin: 0 auto;
-  padding: clamp(2.5rem, 7vw, 4.5rem) var(--pad) clamp(1.75rem, 4vw, 2.75rem);
+  padding: clamp(3rem, 9vw, 6rem) var(--pad) clamp(2rem, 5vw, 3.5rem);
 }
 
-.page-head .eyebrow { margin-bottom: 0.75rem; }
+.page-head .eyebrow { margin-bottom: 1rem; }
 
 .page-head h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 6vw, 3.75rem);
-  line-height: 1.08;
-  letter-spacing: 0.01em;
-  margin-bottom: 0.9rem;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
 }
 
-.page-head .lead + * { margin-top: 1.5rem; }
+.page-head h1 + * { margin-top: 1.25rem; }
+.page-head .lead + * { margin-top: 1.75rem; }
 
 /* ---------- sections ---------- */
 
 .section {
-  padding: clamp(3.5rem, 9vw, 6.5rem) var(--pad);
+  padding: var(--space) var(--pad) 0;
 }
 
 .section > * {
@@ -248,90 +262,53 @@ p { text-wrap: pretty; }
   margin-right: auto;
 }
 
-.section--abyss { background: var(--abyss); }
-
-/* follows the intro directly, so it needs no space above */
-.section--tight { padding-top: 0; padding-bottom: 0; }
-
-.section__kicker { margin-bottom: 1rem; }
-
-.section__head { margin-bottom: clamp(1.75rem, 4vw, 2.75rem); }
-
-.section__head .eyebrow { margin-bottom: 0.6rem; }
-
-.section__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  line-height: 1.15;
-}
-
-.section__head .lead { margin-top: 0.75rem; }
-
 /* ============================================================
    HOME
    ============================================================ */
 
-/* ---------- intro: who, what, and where to go ---------- */
+/* ---------- intro: name, portrait, patches, one button ---------- */
 
 .intro {
   position: relative;
   overflow: hidden;
   /* faint light from the surface, fading into the deep */
   background:
-    radial-gradient(110% 80% at 70% -20%, rgba(20, 99, 111, 0.5), transparent 60%),
+    radial-gradient(100% 70% at 75% -10%, rgba(20, 99, 111, 0.45), transparent 60%),
     var(--ink);
 }
 
 .intro__inner {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   align-items: center;
-  gap: clamp(2rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 7vw, 6rem);
   max-width: calc(var(--measure) + 2 * var(--pad));
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
   margin: 0 auto;
-  padding: clamp(3rem, 8vw, 6rem) var(--pad) clamp(3.5rem, 8vw, 6rem);
+  padding: clamp(2.5rem, 6vw, 4rem) var(--pad);
 }
 
-.intro__tagline { margin-bottom: 1rem; }
+.intro__tagline { margin-bottom: 1.25rem; }
 .intro__period { color: var(--crimson); }
 
 .intro__name {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 9vw, 5.75rem);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 40px rgba(91, 194, 231, 0.25);
-  margin-bottom: 1.25rem;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 60px rgba(91, 194, 231, 0.22);
 }
 
-.intro__lead {
-  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
-  line-height: 1.45;
-  color: var(--text);
-  max-width: 32rem;
-  margin-bottom: 0.9rem;
-}
-
-.intro__sub {
-  color: var(--soft);
-  max-width: 32rem;
-}
-
-.intro__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 2rem;
-}
+.intro__actions { margin-top: clamp(2rem, 5vw, 3rem); }
 
 .intro__portrait {
   position: relative;
   aspect-ratio: 4 / 5;
   border-radius: var(--radius);
   overflow: hidden; /* Safari can size the photo past the frame */
-  background: var(--abyss);
-  box-shadow: 0 30px 80px -30px rgba(91, 194, 231, 0.35);
+  background: var(--deep);
 }
 
 .intro__portrait img {
@@ -354,7 +331,7 @@ p { text-wrap: pretty; }
   position: absolute;
   top: -20%;
   height: 140%;
-  background: linear-gradient(to bottom, rgba(91, 194, 231, 0.12), rgba(20, 99, 111, 0.04) 55%, transparent 85%);
+  background: linear-gradient(to bottom, rgba(91, 194, 231, 0.11), rgba(20, 99, 111, 0.04) 55%, transparent 85%);
   filter: blur(14px);
   transform-origin: top center;
   animation: ray-drift 28s ease-in-out infinite alternate;
@@ -391,40 +368,31 @@ p { text-wrap: pretty; }
   to   { transform: translateY(-110vh); opacity: 0; }
 }
 
-/* ---------- credentials: the patches, labelled ---------- */
+/* ---------- patches: four marks with a one-word label ---------- */
 
-.creds {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+.patches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem clamp(1rem, 3vw, 1.75rem);
+  margin-top: clamp(2rem, 5vw, 2.75rem);
   list-style: none;
 }
 
-.cred {
+.patch {
   display: grid;
-  grid-template-columns: 3rem 1fr;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 1rem;
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  background: rgba(6, 23, 25, 0.6);
+  justify-items: center;
+  gap: 0.5rem;
 }
 
-.cred svg { width: 3rem; height: auto; }
+.patch svg { width: 2.75rem; height: auto; }
 
-.cred__role {
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--text);
-}
-
-.cred__org {
-  font-size: 0.8rem;
-  line-height: 1.35;
+.patch__org {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--muted);
-  margin-top: 0.15rem;
+  white-space: nowrap;
 }
 
 /* patch artwork (inline SVG) */
@@ -432,141 +400,94 @@ p { text-wrap: pretty; }
 .patch__f { fill: currentColor; }
 .patch__thread { color: #c8274f; }
 
-/* ---------- explore: one tile per part of the site ---------- */
+/* ---------- link cards: an image and a name ---------- */
 
-.bento {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
+.link-card { display: block; }
 
-.tile {
-  --tile-pad: clamp(1.25rem, 2.5vw, 1.75rem);
+.link-card__media {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: var(--tile-pad);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  background: var(--abyss);
   overflow: hidden;
-  transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease);
+  border-radius: var(--radius);
+  background: var(--deep);
 }
 
-.tile:hover { border-color: var(--zima); background: var(--deep); }
-
-.tile--wide { grid-column: span 2; }
-
-/* artwork that runs to the tile's edges */
-.tile__media {
-  width: calc(100% + 2 * var(--tile-pad));
-  max-width: none;
-  margin: calc(-1 * var(--tile-pad)) calc(-1 * var(--tile-pad)) 0.75rem;
-}
-
-.tile__thumb {
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: var(--radius-sm);
+.doors .link-card__media img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 0.5rem;
+  transition: transform 1.2s var(--ease);
 }
 
-.tile__glyph {
-  height: 2.5rem;
-  margin-bottom: 0.5rem;
-  font-family: var(--font-display);
-  font-size: 4rem;
-  line-height: 1;
-  color: var(--zima);
-}
+.doors .link-card:hover .link-card__media img { transform: scale(1.04); }
 
-.tile__title {
+.link-card__name {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.9rem;
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
   line-height: 1.2;
-  color: var(--text);
+  transition: color 0.3s;
 }
 
-.tile__desc { color: var(--soft); font-size: 0.95rem; }
+.link-card:hover .link-card__name { color: var(--zima); }
 
-.tile__cta {
-  margin-top: auto;
-  padding-top: 0.75rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--zima);
-}
+.link-card__name .arrow { font-family: var(--font-body); font-size: 0.9em; color: var(--muted); }
 
-.tile__cover {
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-
-.tile__badge {
+.link-card__note {
   display: inline-flex;
   align-items: center;
-  gap: 0.45em;
-  align-self: flex-start;
-  padding: 0.2em 0.7em;
-  border-radius: 999px;
-  border: 1px solid rgba(174, 14, 54, 0.6);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #ff9db4;
+  gap: 0.6em;
+  margin-top: 0.35rem;
 }
 
-.tile__badge::before {
+/* the one red mark on the page */
+.link-card__note::before {
   content: "";
-  width: 0.45em;
-  height: 0.45em;
+  width: 0.4rem;
+  height: 0.4rem;
   border-radius: 50%;
   background: var(--crimson);
 }
 
-/* the Rare Retreats tile: the one call to action, so it glows a little */
-.tile--retreats {
+.link-card__note--plain::before { display: none; }
+
+/* the Altar: a wide collage */
+.link-card--wide .link-card__name { font-size: clamp(1.4rem, 3vw, 2rem); margin-top: 1.1rem; }
+
+/* the four smaller doors */
+.doors {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.doors .link-card__media { aspect-ratio: 4 / 5; }
+
+/* Writing has no picture: a large quotation mark instead */
+.link-card__media--glyph {
+  display: grid;
+  place-items: center;
   background:
-    radial-gradient(120% 90% at 50% 0%, rgba(174, 14, 54, 0.22), transparent 65%),
+    radial-gradient(90% 70% at 50% 20%, rgba(20, 99, 111, 0.45), transparent 70%),
     var(--abyss);
-  border-color: rgba(174, 14, 54, 0.45);
 }
 
-.tile--retreats:hover { border-color: #e0456d; }
-
-.tile--retreats .tile__cover {
-  aspect-ratio: 4 / 3;
-  object-position: 50% 30%;
+.link-card__media--glyph span {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 12vw, 9rem);
+  line-height: 1;
+  color: var(--zima);
+  transform: translateY(18%);
+  transition: transform 1.2s var(--ease);
 }
 
-/* static equalizer on the Music tile */
-.eq {
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  height: 2.5rem;
-  margin-bottom: 0.5rem;
-}
+.link-card:hover .link-card__media--glyph span { transform: translateY(18%) scale(1.06); }
 
-.eq span {
-  width: 6px;
-  border-radius: 3px;
-  background: var(--zima);
-  opacity: 0.85;
-}
-
-.eq span:nth-child(1) { height: 40%; }
-.eq span:nth-child(2) { height: 85%; }
-.eq span:nth-child(3) { height: 60%; }
-.eq span:nth-child(4) { height: 100%; }
-.eq span:nth-child(5) { height: 45%; }
-.eq span:nth-child(6) { height: 70%; }
-.eq span:nth-child(7) { height: 30%; }
-
-/* ---------- Altar collage inside its tile ---------- */
+/* ---------- Altar collage ---------- */
 
 /* a justified-row collage: js/gallery-preview.js groups the images into rows
    and sets each one's shape as --grow (1000 × width / height). Within a row
@@ -577,15 +498,16 @@ p { text-wrap: pretty; }
 .collage {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  background: none;
 }
 
-/* hold about the collage's height while the image list loads, so the tile
-   doesn't grow under the reader: two rows whose shapes add up to 3.4 and
-   4.4 (js/gallery-preview.js) are about half as tall as they are wide */
-.collage:empty { aspect-ratio: 1.9; }
+/* hold about the collage's height while the image list loads, so nothing
+   below moves: two rows whose shapes add up to 3.4 and 4.4
+   (js/gallery-preview.js) are about half as tall as they are wide */
+.collage:empty { aspect-ratio: 1.9; background: var(--deep); }
 
-.collage__row { display: flex; gap: 4px; }
+.collage__row { display: flex; gap: 3px; }
 
 .collage__item {
   display: block;
@@ -599,12 +521,12 @@ p { text-wrap: pretty; }
   display: block;
   width: 100%;
   height: auto;
-  transition: transform 0.6s var(--ease);
+  transition: transform 1.2s var(--ease);
 }
 
-.tile:hover .collage__item img { transform: scale(1.03); }
+.link-card:hover .collage__item img { transform: scale(1.03); }
 
-/* ---------- practice: the Life videos ---------- */
+/* ---------- Life: the videos ---------- */
 
 .lifeframe { position: relative; }
 
@@ -614,9 +536,7 @@ p { text-wrap: pretty; }
   border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
-  background:
-    radial-gradient(120% 70% at 50% -10%, rgba(20, 99, 111, 0.4), transparent 60%),
-    var(--abyss);
+  background: var(--deep);
 }
 
 .lifeframe__slide {
@@ -624,7 +544,7 @@ p { text-wrap: pretty; }
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.8s ease;
 }
 
 .lifeframe__slide.is-active {
@@ -647,14 +567,14 @@ p { text-wrap: pretty; }
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 4rem;
-  height: 4rem;
+  width: 3.75rem;
+  height: 3.75rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(2, 2, 2, 0.55);
-  border: 1px solid rgba(91, 194, 231, 0.6);
-  color: var(--zima);
+  background: rgba(2, 2, 2, 0.45);
+  border: 1px solid rgba(232, 240, 240, 0.5);
+  color: var(--text);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -662,97 +582,81 @@ p { text-wrap: pretty; }
 }
 
 .lifeframe__play svg {
-  width: 40%;
-  height: 40%;
+  width: 36%;
+  height: 36%;
   fill: currentColor;
   margin-left: 8%; /* optically centre the triangle */
 }
 
 .lifeframe.is-paused .lifeframe__play { opacity: 1; }
 
-/* scene picker: a labelled segmented control instead of anonymous dots */
+/* scene picker: three named scenes, the current one underlined */
 .lifeframe__nav {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
 }
 
-.lifeframe__dots {
-  display: inline-flex;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-  background: var(--abyss);
-}
+.lifeframe__dots { display: flex; gap: clamp(1.25rem, 4vw, 2.5rem); }
 
 .lifeframe__dot {
-  min-height: 2.5rem;
-  padding: 0 1.1rem;
+  min-height: 2.75rem;
+  padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-bottom: 1px solid transparent;
   background: none;
-  font-size: 0.875rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  color: var(--soft);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: color 0.3s, border-color 0.3s;
 }
 
 .lifeframe__dot:hover { color: var(--text); }
 
-.lifeframe__dot.is-active { background: var(--zima); color: var(--ink); }
+.lifeframe__dot.is-active { color: var(--text); border-bottom-color: var(--zima); }
 
 /* ---------- contact ---------- */
 
 .contact {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: start;
-}
-
-.contact__email {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  justify-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  padding-bottom: var(--space);
 }
 
 .contact__address {
-  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
-  font-weight: 600;
-  color: var(--zima);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  letter-spacing: 0.02em;
+  color: var(--text);
   overflow-wrap: anywhere;
+  transition: color 0.3s;
 }
 
-.contact__address:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.contact__address:hover { color: var(--zima); }
 
 .socials {
-  display: grid;
+  display: flex;
   gap: 0.5rem;
   list-style: none;
 }
 
-.social {
+.socials a {
   display: grid;
-  grid-template-columns: 1.25rem 1fr auto;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 0.8rem 1rem;
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-sm);
-  transition: border-color 0.2s, background 0.2s;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--muted);
+  transition: color 0.3s;
 }
 
-.social:hover { border-color: var(--zima); background: var(--abyss); }
+.socials a:hover { color: var(--zima); }
 
-.social svg { width: 1.1rem; height: 1.1rem; fill: var(--zima); }
-
-.social__name { font-weight: 600; font-size: 0.95rem; }
-
-.social__handle { font-size: 0.85rem; color: var(--muted); }
+.socials svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
 
 /* ============================================================
    Shared lists and notes
@@ -764,7 +668,7 @@ p { text-wrap: pretty; }
 
 .essays__item-inner {
   display: block;
-  padding: 1.5rem 0;
+  padding: 1.75rem 0;
   border-top: 1px solid var(--line-soft);
 }
 
@@ -779,16 +683,19 @@ p { text-wrap: pretty; }
 
 .essays__title {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  font-size: clamp(1.3rem, 2.8vw, 1.75rem);
   line-height: 1.25;
-  transition: color 0.2s;
+  transition: color 0.3s;
 }
 
 a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
 .essays__date {
   flex-shrink: 0;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -817,7 +724,7 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
 /* ---------- 404 page ---------- */
 
-.not-found { min-height: 50vh; }
+.not-found { min-height: 55vh; }
 
 .not-found__links {
   display: flex;
@@ -826,59 +733,53 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 }
 
 /* ============================================================
-   Site footer (every page)
+   Site footer (every page): one quiet line
    ============================================================ */
 
 .site-footer {
-  border-top: 1px solid var(--line-soft);
-  padding: clamp(2.5rem, 6vw, 4rem) var(--pad) 2rem;
-  font-size: 0.9rem;
-  color: var(--soft);
+  padding: 2.5rem var(--pad);
 }
 
 .site-footer__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
   max-width: var(--measure);
   margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line-soft);
 }
 
 .site-footer__brand {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
   color: var(--text);
 }
 
-.site-footer__tag { margin-top: 0.35rem; color: var(--muted); }
-
-.site-footer h2 {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.75rem;
+.site-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin-right: auto;
+  list-style: none;
 }
 
-.site-footer ul { list-style: none; display: grid; gap: 0.15rem; }
-
-.site-footer ul a {
+.site-footer ul a,
+.site-footer__legal {
   display: inline-block;
-  padding: 0.2rem 0; /* taller tap target without spreading the list */
-  transition: color 0.2s;
+  padding: 0.35rem 0; /* taller tap target */
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s;
 }
 
 .site-footer ul a:hover { color: var(--zima); }
-
-.site-footer__legal {
-  max-width: var(--measure);
-  margin: 2.5rem auto 0;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line-soft);
-  font-size: 0.8rem;
-  color: var(--muted);
-}
 
 /* ============================================================
    Motion
@@ -887,14 +788,14 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 /* hidden state only applies once JS tags <html> with .js — no-JS stays visible */
 .js .reveal {
   opacity: 0;
-  transform: translateY(0.75rem);
-  transition: opacity 0.6s ease, transform 0.6s var(--ease);
+  transform: translateY(1rem);
+  transition: opacity 0.9s ease, transform 0.9s var(--ease);
 }
 
 /* on touch screens content is already moving under the finger, so a second
    movement on top of it only reads as jitter: fade, don't slide */
 @media (pointer: coarse) {
-  .js .reveal { transform: none; transition: opacity 0.5s ease; }
+  .js .reveal { transform: none; transition: opacity 0.6s ease; }
 }
 
 .js .reveal.is-visible { opacity: 1; transform: none; }
@@ -905,7 +806,7 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   .ray, .bubble { animation: none; }
   .bubble { display: none; }
   .lifeframe__slide { transition: none; }
-  .tile, .arrow, .collage__item img { transition: none; }
+  .arrow, .doors .link-card__media img, .link-card__media--glyph span, .collage__item img { transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
@@ -914,60 +815,47 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
    ============================================================ */
 
 @media (max-width: 56rem) {
-  .creds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .site-footer__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .site-footer__about { grid-column: 1 / -1; }
+  .doors { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 40rem) {
   html { font-size: 106.25%; } /* 17px */
 
-  :root { --header-h: 6rem; }
+  :root { --header-h: 5.75rem; }
 
   /* header: name and Rare Retreats on top, the four sections in a row below */
   .site-header__inner {
     flex-wrap: wrap;
-    row-gap: 0.1rem;
+    row-gap: 0;
     padding-top: 0.6rem;
-    padding-bottom: 0.4rem;
+    padding-bottom: 0.2rem;
     min-height: 0;
   }
 
-  .site-nav {
-    order: 3;
-    width: 100%;
-    margin: 0 -0.75rem; /* line the first label up with the name */
-  }
-
+  .site-nav { order: 3; width: 100%; }
   .site-nav ul { justify-content: space-between; gap: 0; }
-  .site-nav a { padding: 0.5rem 0.75rem; }
+  .site-nav a { padding: 0.7rem 0; }
 
   .intro__inner {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
+    min-height: 0;
+    padding-top: 2.5rem;
   }
 
-  /* portrait after the words on phones, so the name and the buttons are
-     the first thing on screen; kept short so the page doesn't drag */
-  .intro__portrait { aspect-ratio: 1 / 1; max-height: 24rem; }
+  /* the portrait follows the name, kept short so the page doesn't drag */
+  .intro__portrait { aspect-ratio: 1 / 1; max-height: 26rem; }
   .intro__portrait img { object-position: 50% 25%; }
 
-  .intro__actions .btn { flex: 1 1 auto; }
+  .patches { justify-content: space-between; }
 
-  .creds { grid-template-columns: 1fr; gap: 0.6rem; }
+  .intro__actions .btn { width: 100%; }
 
-  .bento { grid-template-columns: 1fr; }
-  .tile--wide { grid-column: auto; }
   .collage:empty { aspect-ratio: 1.2; } /* phone rows: 2.2 and 2.8 */
 
   .lifeframe__stage { aspect-ratio: 4 / 5; }
-  .lifeframe__dots { width: 100%; }
-  .lifeframe__dot { flex: 1; padding: 0 0.5rem; }
-
-  .contact { grid-template-columns: 1fr; }
 
   .essays__row { flex-direction: column; gap: 0.3rem; align-items: flex-start; }
 
-  .site-footer__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer__inner { flex-direction: column; align-items: flex-start; }
 }

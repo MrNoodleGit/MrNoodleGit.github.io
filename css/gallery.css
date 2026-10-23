@@ -18,9 +18,8 @@
 
 /* ---------- shared header, page head and footer, in the warm room ---------- */
 
-.gallery .site-header { background: rgba(21, 18, 16, 0.94); border-color: rgba(217, 164, 65, 0.16); }
-.gallery .site-footer,
-.gallery .site-footer__legal { border-color: rgba(217, 164, 65, 0.16); }
+.gallery .site-header { background: rgba(21, 18, 16, 0.94); }
+.gallery .site-footer__inner { border-color: rgba(217, 164, 65, 0.16); }
 
 .gallery .page-head { max-width: 90rem; }
 .gallery .page-head h1 { color: var(--g-text); }

@@ -24,7 +24,7 @@ The software architecture, technology and feature outline is in `ARCHITECTURE.md
 ## How the site works
 
 - Plain HTML, CSS and JS. There is no build step for the site itself, so the shared header and footer are repeated in every page: change a link in all of them (`404.html` uses links from the site root). Hosted on GitHub Pages at ramour.org; `wrangler.jsonc`, `_headers` and `.assetsignore` are prepared for a move to Cloudflare but are not in use yet.
-- Design tokens and shared components (header, page title, buttons, tiles, footer) are in `css/style.css`; reuse them before adding new ones. Text is Inter, headings Marcellus; keep text colors at 7:1 contrast or more.
+- Design tokens and shared components (header, page title, buttons, picture links, footer) are in `css/style.css`; reuse them before adding new ones. Text is Inter, headings Marcellus; keep text colors at 7:1 contrast or more.
 - Content comes from `writing.md`, `music.md` and `quotes.md`, which the pages read in the browser.
 - `media/art-gallery/` holds the Altar images. The "Build altar gallery" Action makes `media/art-gallery.json` and the resized copies in `media/art-gallery-thumbs/` and `media/art-gallery-large/`. Never edit those by hand.
 - `scripts/` holds tools (gallery build, Substack sync, card render, Spotify auth) and their locked dependencies. `worker/` is the radio Cloudflare Worker; it is deployed by hand with `cd worker && npx wrangler deploy --config wrangler.toml` (without `--config`, Wrangler uses the root `wrangler.jsonc` and deploys the website instead), so a change there needs the owner to redeploy.

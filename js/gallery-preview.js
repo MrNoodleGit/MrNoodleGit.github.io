@@ -1,4 +1,4 @@
-/* Ra Mour — homepage Altar tile: a random justified-row collage from
+/* Ra Mour — homepage Altar collage: a random justified-row collage from
    media/art-gallery/ on every visit (list in js/gallery-discovery.js) */
 
 const ROWS = 2; // the collage is this many rows tall
@@ -62,17 +62,16 @@ function toRows(images, targets, minPerRow, maxPerRow) {
   return rows;
 }
 
-// the whole tile is one link to the Altar, so the images are decoration
-// inside it (the tile's own text names where it goes)
+// the whole collage is one link to the Altar, so the images are decoration
+// inside it (the "Altar" name below them says where it goes)
 function collageItem(image, share) {
   const item = document.createElement("span");
   item.className = "collage__item";
   item.style.setProperty("--grow", Math.round(ratioOf(image) * 1000)); // see the CSS
   // the share of the collage this image fills, so the right copy is loaded;
-  // up to 56rem the tile spans the full width, above it two thirds of the
-  // 64rem (1152px) column, about 770px
+  // the collage spans the content column, at most 64rem (1152px) wide
   const pct = Math.round(share * 100);
-  const sizes = `(max-width: 56rem) ${pct}vw, ${Math.round(share * 770)}px`;
+  const sizes = `(max-width: 64rem) ${pct}vw, ${Math.round(share * 1152)}px`;
   item.appendChild(galleryImg(image, sizes));
   return item;
 }
@@ -96,7 +95,15 @@ function render(collage, images) {
 
 const collage = document.getElementById("altar-collage");
 
-loadGallery()
+// wait until the page has loaded, so the collage's images never compete
+// with the portrait (the first thing anyone sees) for a phone's bandwidth
+const pageLoaded =
+  document.readyState === "complete"
+    ? Promise.resolve()
+    : new Promise((resolve) => window.addEventListener("load", resolve, { once: true }));
+
+pageLoaded
+  .then(loadGallery)
   .then((images) => {
     if (!images.length) {
       collage.hidden = true;
