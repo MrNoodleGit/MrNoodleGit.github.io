@@ -1,4 +1,4 @@
-/* Ra Mour — Life: single frame, horizontal toggle between scenes */
+/* Ra Mour — Life: one video player and a labelled picker between scenes */
 
 (() => {
   const frame = document.getElementById("lifeframe");
@@ -7,7 +7,6 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const slides = [...frame.querySelectorAll(".lifeframe__slide")];
   const dots = [...frame.querySelectorAll(".lifeframe__dot")];
-  const arrows = [...frame.querySelectorAll(".lifeframe__arrow")];
 
   let current = Math.max(0, slides.findIndex((s) => s.classList.contains("is-active")));
 
@@ -36,10 +35,6 @@
     frame.classList.add("is-paused");
     video.play().catch(() => {});
   }
-
-  arrows.forEach((arrow) => {
-    arrow.addEventListener("click", () => goTo(current + Number(arrow.dataset.dir)));
-  });
 
   dots.forEach((dot, i) => {
     dot.addEventListener("click", () => goTo(i));

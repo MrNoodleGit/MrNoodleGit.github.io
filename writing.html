@@ -15,19 +15,50 @@
       content="Essays by Ra Mour on art, science, philosophy, and spirituality."
     />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="preload"
+      href="fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/marcellus-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/reveal.js"></script>
     <link rel="stylesheet" href="css/writing.css" />
   </head>
   <body class="writing">
-    <header class="writing-back">
-      <a href="index.html">Ra Mour</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-header__brand" href="index.html">Ra Mour</a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="gallery.html">Altar</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="writing.html" aria-current="page">Writing</a></li>
+            <li><a href="waking-up.html">Waking Up</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--primary btn--sm site-header__cta" href="rare-retreats.html">Rare Retreats</a>
+      </div>
     </header>
 
-    <section class="writing-intro">
-      <p>Essays on art, science, philosophy, and spirituality.</p>
-    </section>
+    <main id="main">
+      <header class="page-head">
+        <h1>Writing</h1>
+        <p class="lead">Essays on art, science, philosophy and spirituality. New ones arrive by email on Substack.</p>
+        <a class="btn btn--primary" href="https://ramour.substack.com/subscribe" target="_blank" rel="noopener"
+          >Subscribe on Substack <span class="arrow" aria-hidden="true">&rarr;</span></a
+        >
+      </header>
 
     <!-- Filled by js/writing-archive.js from writing.md (template inside) —
        add an entry there and it appears here. -->
@@ -50,11 +81,41 @@
         Enable JavaScript to view the archive.
       </p>
     </noscript>
+    </main>
 
-    <footer class="writing-footer">
-      <p>&copy; 2026 Ra Mour</p>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="site-footer__about">
+          <a class="site-footer__brand" href="index.html">Ra Mour</a>
+          <p class="site-footer__tag">Performer, researcher, mystic and experience architect.</p>
+        </div>
+        <nav aria-label="Site">
+          <h2>Site</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Altar</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="writing.html">Writing</a></li>
+            <li><a href="waking-up.html">Waking Up en español</a></li>
+            <li><a href="rare-retreats.html">Rare Retreats</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Follow</h2>
+          <ul>
+            <li><a href="https://substack.com/@ramour" target="_blank" rel="noopener">Substack</a></li>
+            <li><a href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/ramour42" target="_blank" rel="noopener">X</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer__legal">&copy; 2026 Ra Mour</p>
     </footer>
 
+    <script src="js/site.js"></script>
     <script src="js/writing-data.js"></script>
     <script src="js/writing-archive.js"></script>
   </body>

@@ -1,164 +1,98 @@
 /* ============================================================
-   RARE. Retreats — placeholder page
-   A large framed painting hangs on a gilded, glowing gallery wall.
-   Relies on :root variables + base styles from style.css
+   RARE. Retreats — "coming soon" page with the sign-up form.
+   The painting hangs in a warm glow beside the words; header,
+   footer and buttons come from style.css.
    ============================================================ */
 
 .rr {
-  background: #000;
-  overflow: hidden;
-}
-
-/* ---------- back link ---------- */
-
-.rr-back {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 10;
-  padding: 1.25rem var(--pad);
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
-}
-
-.rr-back a {
-  font-family: var(--font-display);
-  letter-spacing: 0.2em;
-  color: var(--zima);
-  font-size: 0.95rem;
-  transition: color 0.3s, text-shadow 0.3s;
-}
-
-.rr-back a::before { content: "← "; }
-
-.rr-back a:hover {
-  color: #d6f7ff;
-  text-shadow: 0 0 18px rgba(91, 194, 231, 0.6);
-}
-
-/* ---------- scene ---------- */
-
-.rr-scene {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  height: 100svh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   align-items: center;
-  justify-content: center;
-  gap: 1.75rem;
-  padding: 6rem 4vw 2.5rem;
-  box-sizing: border-box;
-  background:
-    radial-gradient(120% 90% at 50% 30%, rgba(120, 88, 34, 0.16), transparent 60%),
-    linear-gradient(to bottom, #14100b 0%, #0a0806 68%, #050403 100%);
+  gap: clamp(2rem, 6vw, 5rem);
+  max-width: calc(var(--measure) + 2 * var(--pad));
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 5rem) var(--pad) clamp(3.5rem, 9vw, 6rem);
 }
 
-/* faint floor line grounding the gallery wall */
-.rr-scene::after {
+.rr__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1rem;
+  padding: 0.25em 0.8em;
+  border: 1px solid rgba(174, 14, 54, 0.6);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #ff9db4;
+}
+
+.rr__badge::before {
   content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 22%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  pointer-events: none;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--crimson);
 }
 
-/* ---------- the framed painting ---------- */
-
-.rr-stage {
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.rr h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: 1rem;
 }
 
-.rr-gallery {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+.rr__note {
+  margin-top: 1rem;
+  color: var(--soft);
+  max-width: var(--read);
 }
 
-.rr-halo {
-  display: none;
+/* Substack's form, framed as one card so it reads as part of the page */
+.rr__signup {
+  margin-top: 1.75rem;
+  padding: 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: var(--abyss);
+  max-width: 32rem;
 }
 
-.rr-frame {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.rr__signup-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0.25rem 0.25rem 0.5rem;
 }
 
-.rr-frame__art {
+.rr__form {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.rr-frame__shadow {
-  display: none;
-}
-
-/* ---------- foreground copy ---------- */
-
-.rr-copy {
-  position: relative;
-  flex: 0 0 auto;
-  width: min(90%, 46rem);
-  text-align: center;
-  z-index: 5;
-}
-
-.rr-soon {
-  font-size: 0.78rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--zima);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
-}
-
-.rr-subscribe {
-  max-width: 100%;
+  height: 150px; /* Substack's embed is a fixed height */
   border: 0;
   background: transparent;
 }
 
-/* ---------- keyframes ---------- */
+/* ---------- the painting ---------- */
 
-@keyframes rr-breathe {
-  0%, 100% { opacity: 0.75; transform: scale(1); }
-  50%      { opacity: 1; transform: scale(1.05); }
+.rr__art {
+  position: relative;
+  border-radius: var(--radius-sm);
+  /* a still, warm halo: a fixed shadow, so nothing repaints */
+  box-shadow:
+    0 0 50px 10px rgba(217, 164, 65, 0.35),
+    0 0 120px 40px rgba(217, 164, 65, 0.15),
+    0 30px 60px rgba(0, 0, 0, 0.7);
 }
 
-@keyframes rr-frame-glow {
-  0%, 100% {
-    box-shadow:
-      0 0 46px 10px rgba(217, 164, 65, 0.45),
-      0 0 110px 34px rgba(217, 164, 65, 0.22),
-      0 26px 50px rgba(0, 0, 0, 0.75);
-  }
-  50% {
-    box-shadow:
-      0 0 56px 14px rgba(217, 164, 65, 0.6),
-      0 0 130px 44px rgba(217, 164, 65, 0.3),
-      0 26px 50px rgba(0, 0, 0, 0.75);
-  }
+.rr__art img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
 }
 
-/* ---------- mobile ---------- */
-
-@media (max-width: 40rem) {
-  .rr-scene { padding: 5.5rem 6vw 2rem; gap: 1.25rem; }
-}
-
-/* ---------- reduced motion ---------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .rr-halo,
-  .rr-frame {
-    animation: none;
-  }
+@media (max-width: 56rem) {
+  .rr { grid-template-columns: 1fr; }
+  .rr__art { order: -1; } /* the painting first, then the words */
 }

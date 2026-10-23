@@ -9,9 +9,10 @@
   overflow: hidden;
   /* same left/right edges as .music-grid's cards, at every width */
   width: calc(100% - var(--pad) * 2);
-  max-width: calc(var(--measure) - var(--pad) * 2);
+  max-width: var(--measure);
   margin: 0 auto clamp(2rem, 6vh, 3.5rem);
-  border: 1px solid rgba(91, 194, 231, 0.18);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
   background: var(--abyss);
   display: flex;
   align-items: stretch;
@@ -135,7 +136,6 @@
 }
 
 .radio__album {
-  font-style: italic;
   font-size: 0.9rem;
   color: var(--muted);
 }

@@ -1,6 +1,6 @@
 # ramour.org — architecture, technology and features
 
-**Last updated:** 2026-10-11 · **Status:** live on GitHub Pages; Cloudflare move prepared but not started
+**Last updated:** 2026-10-22 · **Status:** live on GitHub Pages; 2026 redesign on branch `redesign-2026` (not live yet); Cloudflare move prepared but not started
 
 > Keep this file current. Change it in the same commit as the change it describes (rules at the end). Open work lives in `TODO.md`; standards and the review checklist live in `CLAUDE.md`.
 
@@ -18,13 +18,15 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 
 | Page | What it offers |
 | --- | --- |
-| **Home** | A full-screen intro, a portrait and four experience "patches" (tap one to see the role and organization), a feature card for the Spanish Waking Up translations, a three-scene video reel (dancing, martial arts, meditation), a random preview of the Altar, and contact/social links |
+| **Home** | An intro that says who Ra is with two buttons (join the Rare Retreats list, explore), a portrait, four labelled experience "patches", one tile per part of the site (Altar with a random collage, Rare Retreats, Music, Waking Up, Writing), a video player with three labelled scenes (dancing, martial arts, meditation), and a contact section with an email address and social links |
 | **Altar** | A gallery wall of 69 pieces of art, film posters, book covers and photos, mixed with 20 quotes. Tap a piece to enlarge it and step through with buttons, arrow keys or swipes |
 | **Writing** | The full list of essays, which link out to Substack |
 | **Music** | A live "On air / Last played" band showing what Ra is listening to on Spotify, a 1:45 preview of a Waking Up piece, and a curated list of recommended tracks and playlists with built-in players |
 | **Waking Up · en español** | 14 days of Spanish guided meditations and lessons (28 audio sessions) with a built-in player |
-| **Rare Retreats** | A "coming soon" page with an email sign-up (a Substack form) |
+| **Rare Retreats** | A "coming soon" page: what the retreats are for, an email sign-up (a Substack form) and the Tower of Babel painting |
 | **Hello** | A one-screen contact card with social links and a QR code, the page the business card points to |
+
+Every page except Hello shares one header (name, Altar, Music, Writing, Waking Up, and a "Rare Retreats" button) and one footer (site map and social links), so a visitor can reach any page from any page. The two things the site asks of a first-time visitor are to explore and to join the Rare Retreats list.
 
 ### How the owner updates it without a developer
 
@@ -36,10 +38,17 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 | Publish an essay | Publish on Substack, then run the "Sync Substack essays" job by hand | On the next deploy (the daily schedule is switched off, see `TODO.md`) |
 | Change the radio | Edit `worker/now-playing.js`, then redeploy the Worker from a computer | Immediately after the redeploy |
 
+### Trying a change before it goes live, and undoing one
+- **Nothing reaches ramour.org until it is on `main`.** Work happens on a branch; a pull request shows what changes.
+- **Every pull request is checked automatically:** every page is opened at phone and desktop width (errors, broken files, security-policy breaks) with screenshots attached to the run, and Lighthouse measures speed and accessibility.
+- **Preview link for every branch** (once Cloudflare is connected, a one-time setup in §9): a private-ish copy of the site at its own address to open on a phone before merging.
+- **On a computer:** run `python3 -m http.server 8080` in the repo folder and open `http://localhost:8080`.
+- **Undo:** the pre-redesign site is kept on the branch `classic-2026-10`. To undo a merged change, open its pull request on GitHub and press **Revert** (that makes a new pull request; merge it). Steps in §9.
+
 ### What is automated
 - **Deploys:** every push to `main` is published by GitHub Pages in a few minutes.
 - **Gallery images:** resized copies and the image list are rebuilt on every change to the Altar folder.
-- **Quality checks:** a speed/accessibility/best-practice test (Lighthouse) runs on every push and fails if limits are broken.
+- **Quality checks:** a speed/accessibility/best-practice test (Lighthouse) and a page check (every page at phone and desktop width, with screenshots) run on every push and pull request and fail if limits are broken.
 - **Updates:** Dependabot opens a weekly pull request when a tool or GitHub Action has a new version.
 - **Radio history:** a once-a-minute job records what was playing (kept private).
 
@@ -67,8 +76,8 @@ People who arrive from a link, a social profile, or the QR code on Ra's business
 | **Hosting** | GitHub Pages, custom domain ramour.org (`CNAME`). Cloudflare config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`) but not in use |
 | **Back end** | One Cloudflare Worker (`worker/`) for the Spotify "radio", with a KV store and a 1-minute cron |
 | **Content** | Markdown files read by the browser (`writing.md`, `music.md`, `quotes.md`) plus a generated image list (`media/art-gallery.json`) |
-| **Automation** | GitHub Actions: gallery build, Lighthouse CI, Substack sync (manual), Dependabot |
-| **Tooling** | Node 22; `sharp` (image resizing), Lighthouse CI, Playwright (business-card render only), Wrangler (Worker deploy) |
+| **Automation** | GitHub Actions: gallery build, Lighthouse CI, site check, Substack sync (manual), Dependabot |
+| **Tooling** | Node 22; `sharp` (image resizing), Lighthouse CI, Playwright (site check and business-card render), Wrangler (Worker deploy) |
 | **Browsers** | Targets current Chrome, Safari, Firefox and Edge. Automated tests run in Chromium (desktop and an emulated iPhone); iPhone Safari quirks are handled from known issues and reports (they drive several decisions below); Firefox is not routinely tested |
 
 ### System diagram
@@ -113,9 +122,10 @@ CNAME                  custom domain for GitHub Pages
 _headers               HTTP headers + caching (Cloudflare only; ignored by Pages)
 wrangler.jsonc         Cloudflare static-site config (not in use yet)
 .assetsignore          repo files Cloudflare must not publish
-css/                   style.css (shared base + home), one file per page, fonts.css
+css/                   style.css (design system: tokens, header, footer, buttons,
+                       tiles + home), one file per page, fonts.css
 js/                    one file per feature (see §5)
-fonts/                 self-hosted Marcellus and EB Garamond (WOFF2 + licences)
+fonts/                 self-hosted Inter, Marcellus and EB Garamond (WOFF2 + licences)
 media/
   art-gallery/         Altar originals (the only part you edit)
   art-gallery-thumbs/  800 px WebP copies   ┐ generated by
@@ -127,9 +137,9 @@ media/
   hello/               business-card page assets and print files
   logos/               organization logos (only wakingup.png is used; the rest belonged to the removed Work section)
 scripts/               build-gallery, sync-substack, render-card, spotify-auth,
-                       lighthouserc.json, package.json + lockfile
+                       check-site, lighthouserc.json, package.json + lockfile
 worker/                Cloudflare Worker for the radio (+ README with setup)
-.github/               workflows (build-gallery, lighthouse, sync-substack)
+.github/               workflows (build-gallery, lighthouse, site-check, sync-substack)
                        and dependabot.yml
 ```
 
@@ -137,63 +147,67 @@ worker/                Cloudflare Worker for the radio (+ README with setup)
 
 ## 4. Design system
 
-- **Palette (CSS variables in `css/style.css`):** ink `#020202` (page), abyss `#061719` (alternate sections), teal `#14636F` (borders), zima `#5BC2E7` (accent and links), crimson `#AE0E36` (patches, "on air" dot), text `#E8F0F0`, muted `#7FA8AD`.
-- **Type:** Marcellus (headings, nav, labels) and EB Garamond (body), self-hosted and split into Latin and Latin Extended so the second file only downloads when needed. Root size is 112.5% (18 px).
-- **Layout:** content width `--measure` 64rem; side padding `--pad` = `clamp(1.25rem, 5vw, 4rem)`. Phone layout below 40rem; the Altar wall steps 3 → 2 → 1 columns at 64rem and 40rem.
-- **Altar theme:** a warmer "dim gallery" (`--g-bg #151210`, amber `#d9a441`) defined in `css/gallery.css`.
-- **Motion:** scroll fade-ins, drifting light rays and bubbles in the hero, a pulsing play hint. Everything respects `prefers-reduced-motion`; on touch screens fade-ins don't slide.
+Redesigned in October 2026 on product-interface principles: say who and what first, one consistent way around the site, labels instead of mystery icons, one primary action per screen, large tap targets, and type chosen for reading. Same brand colors as before.
+
+- **Palette (CSS variables in `css/style.css`):** ink `#020202` (page), abyss `#061719` (cards, alternate sections), deep `#0a2328` (card hover), teal `#14636F` (borders), zima `#5BC2E7` (links, primary buttons, current page), crimson `#AE0E36` (small marks only: "coming soon", "on air", the period, patches), text `#E8F0F0`, soft `#B4C9CC` (secondary text), muted `#7FA8AD` (dates, counts). Every text color is at least 7:1 against the page.
+- **Type:** Inter (variable, one file for every weight) for reading and the interface; Marcellus for the name and headings; EB Garamond italic only for the Altar quotes. All self-hosted, split into Latin and Latin Extended so the second file only downloads when needed. Inter and Marcellus are preloaded. An "Inter Fallback" face (Arial resized to Inter's proportions) keeps text from reflowing when the font arrives. Root size is 112.5% (18 px), 17 px on phones; body line height 1.65; paragraphs capped at `--read` (38rem, about 70 characters).
+- **Layout:** content width `--measure` 64rem plus side padding `--pad` = `clamp(1.25rem, 5vw, 3rem)`. Breakpoints: 56rem (tablet: two-column grids) and 40rem (phone: one column, two-row header). The Altar wall steps 3 → 2 → 1 columns at 64rem and 40rem.
+- **Components:** sticky header (`.site-header`, hides while scrolling down), page title block (`.page-head`: optional eyebrow, `h1`, `.lead`), pill buttons (`.btn--primary` zima fill, `.btn--ghost` outline, 49 px tall), tiles (`.tile`, 14 px radius, one link each), eyebrow labels (`.eyebrow`), footer (`.site-footer`). The current page's nav item is a filled pill (`aria-current="page"`, set in the HTML).
+- **Altar theme:** the wall keeps its warmer "dim gallery" room (`--g-bg #151210`, amber `#d9a441`, `css/gallery.css`); the header and footer take a warm tint there but are otherwise the same.
+- **Motion:** drifting light rays and bubbles behind the home intro (paused off screen), fade-ins on scroll, a small arrow nudge on hover. Everything respects `prefers-reduced-motion`; on touch screens fade-ins don't slide.
 
 ---
 
 ## 5. Pages and features in detail
 
-### Home — `index.html`
-CSS: `style.css`. JS: `reveal.js`, `main.js`, `lifeframe.js`, `gallery-discovery.js`, `gallery-preview.js`. (`writing-data.js` and `writing-home.js` are not loaded on the home page while its essay list is hidden.)
+### Shared on every page (except Hello)
+- **Header** (`js/site.js`): name (home link), Altar, Music, Writing, Waking Up, and a "Rare Retreats" button. On phones the four links sit on a second row. It slides away on steady downward scrolling (24 px) and returns on upward scrolling (12 px), is always shown near the top, ignores iOS rubber-band overscroll, and returns when a link inside it gets keyboard focus. One shared, passive scroll listener runs at most once per frame (`onScrollFrame`); the page height is measured on resize and by a ResizeObserver, never inside the scroll handler.
+- **Skip link** ("Skip to content") as the first focus stop, jumping to `<main id="main">`.
+- **Footer:** site map, social links, copyright.
+- The header and footer are plain HTML repeated in each page (there is no build step). Changing a link means changing it in every page; `404.html` uses links from the site root (`/gallery.html`) because it can be shown at any address.
 
-- **Navigation (fixed top bar):** About, Mind, Life, Altar, Music; a "Rare Retreats" button; icons for Substack, Instagram, LinkedIn, YouTube and X. On phones it wraps to three rows.
-  - *Scroll spy:* the link for the section in view is highlighted (IntersectionObserver band in the middle of the screen; the last link is forced active at the bottom of the page). The Altar link is tied to the homepage preview section.
-  - *Hide on scroll:* the bar slides away on steady downward scrolling (24 px) and returns on upward scrolling (12 px), is always shown near the top, ignores iOS rubber-band overscroll, and returns when a link inside it gets keyboard focus.
-  - One shared, passive scroll listener runs at most once per frame (`onScrollFrame` in `main.js`).
-- **Hero:** name and tagline over five blurred light rays and 15 randomly generated bubbles. The animations pause once the hero scrolls out of view.
-- **About:** portrait (WebP in 480/640/960 px) and four experience patches drawn as inline SVG. Hover or tap a patch to show role and organization in a live region; tapping pins it. The patch shield outlines are deliberately repeated inline (a shared `<use>` showed white patches on Safari).
-- **Mind:** a feature card for the Waking Up translations. The list of the three latest essays and its "Read more" link to Writing are hidden (commented out in `index.html`, with `writing-home.js` no longer loaded).
-- **Life:** a full-screen carousel of three muted, looping videos (arrows, dots, tap to play or pause). Phones get 720p files via a `media` query on the `<source>`. Videos use `preload="none"`, begin buffering about a screen before the section, play only while at least 35% is visible, and pause when you switch scenes. A play hint shows if autoplay is blocked. Slide titles and text exist in the markup but are hidden.
-- **Altar preview:** a collage of random images from the gallery on every visit (up to 18 drawn, at least six of them landscape), linking to the Altar. It is a justified-row layout: `gallery-preview.js` packs them into three rows (about 4–6 images a row on desktop, 3–4 on phones, so the collage stays short) and gives each its true shape, so every image is shown whole and uncropped, images in a row share a height, and rows differ in height. Re-packs if the screen crosses the phone breakpoint.
-- **Contact:** text links to the Altar, Substack, YouTube, Instagram, LinkedIn and X.
+### Home — `index.html`
+CSS: `style.css`. JS: `reveal.js`, `site.js`, `main.js`, `lifeframe.js`, `gallery-discovery.js`, `gallery-preview.js`. (`writing-data.js` and `writing-home.js` are not loaded on the home page.)
+
+- **Intro:** "Alchemist." eyebrow, the name, a one-line description, a sentence on what the site holds, and two buttons: "Join the Rare Retreats list" (primary) and "Explore" (jumps to the tiles). The portrait (WebP in 480/640/960 px, loaded first with `fetchpriority="high"`) sits to the right, or below on phones. Four light rays and 12 randomly generated bubbles drift behind it and pause once it scrolls out of view.
+- **Experience:** the four embroidered patches, each with its role and organization written beside it (no tapping needed). The patch shield outlines are deliberately repeated inline (a shared `<use>` showed white patches on Safari).
+- **Explore:** five tiles, each one link. Altar (two columns wide) holds a random justified-row collage: `gallery-preview.js` draws up to 14 images (at least four landscape) on every visit and packs them into two rows (about 4–6 images a row on desktop, 3–4 on phones), each image whole and uncropped; it re-packs if the screen crosses the phone breakpoint, and the collage hides itself if the image list can't load. Then Rare Retreats (warm crimson glow, "Coming soon"), Music, Waking Up en español and Writing.
+- **Life:** a 16:9 video player (4:5 on phones) with a labelled scene picker (Dancing / Martial arts / Meditation). Phones get 720p files via a `media` query on the `<source>`. Videos use `preload="none"`, begin buffering about a screen before the section, play only while at least 35% is visible, and pause when you switch scenes; tap the video to play or pause. A play hint shows when paused.
+- **Contact:** the email address (with a "Copy" button where the browser allows it) and the five social profiles with their handles. **The address is a placeholder (`REPLACE-ME@ramour.org`) until the owner chooses one; the site check fails while it is there.**
 - **Fade-in on scroll:** elements with class `reveal` fade in shortly before reaching the screen (`reveal.js`, loaded in `<head>` so the hidden state exists before the first paint).
 
 ### Altar — `gallery.html`
-CSS: `style.css`, `gallery.css`. JS: `reveal.js`, `gallery-discovery.js`, `gallery.js`.
+CSS: `style.css`, `gallery.css`. JS: `reveal.js`, `site.js`, `gallery-discovery.js`, `gallery.js`.
 
 - Reads `media/art-gallery.json` (preloaded) and `quotes.md`; shows a masonry wall with a quote after every few images.
-- Each tile reserves its exact shape before the image loads (aspect ratio from the manifest) and shimmers until loaded; the 800 px copy is used, with the larger copy offered to high-density screens through `srcset`.
+- Each tile reserves its exact shape before the image loads (aspect ratio from the manifest) and shimmers until loaded, then fades in over 0.3 s; the 800 px copy is used, with the larger copy offered to high-density screens through `srcset`.
 - Images get their `src` only as they come within 800 px of the screen, using an IntersectionObserver. Native `loading="lazy"` left tiles blank on iPhone, so it is not used.
 - **Lightbox:** opens the large (≤2000 px) copy; previous/next buttons, left/right arrow keys, swipe, Escape, click outside; focus is trapped inside and returned on close; the next image is preloaded.
 - Alt text is derived from the file name (`galleryAltFrom`), e.g. `the-fountainhead.jpg` → "The fountainhead". A `--` in a file name starts a suffix that is dropped from the alt text (handy for credits).
 
 ### Writing — `writing.html`
-CSS: `style.css`, `writing.css`. JS: `reveal.js`, `writing-data.js`, `writing-archive.js`.
-Lists every essay from `writing.md` (title, date, excerpt, link to Substack). `writing-data.js` is shared with the homepage: it parses the file and builds each list item. Space is reserved while the file loads to avoid layout shift.
+CSS: `style.css`, `writing.css`. JS: `reveal.js`, `site.js`, `writing-data.js`, `writing-archive.js`.
+A "Subscribe on Substack" button, then every essay from `writing.md` (title, date, excerpt, link to Substack). `writing-data.js` is shared with the homepage: it parses the file and builds each list item. Space is reserved while the file loads to avoid layout shift.
 
 ### Music — `music.html`
-CSS: `style.css`, `music.css`, `radio.css`, `music-preview.css`. JS: `reveal.js`, `radio.js`, `music.js`, `music-preview.js`.
+CSS: `style.css`, `music.css`, `radio.css`, `music-preview.css`. JS: `reveal.js`, `site.js`, `radio.js`, `music.js`, `music-preview.js`.
 
 - **Radio band (`radio.js`):** asks the Worker every 25 s (not while the tab is hidden). Shows "On air" with a crimson pulsing dot and a waveform that fills as the song plays, or "Last played" when paused/idle; cover art (also blurred as the band's backdrop), title, artist, album, time, and a link to Spotify. Between polls a local clock advances the bar; when a song should have ended it asks again (rate-limited). If the Worker is missing or errors before anything was shown, the whole band stays hidden; if it fails later, the last good song stays up.
 - **Waking Up preview (`music-preview.js`):** a custom player for a pre-trimmed 1:45 audio clip: play/pause, seek, ±15 s, volume. The clip is downloaded into memory and played from a blob URL so seeking works on any server; a 105 s limit is enforced in code too. Includes a "3 months free" gift link.
 - **Recommendations (`music.js`):** each entry in `music.md` (`track:`, `playlist:` or `album:` plus a Spotify link or ID and a note) becomes a Spotify embed with the note above it.
 
 ### Waking Up · en español — `waking-up.html`
-CSS: `style.css`, `waking-up.css`. JS: `player.js`.
-Builds 14 "days" in the browser, each with a meditation and a lesson (28 MP3s: 109 MB + 70 MB). Track titles, English subtitles and durations are listed in `player.js`. A fixed bottom player appears on first play: play/pause, previous/next, seek, time, cover art; sessions play one after another. The page is the Spanish-language companion to the Waking Up app (links to the app).
+CSS: `style.css`, `waking-up.css`. JS: `site.js`, `player.js`.
+Builds 14 "days" in the browser, each with a meditation and a lesson (28 MP3s: 109 MB + 70 MB). Track titles, English subtitles and durations are listed in `player.js`. A fixed bottom player appears on first play (the footer gains bottom space while it shows): play/pause, previous/next, seek, time, cover art; sessions play one after another. The page is the Spanish-language companion to the Waking Up app (links to the app).
 
 ### Rare Retreats — `rare-retreats.html`
-CSS: `style.css`, `rare-retreats.css`. A framed painting with a glowing halo and a "Coming soon" label, and Substack's embedded sign-up form. No JavaScript.
+CSS: `style.css`, `rare-retreats.css`. JS: `site.js`. A "Coming soon" badge, the page's promise ("for individuals and teams who want to experience what it's like to be as fully alive as they are productive"), Substack's sign-up form in a card, and the Tower of Babel painting (the resized WebP copies from the Altar, not the 3 MB original) in a still warm glow.
 
 ### Hello — `hello_world.html`
 CSS: `hello.css`. A single card: portrait, name, title, five social links, and a QR code that points back to the page. The physical business card is designed in `media/hello/print/card.html` and rendered to PDF/PNG by `scripts/render-card.mjs` (Playwright, run by hand).
 
 ### 404 — `404.html`
-A branded not-found page. Used by GitHub Pages now and by Cloudflare later (`not_found_handling: 404-page`).
+A not-found page with the shared header and footer and buttons to the main pages. Used by GitHub Pages now and by Cloudflare later (`not_found_handling: 404-page`).
 
 ---
 
@@ -203,11 +217,12 @@ All scripts are plain files that share the global scope, so **load order matters
 
 | File | Used on | Role |
 | --- | --- | --- |
-| `reveal.js` | Home, Altar, Writing, Music | In `<head>`. Adds the `js` class and exposes `observeReveals(root)` for fade-ins |
-| `main.js` | Home | Shared scroll handler, nav hide/show, scroll spy, hero bubbles, hero pause, patch captions |
-| `lifeframe.js` | Home | Video carousel |
+| `reveal.js` | Home, Altar, Writing, Music | In `<head>`. Adds the `js` class and exposes `observeReveals(root)` and `prefersReducedMotion` |
+| `site.js` | Every page but Hello | Shared once-per-frame scroll handler (`onScrollFrame`) and header hide/show. Load it before any script that uses `onScrollFrame` |
+| `main.js` | Home | Intro bubbles, intro pause, email copy button |
+| `lifeframe.js` | Home | Video player and scene picker |
 | `gallery-discovery.js` | Home, Altar | Loads `art-gallery.json`; `galleryImg()` builds responsive, lazily loaded `<img>`s |
-| `gallery-preview.js` | Home | Random five-image collage |
+| `gallery-preview.js` | Home | Random two-row collage in the Altar tile |
 | `gallery.js` | Altar | Wall, quotes, lightbox |
 | `writing-data.js` | Home, Writing | Parses `writing.md`; builds essay list items |
 | `writing-home.js` / `writing-archive.js` | Home / Writing | Fill the essay lists |
@@ -237,7 +252,7 @@ All scripts are plain files that share the global scope, so **load order matters
 - **Runtime:** Cloudflare Worker (`now-playing.js`), config in `wrangler.toml`; deployed by hand with `cd worker && npx wrangler deploy --config wrangler.toml` (a change there is not live until redeployed). The `--config` flag is required: Wrangler otherwise uses the repo root's `wrangler.jsonc` and deploys the website as `ramour-site` instead.
 - **Secrets (names only; set with `wrangler secret put`):** `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`, `HISTORY_TOKEN`. One-time token minting: `scripts/spotify-auth.mjs`. Spotify scopes are read-only (currently playing, recently played).
 - **Storage:** one KV namespace (`HISTORY`) holding the daily history and `last-live`.
-- **Access control:** answers only GET/OPTIONS; CORS allowlist `ALLOWED_ORIGINS` (ramour.org, www, the GitHub Pages address, and two localhost ports). **Any new site address, including a Cloudflare test address, must be added there and redeployed, and added to `connect-src` in the page CSP, or the radio will be blocked.** `/history` returns a plain 404 without the token (constant-time comparison).
+- **Access control:** answers only GET/OPTIONS; CORS allowlist `ALLOWED_ORIGINS` (ramour.org, www, the GitHub Pages address, and two localhost ports) plus `PREVIEW_ORIGIN`, which matches the site's Cloudflare test copy and its per-branch preview links (`https://[<branch>-]ramour-site.ronald1andres2.workers.dev`; only this Cloudflare account can publish there). **Any other new site address must be added there and redeployed, or the radio will be blocked.** (The page CSP already allows the Worker's address from any page.) `/history` returns a plain 404 without the token (constant-time comparison).
 - **Failure behavior:** Spotify errors return 502 and the page simply hides the band.
 - Full setup and privacy notes: `worker/README.md`.
 
@@ -246,20 +261,33 @@ All scripts are plain files that share the global scope, so **load order matters
 ## 9. Build, deployment and automation
 
 - **Deploy:** push to `main` → GitHub Pages "pages build and deployment" (about 1–2 minutes). There is no build step; the repository root is the site. Browsers may keep old files up to about 10 minutes (Pages' default caching), and file names carry no version numbers.
-- **Local preview:** any static file server from the repo root, for example `python3 -m http.server 8080`. The radio only works from `localhost:8080`/`8123` (Worker allowlist).
+- **Local preview:** any static file server from the repo root, for example `python3 -m http.server 8080`, then open `http://localhost:8080`. The radio only works from `localhost:8080`/`8123` (Worker allowlist). To look at it on a phone on the same Wi-Fi, run `python3 -m http.server 8080 --bind 0.0.0.0` and open `http://<the computer's local IP>:8080` on the phone (no radio there).
+- **Page check:** `npm ci --prefix scripts`, `npx --no-install --prefix scripts playwright install chromium`, then `node scripts/check-site.mjs`. It serves the repo on port 8080, opens every page at 390 px and 1440 px, scrolls through it, and fails on script errors from the site's own files, Content Security Policy violations, missing files, sideways scrolling, or the `REPLACE-ME` email placeholder. Screenshots go to `site-check/` (gitignored). Failures of outside services (Spotify, Substack, the radio) are ignored.
+
+### Testing changes before they go live
+1. **Branch, not `main`.** Every change goes on a branch with a pull request. GitHub Pages only publishes `main`, so nothing on a branch is public at ramour.org.
+2. **Automatic checks on the pull request:** "Site check" (above; screenshots under the run's *Artifacts*) and "Lighthouse". Both must be green before merging.
+3. **Preview link per branch (Cloudflare Workers Builds, one-time setup, free).** `wrangler.jsonc` is ready (`workers_dev` and `preview_urls` on). In the Cloudflare dashboard of the account that runs the radio: *Workers & Pages → Create → Import a repository →* `MrNoodleGit/MrNoodleGit.github.io`; project name `ramour-site`; build command empty; deploy command `npx wrangler deploy`; under *Builds for non-production branches* keep "Enabled" with the default `npx wrangler versions upload`. From then on `main` appears at `https://ramour-site.ronald1andres2.workers.dev` and every other branch at `https://<branch>-ramour-site.ronald1andres2.workers.dev` (Cloudflare can also post the link on the pull request). ramour.org is untouched: it still comes from GitHub Pages. For the radio to work on those addresses, redeploy the Worker once (its allowlist already includes them). Previews are public to anyone who has the link, and search engines may find the `main` copy; that's acceptable for a public site, and goes away with the full Cloudflare move.
+4. **Merge** the pull request. GitHub Pages publishes it in about 2 minutes; browsers may show the old files for up to 10 minutes.
+
+### Rolling back
+- **The pre-redesign site** is kept unchanged on the branch `classic-2026-10` (commit `7c17bac`). Don't delete it. (It's a branch rather than a tag only because tags couldn't be pushed from the session that made it; turning it into a tag or a GitHub Release is optional.)
+- **Undo one merged change (easiest):** open its merged pull request on GitHub, press **Revert**, and merge the pull request GitHub creates. Content added since (Altar images, essays, music picks) is kept, because only that pull request's changes are undone.
+- **If Revert reports conflicts** (later changes touched the same files), bring back the old design files but keep today's content: `git checkout classic-2026-10 -- index.html gallery.html writing.html music.html waking-up.html rare-retreats.html 404.html css js fonts`, then commit on a branch and open a pull request. `writing.md`, `music.md`, `quotes.md` and `media/` are left as they are.
 - **Workflows (`.github/workflows/`, all actions pinned to commit IDs):**
   - `build-gallery.yml`: on pushes touching `media/art-gallery/**`, the build script or the lockfile. Installs with `npm ci`, runs the build, commits changes as `github-actions[bot]`. Needs "Read and write" workflow permission.
   - `lighthouse.yml`: every push and pull request. Serves the repo statically, runs Lighthouse 3× on Home, Altar, Writing and Waking Up, asserts on the median, uploads reports as an artifact.
+  - `site-check.yml`: every push to `main` and every pull request. Installs the locked Playwright and its Chromium, runs `scripts/check-site.mjs`, uploads the screenshots as an artifact.
   - `sync-substack.yml`: manual only (the daily schedule is commented out). Runs `scripts/sync-substack.mjs` and commits `writing.md` if it changed.
   - `dependabot.yml`: weekly grouped updates for GitHub Actions and `scripts/` npm packages.
-- **Scripts (`scripts/`, locked by `package-lock.json`):** `build-gallery.mjs` (sharp; hash-based so only new or changed images are re-encoded; stale copies deleted), `sync-substack.mjs` (no dependencies), `render-card.mjs` (Playwright, installed on demand), `spotify-auth.mjs`.
-- **Prepared Cloudflare hosting:** `wrangler.jsonc` serves the repo folder as static assets, `_headers` adds security headers and caching rules, `.assetsignore` keeps tooling files out, `404.html` is the not-found page. Not deployed.
+- **Scripts (`scripts/`, locked by `package-lock.json`):** `build-gallery.mjs` (sharp; hash-based so only new or changed images are re-encoded; stale copies deleted), `sync-substack.mjs` (no dependencies), `render-card.mjs` (Playwright, run by hand), `check-site.mjs` (Playwright; also run by `site-check.yml`), `spotify-auth.mjs`.
+- **Prepared Cloudflare hosting:** `wrangler.jsonc` serves the repo folder as static assets, `_headers` adds security headers and caching rules, `.assetsignore` keeps tooling files out, `404.html` is the not-found page. Not deployed for ramour.org; the same config gives the per-branch preview links above once connected.
 
 ---
 
 ## 10. Performance design
 
-- Self-hosted fonts split by character range; the hero font is preloaded; no third-party requests on page load except the Spotify and Substack embeds where they appear.
+- Self-hosted fonts split by character range; Inter (every page) and Marcellus (home) are preloaded, with a size-matched fallback face so the swap doesn't shift text; no third-party requests on page load except the Spotify and Substack embeds where they appear.
 - WebP everywhere for photos; responsive `srcset`/`sizes`; 800 px tiles with 2000 px copies only for the lightbox; explicit `width`/`height` so nothing shifts.
 - Nothing heavy loads early: videos use `preload="none"` and start near the screen; Altar images load as they approach; the Waking Up audio only on tap.
 - Phones get 720p video and smaller image copies.
@@ -296,8 +324,9 @@ All scripts are plain files that share the global scope, so **load order matters
 
 ## 12. Accessibility and compatibility
 
-- Semantic landmarks, one `<h1>` per page, ordered headings, labelled controls, and 24 px tap targets for the slide dots. Keyboard focus is visible (custom styles on the patches and Altar tiles, the browser's default elsewhere).
-- The carousel and lightbox expose roles and labels; patch captions use a live region; the lightbox traps focus and restores it on close.
+- Semantic landmarks, a skip link, one `<h1>` per page, ordered headings, labelled controls, the current page marked with `aria-current`, and tap targets of 40 px or more for buttons and nav. Keyboard focus shows a 2 px zima outline everywhere.
+- Information is written out rather than hidden behind hover or tap (the patches show their roles; the video scenes are named).
+- The video player and lightbox expose roles and labels; the lightbox traps focus and restores it on close. Spanish text is marked `lang="es"`.
 - `prefers-reduced-motion` disables the decorative motion. Without JavaScript the static content still shows, and pages built by script (Altar, Writing, Music, Waking Up) show an "Enable JavaScript" note.
 - **Safari/iPhone lessons:** native `loading="lazy"` left images blank; a shared `<use>` for the patch outlines rendered white; `svh` units keep the hero stable when the toolbar collapses (with a `vh` fallback).
 
@@ -331,6 +360,8 @@ All scripts are plain files that share the global scope, so **load order matters
 | 2026-10 | Worker commands always use `--config wrangler.toml` | The root `wrangler.jsonc` (site) is picked up even from `worker/`, so a plain `wrangler deploy` published the website instead of the radio |
 | 2026-10 | Prepared, but did not start, a Cloudflare move | Real headers and caching; waits on an owner decision |
 | 2026-10 | Radio sends Spotify's 640 px cover; the saved "last played" entry is rewritten when its cover changes | Larger cover art stays sharp. The first version kept serving the old 300 px cover for a saved song until a different song played (needs a Worker redeploy) |
+| 2026-10 | Redesign (branch `redesign-2026`): shared header and footer on every page, informative intro instead of a full-screen title, labelled patches, tiles for each part of the site, labelled video scenes, contact with email, Inter for reading | Visitors couldn't tell who Ra is or what's here from the first screen, inner pages had no way to each other except "back", and roles were hidden behind taps. Same brand colors; Garamond was hard to read on screens at small sizes |
+| 2026-10 | Pre-redesign site kept on branch `classic-2026-10`; changes go through pull requests; per-branch preview links via Cloudflare Workers Builds; a Playwright page check on every pull request | Easy to undo, and every change can be seen on a phone before it is live, without moving ramour.org off GitHub Pages |
 | 2026-10 | `scripts/package.json` `overrides` pin `tmp` 0.2.7 and `uuid` 11.1.1 | Clears Dependabot alerts in the dev-only Lighthouse CI tool (`@lhci/cli` 0.15.1 is the latest and still ships old versions). Remove when it updates. `extract-zip` and `sprintf-js` have no patched release; alerts dismissed as unused |
 
 ---

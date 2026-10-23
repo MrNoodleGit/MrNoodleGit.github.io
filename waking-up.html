@@ -15,18 +15,45 @@
       content="Traducciones al español del curso introductorio y las lecciones de la app Waking Up, por Ra Mour."
     />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="preload"
+      href="fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/marcellus-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/waking-up.css" />
   </head>
   <body>
-    <header class="wu-header">
-      <a href="index.html">Ra Mour</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-header__brand" href="index.html">Ra Mour</a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="gallery.html">Altar</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="writing.html">Writing</a></li>
+            <li><a href="waking-up.html" aria-current="page">Waking Up</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--primary btn--sm site-header__cta" href="rare-retreats.html">Rare Retreats</a>
+      </div>
     </header>
 
+    <main id="main">
     <section class="wu-intro">
-      <p class="wu-intro__label">Translation · Voice</p>
-      <h1>Waking Up · en español</h1>
+      <p class="eyebrow wu-intro__label">Translation · Voice</p>
+      <h1>Waking Up&nbsp;· <span lang="es">en español</span></h1>
       <p>
         Spanish translations and narration of the Waking Up app's
         Introductory Course and theory lessons — Sam Harris's foundational
@@ -55,9 +82,38 @@
         Enable JavaScript to play the audio sessions.
       </p>
     </noscript>
+    </main>
 
-    <footer class="wu-footer">
-      <p>&copy; 2026 Ra Mour · Traducciones de Waking Up</p>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="site-footer__about">
+          <a class="site-footer__brand" href="index.html">Ra Mour</a>
+          <p class="site-footer__tag">Performer, researcher, mystic and experience architect.</p>
+        </div>
+        <nav aria-label="Site">
+          <h2>Site</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Altar</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="writing.html">Writing</a></li>
+            <li><a href="waking-up.html">Waking Up en español</a></li>
+            <li><a href="rare-retreats.html">Rare Retreats</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Follow</h2>
+          <ul>
+            <li><a href="https://substack.com/@ramour" target="_blank" rel="noopener">Substack</a></li>
+            <li><a href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/ramour42" target="_blank" rel="noopener">X</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer__legal">&copy; 2026 Ra Mour &middot; <span lang="es">Traducciones de Waking Up</span></p>
     </footer>
 
     <div class="player" id="player" hidden>
@@ -98,6 +154,7 @@
       <audio id="audio" preload="none"></audio>
     </div>
 
+    <script src="js/site.js"></script>
     <script src="js/player.js"></script>
   </body>
 </html>

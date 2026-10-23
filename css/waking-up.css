@@ -3,52 +3,25 @@
    Relies on :root variables and base styles from style.css
    ============================================================ */
 
-.wu-header {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  padding: 1.25rem var(--pad);
-  background: linear-gradient(to bottom, rgba(2, 2, 2, 0.85), transparent);
-}
-
-.wu-header a {
-  font-family: var(--font-display);
-  letter-spacing: 0.2em;
-  color: var(--zima);
-  font-size: 0.95rem;
-}
-
-.wu-header a::before {
-  content: "← ";
-}
-
 .wu-intro {
-  padding: clamp(7rem, 18vh, 11rem) var(--pad) clamp(2rem, 6vh, 3.5rem);
-  max-width: var(--measure);
+  padding: clamp(2.5rem, 7vw, 4.5rem) var(--pad) clamp(2rem, 6vh, 3.5rem);
+  max-width: calc(var(--measure) + 2 * var(--pad));
   margin: 0 auto;
 }
 
-.wu-intro__label {
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--zima);
-  margin-bottom: 1.25rem;
-}
+.wu-intro__label { margin-bottom: 0.75rem; }
 
 .wu-intro h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
   letter-spacing: 0.03em;
   margin-bottom: 1.25rem;
 }
 
-.wu-intro p {
-  max-width: 42rem;
-  color: var(--muted);
+.wu-intro p:not(.eyebrow) {
+  max-width: var(--read);
+  color: var(--soft);
   font-size: clamp(1.05rem, 2vw, 1.25rem);
 }
 
@@ -61,7 +34,7 @@
   margin-top: 1.75rem;
   padding: 0.65em 1.3em 0.65em 0.75em;
   border: 1px solid rgba(91, 194, 231, 0.5);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   background: rgba(20, 99, 111, 0.12);
   transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
 }
@@ -106,7 +79,7 @@
 }
 
 .day {
-  max-width: var(--measure);
+  max-width: calc(var(--measure) + 2 * var(--pad));
   margin: 0 auto;
   padding: 0 var(--pad);
 }
@@ -132,7 +105,6 @@
 
 .day__en {
   font-size: 0.85rem;
-  font-style: italic;
   letter-spacing: 0.05em;
   color: var(--muted);
 }
@@ -191,7 +163,6 @@
 .track__en {
   font-size: 0.85rem;
   color: var(--muted);
-  font-style: italic;
 }
 
 .track__dur {
@@ -266,7 +237,6 @@
 .player__sub {
   font-size: 0.8rem;
   color: var(--muted);
-  font-style: italic;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -345,14 +315,8 @@
   background: var(--zima);
 }
 
-/* leave room so the fixed player never covers the last track */
-.wu-footer {
-  padding: 2.5rem var(--pad) 7rem;
-  text-align: center;
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
-  color: var(--muted);
-}
+/* leave room so the fixed player never covers the footer */
+.site-footer:has(~ .player:not([hidden])) { padding-bottom: 8rem; }
 
 /* ---------- mobile ---------- */
 

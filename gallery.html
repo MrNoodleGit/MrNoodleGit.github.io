@@ -17,19 +17,47 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <!-- start fetching the image list right away instead of after the scripts run -->
     <link rel="preload" href="media/art-gallery.json" as="fetch" crossorigin />
+    <link
+      rel="preload"
+      href="fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/marcellus-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/reveal.js"></script>
     <link rel="stylesheet" href="css/gallery.css" />
   </head>
   <body class="gallery">
-    <header class="gal-back">
-      <a href="index.html">Ra Mour</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-header__brand" href="index.html">Ra Mour</a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="gallery.html" aria-current="page">Altar</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="writing.html">Writing</a></li>
+            <li><a href="waking-up.html">Waking Up</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--primary btn--sm site-header__cta" href="rare-retreats.html">Rare Retreats</a>
+      </div>
     </header>
 
-    <section class="gal-intro">
-      <h1>Altar</h1>
-    </section>
+    <main id="main">
+      <header class="page-head">
+        <h1>Altar</h1>
+        <p class="lead">Art, film, books and photos that shaped me, with the quotes I return to. Tap any piece to see it large.</p>
+      </header>
 
     <!-- Filled by js/gallery.js from the contents of media/art-gallery/ —
        drop an image into that folder and it appears here once the
@@ -40,6 +68,7 @@
     <noscript>
       <p class="gal-note">Enable JavaScript to view the altar.</p>
     </noscript>
+    </main>
 
     <div
       class="lightbox"
@@ -78,10 +107,39 @@
       </button>
     </div>
 
-    <footer class="gal-footer">
-      <p>&copy; 2026 Ra Mour</p>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="site-footer__about">
+          <a class="site-footer__brand" href="index.html">Ra Mour</a>
+          <p class="site-footer__tag">Performer, researcher, mystic and experience architect.</p>
+        </div>
+        <nav aria-label="Site">
+          <h2>Site</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Altar</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="writing.html">Writing</a></li>
+            <li><a href="waking-up.html">Waking Up en español</a></li>
+            <li><a href="rare-retreats.html">Rare Retreats</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Follow</h2>
+          <ul>
+            <li><a href="https://substack.com/@ramour" target="_blank" rel="noopener">Substack</a></li>
+            <li><a href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/ramour42" target="_blank" rel="noopener">X</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer__legal">&copy; 2026 Ra Mour</p>
     </footer>
 
+    <script src="js/site.js"></script>
     <script src="js/gallery-discovery.js"></script>
     <script src="js/gallery.js"></script>
   </body>

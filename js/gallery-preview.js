@@ -1,16 +1,16 @@
-/* Ra Mour — homepage gallery preview: a random justified-row collage from
+/* Ra Mour — homepage Altar tile: a random justified-row collage from
    media/art-gallery/ on every visit (list in js/gallery-discovery.js) */
 
-const ROWS = 3; // the collage is this many rows tall
-const COUNT = 18; // images drawn at random; the rows use as many as they need
-const WIDE = 6; // of those, how many to take from the landscape images, so rows aren't all portraits
+const ROWS = 2; // the collage is this many rows tall
+const COUNT = 14; // images drawn at random; the rows use as many as they need
+const WIDE = 4; // of those, how many to take from the landscape images, so rows aren't all portraits
 
 // Row targets: the sum of the images' width/height ratios in a row. A row's
 // height is (width of the collage) / (that sum), so a low target makes a tall
 // row and a high one a short row. One target per row.
 const ROW_TARGETS = {
-  wide: [3.6, 4.8, 4.0], // about 4–6 images a row
-  narrow: [2.0, 2.6, 2.2], // about 3–4 images a row, for phones
+  wide: [3.4, 4.4], // about 4–6 images a row
+  narrow: [2.2, 2.8], // about 3–4 images a row, for phones
 };
 const phone = window.matchMedia("(max-width: 40rem)");
 
@@ -62,23 +62,19 @@ function toRows(images, targets, minPerRow, maxPerRow) {
   return rows;
 }
 
+// the whole tile is one link to the Altar, so the images are decoration
+// inside it (the tile's own text names where it goes)
 function collageItem(image, share) {
-  const a = document.createElement("a");
-  a.className = "gallery-preview__item";
-  a.style.setProperty("--grow", Math.round(ratioOf(image) * 1000)); // see the CSS
-  a.href = "gallery.html";
-  // every tile goes to the same place, so only the text link below the
-  // collage is a keyboard stop; the images' titles name the tiles for
-  // screen readers and pointer users
-  a.tabIndex = -1;
+  const item = document.createElement("span");
+  item.className = "collage__item";
+  item.style.setProperty("--grow", Math.round(ratioOf(image) * 1000)); // see the CSS
   // the share of the collage this image fills, so the right copy is loaded;
-  // the content column is at most 64rem (1024px) wide
+  // up to 56rem the tile spans the full width, above it two thirds of the
+  // 64rem (1152px) column, about 770px
   const pct = Math.round(share * 100);
-  const sizes = `(max-width: 40rem) ${pct}vw, ${Math.round(share * 1024)}px`;
-  const img = galleryImg(image, sizes);
-  img.alt = image.alt;
-  a.appendChild(img);
-  return a;
+  const sizes = `(max-width: 56rem) ${pct}vw, ${Math.round(share * 770)}px`;
+  item.appendChild(galleryImg(image, sizes));
+  return item;
 }
 
 function render(collage, images) {
@@ -89,7 +85,7 @@ function render(collage, images) {
   const frag = document.createDocumentFragment();
   for (const images of rows) {
     const row = document.createElement("div");
-    row.className = "gallery-preview__row";
+    row.className = "collage__row";
     const total = images.reduce((n, image) => n + ratioOf(image), 0);
     for (const image of images) row.appendChild(collageItem(image, ratioOf(image) / total));
     frag.appendChild(row);
@@ -98,15 +94,14 @@ function render(collage, images) {
   collage.replaceChildren(frag);
 }
 
-const galleryPreview = document.getElementById("gallery-preview");
+const collage = document.getElementById("altar-collage");
 
 loadGallery()
   .then((images) => {
     if (!images.length) {
-      galleryPreview.hidden = true;
+      collage.hidden = true;
       return;
     }
-    const collage = document.getElementById("gallery-preview-collage");
     const chosen = pick(images);
     render(collage, chosen);
     // re-pack the same images if the screen crosses the phone breakpoint
@@ -115,5 +110,5 @@ loadGallery()
     else phone.addListener(repack); // Safari before 14
   })
   .catch(() => {
-    galleryPreview.hidden = true;
+    collage.hidden = true;
   });

@@ -16,47 +16,15 @@
 
 .gallery ::selection { background: var(--g-amber); color: var(--g-bg); }
 
-/* ---------- back link ---------- */
+/* ---------- shared header, page head and footer, in the warm room ---------- */
 
-.gal-back {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 10;
-  padding: 1.25rem var(--pad);
-  background: linear-gradient(to bottom, rgba(21, 18, 16, 0.9), transparent);
-}
+.gallery .site-header { background: rgba(21, 18, 16, 0.94); border-color: rgba(217, 164, 65, 0.16); }
+.gallery .site-footer,
+.gallery .site-footer__legal { border-color: rgba(217, 164, 65, 0.16); }
 
-.gal-back a {
-  font-family: var(--font-display);
-  letter-spacing: 0.2em;
-  color: var(--g-amber);
-  font-size: 0.95rem;
-  transition: color 0.3s, text-shadow 0.3s;
-}
-
-.gal-back a::before { content: "← "; }
-
-.gal-back a:hover {
-  color: #f4e3bc;
-  text-shadow: 0 0 18px rgba(217, 164, 65, 0.55);
-}
-
-/* ---------- intro ---------- */
-
-.gal-intro {
-  max-width: 90rem;
-  margin: 0 auto;
-  padding: clamp(6.5rem, 16vh, 10rem) var(--pad) clamp(2rem, 5vh, 3.5rem);
-}
-
-.gal-intro h1 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: var(--g-amber);
-}
+.gallery .page-head { max-width: 90rem; }
+.gallery .page-head h1 { color: var(--g-text); }
+.gallery .page-head .lead { color: var(--g-muted); }
 
 /* ---------- masonry wall ---------- */
 
@@ -101,7 +69,7 @@
   width: 100%;
   height: auto;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.3s ease; /* short, so the first images count as painted early */
 }
 
 .wall__item.is-loaded img { opacity: 1; }
@@ -137,8 +105,9 @@
 }
 
 .wall-quote__text {
+  font-family: var(--font-quote);
   font-style: italic;
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-size: clamp(1.15rem, 1.8vw, 1.3rem); /* Garamond runs small */
   line-height: 1.6;
   color: var(--g-text);
   white-space: pre-line;
@@ -173,7 +142,7 @@
 .wall__error a { color: var(--g-amber); }
 
 .gal-note {
-  max-width: var(--measure);
+  max-width: 90rem;
   margin: 0 auto;
   padding: 0 var(--pad) 3rem;
   color: var(--g-muted);
@@ -270,16 +239,6 @@
   .lightbox__step--prev { left: calc(50% - 3.5rem); }
   .lightbox__step--next { right: calc(50% - 3.5rem); }
   .lightbox__img { max-height: 72vh; } /* leave room for the buttons below */
-}
-
-/* ---------- footer ---------- */
-
-.gal-footer {
-  padding: 2.5rem var(--pad);
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
-  color: var(--g-muted);
-  text-align: center;
 }
 
 /* ---------- reduced motion ---------- */

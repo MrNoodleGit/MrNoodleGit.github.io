@@ -15,6 +15,20 @@
       content="Songs and playlists Ra Mour keeps returning to."
     />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="preload"
+      href="fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/marcellus-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/reveal.js"></script>
@@ -23,14 +37,27 @@
     <link rel="stylesheet" href="css/music-preview.css" />
   </head>
   <body class="music">
-    <header class="music-back">
-      <a href="index.html">Ra Mour</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-header__brand" href="index.html">Ra Mour</a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="gallery.html">Altar</a></li>
+            <li><a href="music.html" aria-current="page">Music</a></li>
+            <li><a href="writing.html">Writing</a></li>
+            <li><a href="waking-up.html">Waking Up</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--primary btn--sm site-header__cta" href="rare-retreats.html">Rare Retreats</a>
+      </div>
     </header>
 
-    <section class="music-intro">
-      <h1>Music</h1>
-      <!-- <p>Songs and playlists I keep returning to.</p> -->
-    </section>
+    <main id="main">
+      <header class="page-head">
+        <h1>Music</h1>
+        <p class="lead">What I'm listening to right now, and the tracks and playlists I keep coming back to.</p>
+      </header>
 
     <!-- Ra Mour Radio — live now-playing band, filled by js/radio.js from the
        Cloudflare Worker in worker/now-playing.js. Ships hidden: if the Worker
@@ -147,11 +174,41 @@
         Enable JavaScript to view the recommendations.
       </p>
     </noscript>
+    </main>
 
-    <footer class="music-footer">
-      <p>&copy; 2026 Ra Mour</p>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="site-footer__about">
+          <a class="site-footer__brand" href="index.html">Ra Mour</a>
+          <p class="site-footer__tag">Performer, researcher, mystic and experience architect.</p>
+        </div>
+        <nav aria-label="Site">
+          <h2>Site</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Altar</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="writing.html">Writing</a></li>
+            <li><a href="waking-up.html">Waking Up en español</a></li>
+            <li><a href="rare-retreats.html">Rare Retreats</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Follow</h2>
+          <ul>
+            <li><a href="https://substack.com/@ramour" target="_blank" rel="noopener">Substack</a></li>
+            <li><a href="https://www.instagram.com/ramour42/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.youtube.com/@Ra_Mour" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="https://www.linkedin.com/in/ramour/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://x.com/ramour42" target="_blank" rel="noopener">X</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer__legal">&copy; 2026 Ra Mour</p>
     </footer>
 
+    <script src="js/site.js"></script>
     <script src="js/radio.js"></script>
     <script src="js/music.js"></script>
     <script src="js/music-preview.js"></script>

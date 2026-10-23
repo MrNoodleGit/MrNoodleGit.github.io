@@ -1,155 +1,350 @@
 /* ============================================================
-   Ra Mour — portfolio
-   Palette from the "longboard" moodboard / Zima Blue stills
+   Ra Mour — shared design system (every page but Hello) + home
+   Palette from the "longboard" moodboard / Zima Blue stills.
+   Page-specific styles live in their own files and build on these
+   tokens and components.
    ============================================================ */
 
 :root {
-  --ink: #020202;
-  --abyss: #061719;
-  --teal: #14636F;
-  --zima: #5BC2E7;
-  --crimson: #AE0E36;
-  --text: #E8F0F0;
-  --muted: #7FA8AD;
+  /* brand palette */
+  --ink: #020202;      /* page */
+  --abyss: #061719;    /* raised surfaces: cards, alternate sections */
+  --deep: #0a2328;     /* hover state of a surface */
+  --teal: #14636F;     /* borders */
+  --zima: #5BC2E7;     /* accent, links, primary buttons */
+  --crimson: #AE0E36;  /* small marks only: "live", the period, patches */
+  --text: #E8F0F0;     /* body text, 18:1 on ink */
+  --soft: #B4C9CC;     /* secondary text, 11:1 on ink */
+  --muted: #7FA8AD;    /* meta text (dates, counts), 7.9:1 on ink */
+  --line: rgba(20, 99, 111, 0.55);
+  --line-soft: rgba(20, 99, 111, 0.3);
 
+  /* type: Inter for reading and interface, Marcellus for the brand */
+  --font-body: "Inter", "Inter Fallback", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-display: "Marcellus", "Times New Roman", serif;
-  --font-body: "EB Garamond", Georgia, serif;
-  --font-patch: "Marcellus", "Times New Roman", serif; /* role titles under the patches */
+  --font-quote: "EB Garamond", Georgia, serif;
 
-  --measure: 64rem;
-  --pad: clamp(1.25rem, 5vw, 4rem);
+  /* layout */
+  --measure: 64rem;    /* content column */
+  --read: 38rem;       /* comfortable line length for paragraphs */
+  --pad: clamp(1.25rem, 5vw, 3rem);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --header-h: 4rem;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; font-size: 112.5%; }
+html {
+  font-size: 112.5%; /* 18px: the base every page's rem sizes assume */
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1rem); /* in-page links land below the header */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   background: var(--ink);
   color: var(--text);
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 1.0625rem; /* Garamond runs small at default size */
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.65;
+  font-feature-settings: "cv11", "ss01"; /* Inter's single-storey a and open digits read more calmly */
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection { background: var(--zima); color: var(--ink); }
 
 a { color: inherit; text-decoration: none; }
 
-/* ---------- nav ---------- */
+img, svg, video { display: block; max-width: 100%; }
 
-.nav {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 10;
-  display: flex;
-  justify-content: flex-start;
+/* the hidden attribute wins over any display set below */
+[hidden] { display: none !important; }
+
+button { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--zima);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1, h2, h3 { font-weight: 400; text-wrap: balance; }
+
+p { text-wrap: pretty; }
+
+/* ---------- small type helpers ---------- */
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--zima);
+}
+
+.lead {
+  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--soft);
+  max-width: var(--read);
+}
+
+.textlink {
+  color: var(--zima);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgba(91, 194, 231, 0.4);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 0.2s;
+}
+
+.textlink:hover { text-decoration-color: var(--zima); }
+
+.arrow { display: inline-block; transition: transform 0.25s var(--ease); }
+
+/* ---------- skip link ---------- */
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--zima);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.skip-link:focus { top: 1rem; }
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
   align-items: center;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  padding: 1.25rem var(--pad);
-  background: linear-gradient(to bottom, rgba(2, 2, 2, 0.85), transparent);
-  transition: transform 0.35s ease;
-}
-
-/* slides out of the way while scrolling down, back on scrolling up (js/main.js) */
-.nav.is-hidden { transform: translateY(-100%); }
-
-.nav__home {
-  font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  color: var(--zima);
-}
-
-.nav__links {
-  display: flex;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  list-style: none;
-}
-
-.nav__links a {
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding-bottom: 0.2em;
-  border-bottom: 1px solid transparent;
-  transition: color 0.3s, border-color 0.3s;
-}
-
-.nav__links a:hover,
-.nav__links a.is-active {
-  color: var(--zima);
-  border-color: var(--zima);
-}
-
-/* Rare Retreats CTA — pushed to the right, ahead of the social icons */
-.nav__cta {
-  margin-left: auto;
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--zima);
-  border: 1px solid rgba(91, 194, 231, 0.5);
-  padding: 0.5em 1.05em;
-  border-radius: 2px;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 2.75rem; /* 49px: an easy thumb target */
+  padding: 0.6em 1.3em;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
   white-space: nowrap;
-  transition: color 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
-.nav__cta:hover {
-  color: #d6f7ff;
-  border-color: var(--zima);
-  background: rgba(91, 194, 231, 0.12);
-  box-shadow: 0 0 18px rgba(91, 194, 231, 0.35);
+.btn--primary { background: var(--zima); color: var(--ink); }
+.btn--primary:hover { background: #8fd6f0; }
+
+.btn--ghost { background: none; border-color: var(--line); color: var(--text); }
+.btn--ghost:hover { border-color: var(--zima); color: var(--zima); }
+
+.btn--sm { min-height: 2.25rem; padding: 0.45em 1em; font-size: 0.85rem; }
+
+.btn:hover .arrow,
+.tile:hover .arrow,
+.textlink:hover .arrow { transform: translateX(3px); }
+
+/* ---------- site header (every page) ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(2, 2, 2, 0.92);
+  border-bottom: 1px solid var(--line-soft);
+  transition: transform 0.3s var(--ease);
 }
 
-.nav__social {
+/* slides away while scrolling down, back on scrolling up (js/site.js) */
+.site-header.is-hidden { transform: translateY(-100%); }
+
+.site-header__inner {
   display: flex;
   align-items: center;
-  gap: 1.1rem;
-  margin-left: clamp(1rem, 3vw, 2.5rem);
-  padding-left: clamp(1rem, 3vw, 2.5rem);
-  border-left: 1px solid rgba(20, 99, 111, 0.5);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  max-width: calc(var(--measure) + 2 * var(--pad));
+  min-height: var(--header-h);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.site-header__brand {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.site-header__brand:hover { color: var(--zima); }
+
+.site-nav ul {
+  display: flex;
+  gap: 0.25rem;
   list-style: none;
 }
 
-.nav__social a {
+.site-nav a {
   display: block;
-  color: var(--muted);
-  transition: color 0.3s, filter 0.3s;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--soft);
+  white-space: nowrap;
+  transition: color 0.2s, background 0.2s;
 }
 
-.nav__social svg {
-  display: block;
-  width: 1.05rem;
-  height: 1.05rem;
-  fill: currentColor;
+.site-nav a:hover { color: var(--text); background: rgba(91, 194, 231, 0.08); }
+
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--zima);
 }
 
-.nav__social a:hover {
-  color: var(--zima);
-  filter: drop-shadow(0 0 8px rgba(91, 194, 231, 0.6));
+.site-header__cta { margin-left: auto; }
+
+/* ---------- page head (top of every inner page) ---------- */
+
+.page-head {
+  max-width: calc(var(--measure) + 2 * var(--pad));
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 4.5rem) var(--pad) clamp(1.75rem, 4vw, 2.75rem);
 }
 
-/* ---------- hero: underwater light rays ---------- */
+.page-head .eyebrow { margin-bottom: 0.75rem; }
 
-.hero {
+.page-head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.9rem;
+}
+
+.page-head .lead + * { margin-top: 1.5rem; }
+
+/* ---------- sections ---------- */
+
+.section {
+  padding: clamp(3.5rem, 9vw, 6.5rem) var(--pad);
+}
+
+.section > * {
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section--abyss { background: var(--abyss); }
+
+/* follows the intro directly, so it needs no space above */
+.section--tight { padding-top: 0; padding-bottom: 0; }
+
+.section__kicker { margin-bottom: 1rem; }
+
+.section__head { margin-bottom: clamp(1.75rem, 4vw, 2.75rem); }
+
+.section__head .eyebrow { margin-bottom: 0.6rem; }
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.15;
+}
+
+.section__head .lead { margin-top: 0.75rem; }
+
+/* ============================================================
+   HOME
+   ============================================================ */
+
+/* ---------- intro: who, what, and where to go ---------- */
+
+.intro {
   position: relative;
-  height: 100vh;
-  height: 100svh;
-  display: grid;
-  place-items: center;
   overflow: hidden;
   /* faint light from the surface, fading into the deep */
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(20, 99, 111, 0.45), transparent 60%),
+    radial-gradient(110% 80% at 70% -20%, rgba(20, 99, 111, 0.5), transparent 60%),
     var(--ink);
 }
 
-.hero__rays {
+.intro__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  max-width: calc(var(--measure) + 2 * var(--pad));
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 6rem) var(--pad) clamp(3.5rem, 8vw, 6rem);
+}
+
+.intro__tagline { margin-bottom: 1rem; }
+.intro__period { color: var(--crimson); }
+
+.intro__name {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 5.75rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 40px rgba(91, 194, 231, 0.25);
+  margin-bottom: 1.25rem;
+}
+
+.intro__lead {
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+  line-height: 1.45;
+  color: var(--text);
+  max-width: 32rem;
+  margin-bottom: 0.9rem;
+}
+
+.intro__sub {
+  color: var(--soft);
+  max-width: 32rem;
+}
+
+.intro__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.intro__portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  overflow: hidden; /* Safari can size the photo past the frame */
+  background: var(--abyss);
+  box-shadow: 0 30px 80px -30px rgba(91, 194, 231, 0.35);
+}
+
+.intro__portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* drifting light rays and rising bubbles behind the intro */
+.intro__rays,
+.intro__bubbles {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -159,17 +354,16 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   top: -20%;
   height: 140%;
-  background: linear-gradient(to bottom, rgba(91, 194, 231, 0.16), rgba(20, 99, 111, 0.05) 55%, transparent 85%);
+  background: linear-gradient(to bottom, rgba(91, 194, 231, 0.12), rgba(20, 99, 111, 0.04) 55%, transparent 85%);
   filter: blur(14px);
   transform-origin: top center;
   animation: ray-drift 28s ease-in-out infinite alternate;
 }
 
 .ray--1 { left: 8%;  width: 9vw;  transform: skewX(-14deg); animation-duration: 31s; }
-.ray--2 { left: 26%; width: 5vw;  transform: skewX(-10deg); animation-duration: 24s; animation-delay: -8s; }
-.ray--3 { left: 44%; width: 13vw; transform: skewX(-16deg); animation-duration: 37s; animation-delay: -15s; }
-.ray--4 { left: 66%; width: 6vw;  transform: skewX(-11deg); animation-duration: 26s; animation-delay: -4s; }
-.ray--5 { left: 82%; width: 10vw; transform: skewX(-15deg); animation-duration: 33s; animation-delay: -20s; }
+.ray--2 { left: 30%; width: 5vw;  transform: skewX(-10deg); animation-duration: 24s; animation-delay: -8s; }
+.ray--3 { left: 52%; width: 13vw; transform: skewX(-16deg); animation-duration: 37s; animation-delay: -15s; }
+.ray--4 { left: 74%; width: 6vw;  transform: skewX(-11deg); animation-duration: 26s; animation-delay: -4s; }
 
 @keyframes ray-drift {
   from { translate: -3vw 0; opacity: 0.55; }
@@ -177,11 +371,9 @@ a { color: inherit; text-decoration: none; }
   to   { translate: 3vw 0; opacity: 0.65; }
 }
 
-.hero__bubbles { position: absolute; inset: 0; pointer-events: none; }
-
 /* off screen: freeze rays and bubbles where they are (js/main.js) */
-.hero.is-offscreen .ray,
-.hero.is-offscreen .bubble { animation-play-state: paused; }
+.intro.is-offscreen .ray,
+.intro.is-offscreen .bubble { animation-play-state: paused; }
 
 .bubble {
   position: absolute;
@@ -196,101 +388,235 @@ a { color: inherit; text-decoration: none; }
   from { transform: translateY(0); opacity: 0; }
   10%  { opacity: 0.8; }
   90%  { opacity: 0.5; }
-  to   { transform: translateY(-105vh); opacity: 0; }
+  to   { transform: translateY(-110vh); opacity: 0; }
 }
 
-.hero__center { position: relative; text-align: center; }
+/* ---------- credentials: the patches, labelled ---------- */
 
-.hero__name {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3rem, 11vw, 8.5rem);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.creds {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.cred {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: rgba(6, 23, 25, 0.6);
+}
+
+.cred svg { width: 3rem; height: auto; }
+
+.cred__role {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
   color: var(--text);
-  text-shadow:
-    0 0 24px rgba(91, 194, 231, 0.45),
-    0 0 90px rgba(91, 194, 231, 0.25);
 }
 
-.hero__tagline {
-  margin-top: 0.75rem;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.hero__period { color: var(--crimson); }
-
-.hero__scrollcue {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  width: 1px;
-  height: 4rem;
-  background: var(--teal);
-  overflow: hidden;
-}
-
-.hero__scrollcue::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--zima);
-  animation: scroll-cue 2.2s ease-in-out infinite;
-}
-
-@keyframes scroll-cue {
-  from { transform: translateY(-100%); }
-  to   { transform: translateY(100%); }
-}
-
-/* ---------- sections ---------- */
-
-.section {
-  padding: clamp(5rem, 12vh, 9rem) var(--pad);
-}
-
-.section--abyss { background: var(--abyss); }
-
-.section > * {
-  max-width: var(--measure);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.section__label {
+.cred__org {
   font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--zima);
-  margin-bottom: 3.5rem;
+  line-height: 1.35;
+  color: var(--muted);
+  margin-top: 0.15rem;
 }
 
-/* ---------- life: single frame, horizontal toggle ---------- */
+/* patch artwork (inline SVG) */
+.patch__s { fill: none; stroke: currentColor; }
+.patch__f { fill: currentColor; }
+.patch__thread { color: #c8274f; }
 
-.life__label {
-  padding: clamp(5rem, 12vh, 9rem) var(--pad) clamp(2.5rem, 6vh, 4rem);
+/* ---------- explore: one tile per part of the site ---------- */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
 
-.life__label > * {
-  max-width: var(--measure);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.lifeframe {
+.tile {
+  --tile-pad: clamp(1.25rem, 2.5vw, 1.75rem);
   position: relative;
-  height: 100vh;
-  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--tile-pad);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: var(--abyss);
   overflow: hidden;
-  /* fallback backdrop until a video loads — same light-from-above as the hero */
+  transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease);
+}
+
+.tile:hover { border-color: var(--zima); background: var(--deep); }
+
+.tile--wide { grid-column: span 2; }
+
+/* artwork that runs to the tile's edges */
+.tile__media {
+  width: calc(100% + 2 * var(--tile-pad));
+  max-width: none;
+  margin: calc(-1 * var(--tile-pad)) calc(-1 * var(--tile-pad)) 0.75rem;
+}
+
+.tile__thumb {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.tile__glyph {
+  height: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--zima);
+}
+
+.tile__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.tile__desc { color: var(--soft); font-size: 0.95rem; }
+
+.tile__cta {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--zima);
+}
+
+.tile__cover {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.tile__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  align-self: flex-start;
+  padding: 0.2em 0.7em;
+  border-radius: 999px;
+  border: 1px solid rgba(174, 14, 54, 0.6);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #ff9db4;
+}
+
+.tile__badge::before {
+  content: "";
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 50%;
+  background: var(--crimson);
+}
+
+/* the Rare Retreats tile: the one call to action, so it glows a little */
+.tile--retreats {
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(174, 14, 54, 0.22), transparent 65%),
+    var(--abyss);
+  border-color: rgba(174, 14, 54, 0.45);
+}
+
+.tile--retreats:hover { border-color: #e0456d; }
+
+.tile--retreats .tile__cover {
+  aspect-ratio: 4 / 3;
+  object-position: 50% 30%;
+}
+
+/* static equalizer on the Music tile */
+.eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.eq span {
+  width: 6px;
+  border-radius: 3px;
+  background: var(--zima);
+  opacity: 0.85;
+}
+
+.eq span:nth-child(1) { height: 40%; }
+.eq span:nth-child(2) { height: 85%; }
+.eq span:nth-child(3) { height: 60%; }
+.eq span:nth-child(4) { height: 100%; }
+.eq span:nth-child(5) { height: 45%; }
+.eq span:nth-child(6) { height: 70%; }
+.eq span:nth-child(7) { height: 30%; }
+
+/* ---------- Altar collage inside its tile ---------- */
+
+/* a justified-row collage: js/gallery-preview.js groups the images into rows
+   and sets each one's shape as --grow (1000 × width / height). Within a row
+   every image gets a width in proportion to its shape, so they share one
+   height and nothing is cropped; rows differ in height, which gives the
+   varied sizes. (The factor of 1000 keeps flex-grow above 1, because below 1
+   a row would not fill its width.) */
+.collage {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* hold about the collage's height while the image list loads, so the tile
+   doesn't grow under the reader: two rows whose shapes add up to 3.4 and
+   4.4 (js/gallery-preview.js) are about half as tall as they are wide */
+.collage:empty { aspect-ratio: 1.9; }
+
+.collage__row { display: flex; gap: 4px; }
+
+.collage__item {
+  display: block;
+  flex: var(--grow) 1 0%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--deep);
+}
+
+.collage__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.6s var(--ease);
+}
+
+.tile:hover .collage__item img { transform: scale(1.03); }
+
+/* ---------- practice: the Life videos ---------- */
+
+.lifeframe { position: relative; }
+
+.lifeframe__stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
   background:
     radial-gradient(120% 70% at 50% -10%, rgba(20, 99, 111, 0.4), transparent 60%),
-    var(--ink);
+    var(--abyss);
 }
 
 .lifeframe__slide {
@@ -298,7 +624,7 @@ a { color: inherit; text-decoration: none; }
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.9s ease;
+  transition: opacity 0.6s ease;
 }
 
 .lifeframe__slide.is-active {
@@ -313,38 +639,24 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* visible by default so the poster frame always shows, even if
-     autoplay is blocked (common on Android with Data Saver) */
-  opacity: 0.85;
 }
 
-.lifeframe__scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(2, 2, 2, 0.88),
-    rgba(2, 2, 2, 0.25) 45%,
-    rgba(2, 2, 2, 0.35)
-  );
-}
-
-/* play hint — visible while the active slide's video is paused */
+/* play hint: shown while the active video is paused */
 .lifeframe__play {
   position: absolute;
   left: 50%;
-  top: 44%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(3.25rem, 7vw, 4.5rem);
-  height: clamp(3.25rem, 7vw, 4.5rem);
+  width: 4rem;
+  height: 4rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(91, 194, 231, 0.65);
   border-radius: 50%;
-  background: rgba(2, 2, 2, 0.2);
+  background: rgba(2, 2, 2, 0.55);
+  border: 1px solid rgba(91, 194, 231, 0.6);
   color: var(--zima);
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
   z-index: 2;
 }
@@ -358,152 +670,105 @@ a { color: inherit; text-decoration: none; }
 
 .lifeframe.is-paused .lifeframe__play { opacity: 1; }
 
-/* the glow is a fixed shadow whose opacity pulses (cheap to animate),
-   not an animated box-shadow (repainted every frame) */
-.lifeframe__play::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  box-shadow: 0 0 26px rgba(91, 194, 231, 0.5);
-  opacity: 0;
-}
-
-.lifeframe.is-paused .lifeframe__play::after {
-  animation: hint-pulse 2.6s ease-in-out infinite;
-}
-
-@keyframes hint-pulse {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
-}
-
-/* ---------- life: nav (arrows + dots) ---------- */
-
+/* scene picker: a labelled segmented control instead of anonymous dots */
 .lifeframe__nav {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(1.75rem, 5vh, 3rem);
-  transform: translateX(-50%);
-  z-index: 3;
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-.lifeframe__arrow {
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 1px solid rgba(91, 194, 231, 0.45);
-  border-radius: 50%;
-  background: rgba(2, 2, 2, 0.3);
-  color: var(--zima);
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.lifeframe__arrow svg { width: 0.85rem; height: 0.85rem; }
-
-.lifeframe__arrow:hover {
-  border-color: var(--zima);
-  box-shadow: 0 0 18px rgba(91, 194, 231, 0.35);
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .lifeframe__dots {
-  display: flex;
-  align-items: center;
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: var(--abyss);
 }
 
-/* the button is a 24px tap target; the visible dot is drawn inside it */
 .lifeframe__dot {
-  display: grid;
-  place-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  min-height: 2.5rem;
+  padding: 0 1.1rem;
   border: 0;
+  border-radius: 999px;
   background: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--soft);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
 
-/* whole-pixel size so the circle doesn't render slightly oval */
-.lifeframe__dot::before {
-  content: "";
-  box-sizing: border-box;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid var(--muted);
-  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+.lifeframe__dot:hover { color: var(--text); }
+
+.lifeframe__dot.is-active { background: var(--zima); color: var(--ink); }
+
+/* ---------- contact ---------- */
+
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
 }
 
-.lifeframe__dot:hover::before { border-color: var(--zima); }
-
-.lifeframe__dot.is-active::before {
-  background: var(--zima);
-  border-color: var(--zima);
-  transform: scale(1.2);
-}
-
-/* ---------- gallery preview (homepage) ---------- */
-
-/* a justified-row collage: js/gallery-preview.js groups the images into rows
-   and sets each one's shape as --grow (1000 × width / height). Within a row
-   every image gets a width in proportion to its shape, so they share one
-   height and nothing is cropped; rows differ in height, which gives the
-   varied sizes. (The factor of 1000 keeps flex-grow above 1, because below 1
-   a row would not fill its width.) */
-.gallery-preview__collage {
+.contact__email {
   display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 }
 
-.gallery-preview__row {
-  display: flex;
-  gap: 0.85rem;
+.contact__address {
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  font-weight: 600;
+  color: var(--zima);
+  overflow-wrap: anywhere;
 }
 
-.gallery-preview__item {
-  display: block;
-  flex: var(--grow) 1 0%;
-  min-width: 0;
-  overflow: hidden;
-  /* an inset outline, so the frame takes no space and rows stay flush */
-  outline: 1px solid rgba(20, 99, 111, 0.45);
-  outline-offset: -1px;
-  transition: outline-color 0.4s;
+.contact__address:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+
+.socials {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
 }
 
-.gallery-preview__item:hover { outline-color: var(--zima); }
-
-.gallery-preview__item img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: saturate(0.9);
-  transition: filter 0.4s, transform 0.6s;
+.social {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s, background 0.2s;
 }
 
-.gallery-preview__item:hover img {
-  filter: saturate(1.05);
-  transform: scale(1.04);
-}
+.social:hover { border-color: var(--zima); background: var(--abyss); }
 
-.gallery-preview__cta { margin-top: 2rem; }
+.social svg { width: 1.1rem; height: 1.1rem; fill: var(--zima); }
 
-/* ---------- writing ---------- */
+.social__name { font-weight: 600; font-size: 0.95rem; }
+
+.social__handle { font-size: 0.85rem; color: var(--muted); }
+
+/* ============================================================
+   Shared lists and notes
+   ============================================================ */
+
+/* essays (Writing page; js/writing-data.js builds the items) */
 
 .essays { list-style: none; }
 
 .essays__item-inner {
   display: block;
-  padding: 1.4rem 0;
-  border-top: 1px solid rgba(20, 99, 111, 0.45);
-  transition: border-color 0.4s;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line-soft);
 }
 
-.essays__item:last-of-type .essays__item-inner { border-bottom: 1px solid rgba(20, 99, 111, 0.45); }
-a.essays__item-inner:hover { border-color: var(--zima); }
+.essays__item:last-of-type .essays__item-inner { border-bottom: 1px solid var(--line-soft); }
 
 .essays__row {
   display: flex;
@@ -514,9 +779,9 @@ a.essays__item-inner:hover { border-color: var(--zima); }
 
 .essays__title {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  transition: color 0.3s;
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  line-height: 1.25;
+  transition: color 0.2s;
 }
 
 a.essays__item-inner:hover .essays__title { color: var(--zima); }
@@ -525,258 +790,105 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
   flex-shrink: 0;
   font-size: 0.85rem;
   color: var(--muted);
-  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
 }
 
 .essays__excerpt {
   display: block;
   margin-top: 0.5rem;
-  color: var(--muted);
-  max-width: 42rem;
+  color: var(--soft);
+  max-width: var(--read);
 }
 
-.essays__item--soon .essays__date::after {
-  content: " · soon";
-  text-transform: uppercase;
-}
+.essays__item--soon .essays__date::after { content: " · soon"; }
 
-.essays__more { margin-top: 3rem; }
+.essays__more { margin-top: 2.5rem; }
 
-.essays-note { color: var(--muted); }
+.essays-note { color: var(--soft); }
+.essays-note a { color: var(--zima); }
 
 /* "Enable JavaScript" message on pages that build their content in JS */
 .noscript-note {
-  max-width: var(--measure);
+  max-width: calc(var(--measure) + 2 * var(--pad));
   margin: 0 auto;
   padding: 0 var(--pad) 3rem;
-  color: var(--muted);
-}
-.essays-note a { color: var(--zima); }
-
-/* ---------- waking-up feature card (homepage) ---------- */
-
-.wu-feature {
-  display: flex;
-  align-items: center;
-  gap: clamp(1.25rem, 4vw, 2.5rem);
-  margin-top: 3.5rem;
-  padding: clamp(1.25rem, 3vw, 2rem);
-  border: 1px solid rgba(20, 99, 111, 0.55);
-  background: rgba(2, 2, 2, 0.25);
-  transition: border-color 0.4s, background 0.4s;
-}
-
-.wu-feature:hover {
-  border-color: var(--zima);
-  background: rgba(20, 99, 111, 0.12);
-}
-
-.wu-feature__cover {
-  width: clamp(5rem, 16vw, 8rem);
-  height: clamp(5rem, 16vw, 8rem);
-  object-fit: cover;
-  border: 1px solid var(--teal);
-  flex-shrink: 0;
-}
-
-.wu-feature__kicker {
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--zima);
-  margin-bottom: 0.6rem;
-}
-
-.wu-feature__title {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  margin-bottom: 0.5rem;
-}
-
-.wu-feature__desc {
-  color: var(--muted);
-  max-width: 34rem;
-  margin-bottom: 0.85rem;
-}
-
-.wu-feature__cta {
-  color: var(--zima);
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid rgba(91, 194, 231, 0.35);
-  padding-bottom: 0.15em;
-  transition: border-color 0.3s, text-shadow 0.3s;
-}
-
-.wu-feature:hover .wu-feature__cta {
-  border-color: var(--zima);
-  text-shadow: 0 0 20px rgba(91, 194, 231, 0.5);
-}
-
-@media (max-width: 40rem) {
-  .wu-feature { flex-direction: column; align-items: flex-start; text-align: left; }
-}
-
-.textlink {
-  color: var(--zima);
-  padding-bottom: 0.2em;
-  border-bottom: 1px solid rgba(91, 194, 231, 0.35);
-  transition: border-color 0.3s, text-shadow 0.3s;
-}
-
-.textlink:hover {
-  border-color: var(--zima);
-  text-shadow: 0 0 20px rgba(91, 194, 231, 0.5);
-}
-
-/* ---------- about: portrait centred, experience patches below ---------- */
-
-.about {
-  display: grid;
-  justify-items: center;
-  gap: 2rem;
-}
-
-.about__portrait {
-  position: relative;
-  width: min(24rem, 100%);
-  aspect-ratio: 4 / 5;
-  overflow: hidden; /* Safari can size the photo past the frame and hide the border */
-  border: 1px solid var(--teal);
-  background: var(--abyss);
-}
-
-.about__portrait img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* experience patches — embroidered-patch badges */
-
-.patches {
-  display: grid;
-  justify-items: center;
-  gap: 1rem;
-}
-
-.patches__row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.9rem;
-  list-style: none;
-}
-
-.patch {
-  display: block;
-  width: clamp(3.5rem, 18vw, 4.25rem); /* all four fit one row on phones */
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  -webkit-appearance: none;
-  appearance: none;
-  color: inherit;
-  cursor: pointer;
-  opacity: 0.8;
-  -webkit-tap-highlight-color: transparent;
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.patch:hover,
-.patch[aria-pressed="true"] {
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-.patch:focus-visible {
-  outline: 1px solid var(--zima);
-  outline-offset: 4px;
-}
-
-.patch svg { display: block; width: 100%; height: auto; }
-
-.patch__s { fill: none; stroke: currentColor; }
-.patch__f { fill: currentColor; }
-.patch__thread { color: #c8274f; }
-
-.patches__caption {
-  display: grid;
-  text-align: center;
-  gap: 0.15rem;
-  min-height: 3.2rem; /* reserve both lines so tapping doesn't shift the page */
-  line-height: 1.35;
-}
-
-/* role title on top in the display face; institution below in italics */
-.patches__role {
-  font-family: var(--font-patch);
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
-  color: var(--text);
-  text-wrap: balance;
-}
-
-.patches__org {
-  font-size: 0.9rem;
-  font-style: italic;
-  color: var(--muted);
-}
-
-/* ---------- contact ---------- */
-
-.section--contact { text-align: center; }
-.section--contact .section__label { text-align: left; }
-
-.contact {
-  display: grid;
-  justify-items: center;
-  gap: 3rem;
-  padding: 3rem 0 1rem;
-}
-
-.contact__links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem 2.5rem;
-  list-style: none;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
+  color: var(--soft);
 }
 
 /* ---------- 404 page ---------- */
 
-.not-found { min-height: 100vh; }
+.not-found { min-height: 50vh; }
 
-.not-found__title {
+.not-found__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* ============================================================
+   Site footer (every page)
+   ============================================================ */
+
+.site-footer {
+  border-top: 1px solid var(--line-soft);
+  padding: clamp(2.5rem, 6vw, 4rem) var(--pad) 2rem;
+  font-size: 0.9rem;
+  color: var(--soft);
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.site-footer__brand {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.6rem, 4vw, 2.75rem);
-  margin-bottom: 2rem;
+  font-size: 1.35rem;
+  color: var(--text);
 }
 
-/* ---------- footer ---------- */
+.site-footer__tag { margin-top: 0.35rem; color: var(--muted); }
 
-.footer {
-  padding: 2.5rem var(--pad);
-  font-size: 0.8rem;
-  letter-spacing: 0.15em;
+.site-footer h2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--muted);
-  text-align: center;
+  margin-bottom: 0.75rem;
 }
 
-/* ---------- scroll reveals ---------- */
+.site-footer ul { list-style: none; display: grid; gap: 0.15rem; }
+
+.site-footer ul a {
+  display: inline-block;
+  padding: 0.2rem 0; /* taller tap target without spreading the list */
+  transition: color 0.2s;
+}
+
+.site-footer ul a:hover { color: var(--zima); }
+
+.site-footer__legal {
+  max-width: var(--measure);
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ============================================================
+   Motion
+   ============================================================ */
 
 /* hidden state only applies once JS tags <html> with .js — no-JS stays visible */
 .js .reveal {
   opacity: 0;
   transform: translateY(0.75rem);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.6s ease, transform 0.6s var(--ease);
 }
 
 /* on touch screens content is already moving under the finger, so a second
@@ -787,40 +899,75 @@ a.essays__item-inner:hover .essays__title { color: var(--zima); }
 
 .js .reveal.is-visible { opacity: 1; transform: none; }
 
-/* ---------- reduced motion ---------- */
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .nav { transition: none; }
-  .ray, .bubble, .hero__scrollcue::after { animation: none; }
-  .lifeframe.is-paused .lifeframe__play::after { animation: none; }
-  .lifeframe__slide { transition: none; }
+  .site-header { transition: none; }
+  .ray, .bubble { animation: none; }
   .bubble { display: none; }
+  .lifeframe__slide { transition: none; }
+  .tile, .arrow, .collage__item img { transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* ---------- mobile ---------- */
+/* ============================================================
+   Tablet and phone
+   ============================================================ */
+
+@media (max-width: 56rem) {
+  .creds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer__about { grid-column: 1 / -1; }
+}
 
 @media (max-width: 40rem) {
-  .nav__home { display: none; }
+  html { font-size: 106.25%; } /* 17px */
 
-  .nav { flex-wrap: wrap; row-gap: 0.85rem; }
+  :root { --header-h: 6rem; }
 
-  .nav__links { width: 100%; justify-content: space-between; gap: clamp(0.35rem, 1.8vw, 0.75rem); }
-  .nav__links a { letter-spacing: 0.1em; }
-
-  .nav__cta { margin: 0 auto; }
-
-  .nav__social {
-    width: 100%;
-    justify-content: center;
-    gap: 1.6rem;
-    margin-left: 0;
-    padding-left: 0;
-    border-left: none;
+  /* header: name and Rare Retreats on top, the four sections in a row below */
+  .site-header__inner {
+    flex-wrap: wrap;
+    row-gap: 0.1rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.4rem;
+    min-height: 0;
   }
+
+  .site-nav {
+    order: 3;
+    width: 100%;
+    margin: 0 -0.75rem; /* line the first label up with the name */
+  }
+
+  .site-nav ul { justify-content: space-between; gap: 0; }
+  .site-nav a { padding: 0.5rem 0.75rem; }
+
+  .intro__inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* portrait after the words on phones, so the name and the buttons are
+     the first thing on screen; kept short so the page doesn't drag */
+  .intro__portrait { aspect-ratio: 1 / 1; max-height: 24rem; }
+  .intro__portrait img { object-position: 50% 25%; }
+
+  .intro__actions .btn { flex: 1 1 auto; }
+
+  .creds { grid-template-columns: 1fr; gap: 0.6rem; }
+
+  .bento { grid-template-columns: 1fr; }
+  .tile--wide { grid-column: auto; }
+  .collage:empty { aspect-ratio: 1.2; } /* phone rows: 2.2 and 2.8 */
+
+  .lifeframe__stage { aspect-ratio: 4 / 5; }
+  .lifeframe__dots { width: 100%; }
+  .lifeframe__dot { flex: 1; padding: 0 0.5rem; }
+
+  .contact { grid-template-columns: 1fr; }
 
   .essays__row { flex-direction: column; gap: 0.3rem; align-items: flex-start; }
 
-  .contact__links { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+  .site-footer__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

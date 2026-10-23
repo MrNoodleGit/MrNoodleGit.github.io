@@ -4,6 +4,10 @@ Open work for ramour.org. Tick items off (or delete them) when done, and add new
 
 ## Needs the site owner
 
+- [ ] **Redesign: choose the public email address.** Replace `REPLACE-ME@ramour.org` in the Contact section of `index.html` (three places on two lines: the link, the text, the copy button). The "Site check" fails until it's done, so it can't slip out by accident.
+- [ ] **Redesign: review it before it goes live.** Look at the screenshots attached to the "Site check" run of the redesign pull request, or the preview link (next item), on a phone and a computer. Read the new wording (intro, tiles, Rare Retreats page) and change anything that doesn't sound like you. Then merge the pull request.
+- [ ] **One-time: turn on preview links** so every branch gets its own test address (steps in `ARCHITECTURE.md` §9, "Testing changes before they go live"). Then redeploy the radio Worker once (`cd worker && npx wrangler deploy --config wrangler.toml`) so the radio also plays on those addresses.
+- [ ] Optional: turn the `classic-2026-10` branch (the pre-redesign site) into a tag or GitHub Release, so it can't be deleted by accident with other old branches.
 - [ ] Redeploy the radio Worker so the larger album art is sharp: pull the latest `main`, then `cd worker && npx wrangler deploy --config wrangler.toml` (the flag matters: without it Wrangler deploys the website as `ramour-site` instead of the radio). (The Worker sends Spotify's 640px cover. A first redeploy still showed the old 300px cover for songs saved as "last played" before it; the fix is in `saveLastLive`.) After redeploying, play any song for a minute so the once-a-minute job refreshes the saved cover, then check the Music page.
 - [ ] Open the Music page with the browser console open and check for any "Content Security Policy" error (Spotify embeds, album art, radio). Report what it says so the policy can be fixed.
 - [ ] Try the homepage on a phone and say whether scrolling is still jumpy. If it is: which phone and browser, and what you see (nav bar appearing and disappearing, content shifting, or choppy scrolling).
@@ -37,13 +41,16 @@ Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but 
 
 ## Next up
 
-- [ ] The homepage's latest-essays list is hidden at the owner's request (commented out in the Mind section of `index.html`; `writing-data.js` and `writing-home.js` are no longer loaded there). Decide whether to bring it back or delete `js/writing-home.js`, and whether the homepage should link to the Writing page some other way.
+- [x] The homepage links to Writing again, through the header and a Writing tile (the redesign). The latest-essays list stays off the homepage.
+- [ ] Delete `js/writing-home.js` (nothing loads it since the latest-essays list left the homepage), unless the list is coming back.
 - [ ] Altar on iPhones: all 69 images are decoded at once (about 100 million pixels at 3× density), which risks blank images or tab reloads. Load images only near the screen and release them when far away.
 - [ ] Turn the Substack sync back on: its schedule is commented out in `.github/workflows/sync-substack.yml`, so new essays only appear when it's run by hand.
 - [ ] Link previews: add Open Graph tags (`og:title`, `og:description`, `og:image`) to every page except `hello_world.html`, which has them.
-- [ ] Shorten the Altar's 0.8 s image fade-in; it delays the first image to about 3.2 s in Lighthouse.
+- [x] Shorten the Altar's 0.8 s image fade-in (now 0.3 s).
 - [ ] Remove files no page uses: in the repo root `ra-mour-sun.jpeg` (identical copy in `media/art-gallery/`), `ramour_soul_pictures.jpg` and the `eudaimonia-machine/` folder; in `media/` the `gallery-archive/` folder (16 MB), `the-whirlwind-of-lovers-blake.jpg`, `hello/qr.png` (the page uses `qr.svg`) and the eight organization logos other than `logos/wakingup.png` (they belonged to the removed Work section; keep them if it's coming back). Keep `soul-city-art.png` (source for the portrait WebPs) and the three `media/*.jpg` video posters if you want sources for the WebP posters.
-- [ ] Rare Retreats loads the original 3 MB `tower-of-babel.png`; use the 2000 px WebP in `media/art-gallery-large/` instead.
+- [x] Rare Retreats loads the resized WebP copies of the Tower of Babel instead of the 3 MB original (the redesign).
+- [ ] Once Rare Retreats has a date, a place or a price, put it on the Rare Retreats page and tile: specific facts convert better than "coming soon".
+- [ ] Consider showing the live "On air" song on the homepage Music tile (the radio Worker already allows it; the CSP too).
 
 ## Later
 
@@ -56,7 +63,6 @@ Config is ready (`wrangler.jsonc`, `_headers`, `.assetsignore`, `404.html`) but 
 - [ ] A line on each Altar piece saying why it's there, shown in the lightbox.
 - [ ] Smooth page-to-page transitions (cross-document view transitions; Firefox just navigates normally).
 - [ ] Swipe left and right on the Life carousel.
-- [ ] A small "listening to…" line on the homepage from the radio Worker.
 - [ ] A random Altar quote in the footer or hero.
 - [ ] Start loading the Altar page when someone hovers its link.
 
